@@ -1,0 +1,48 @@
+/* JSG Palette v1 */
+:root {
+  /* Backgrounds */
+  --bg-page: #ffffff;
+  --bg-soft: #f9fafb;
+
+  /* Brand & Primary */
+  --brand-royal-blue: #1d4ed8;
+  --brand-deep-blue: #0f172a;
+  --base-white: #ffffff;
+
+  /* Text & Neutral */
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  --border-light: #e5e7eb;
+
+  /* Accents */
+  --accent-royal-purple: #6d28d9;
+  --accent-crimson-red: #dc2626;
+
+  /* Functional */
+  --action-primary-bg: var(--brand-royal-blue);
+  --action-primary-text: var(--brand-royal-blue);
+  --action-disabled: #9ca3af;
+
+  /* Typography */
+  --font-family-base: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Noto Sans KR", sans-serif;
+
+  --h1-size: 28px;
+  --h1-weight: 700;
+
+  --h2-size: 22px;
+  --h2-weight: 600;
+
+  --h3-size: 18px;
+  --h3-weight: 600;
+
+  --body-size: 16px;
+  --body-weight: 400;
+
+  --caption-size: 13px;
+
+  /* Dimensions */
+  --header-height: 60px;
+  --nav-height: 56px;
+  --max-width-desktop: 800px;
+}

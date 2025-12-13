@@ -1,0 +1,200 @@
+/* Layout Styles */
+
+/* Header */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    background-color: var(--brand-royal-blue);
+    color: var(--base-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Mobile default */
+    z-index: 1000;
+    padding: 0 16px;
+}
+
+.header-inner {
+    width: 100%;
+    max-width: var(--max-width-desktop);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--base-white);
+}
+
+.desktop-nav {
+    display: none;
+    /* Hidden on mobile */
+    gap: 24px;
+}
+
+.desktop-nav a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--base-white);
+    opacity: 0.9;
+    transition: opacity 0.2s;
+}
+
+.desktop-nav a.current {
+    background-color: var(--base-white);
+    color: var(--brand-royal-blue);
+    padding: 8px 16px;
+    border-radius: 9999px;
+    opacity: 1;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.desktop-nav a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+/* Main Content */
+.site-main {
+    padding-top: calc(var(--header-height) + 20px);
+    padding-bottom: calc(var(--nav-height) + 40px);
+    /* Space for bottom nav */
+    padding-left: 16px;
+    padding-right: 16px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: var(--max-width-desktop);
+    margin: 0 auto;
+}
+
+/* Bottom Navigation (Floating Pill) */
+.bottom-nav {
+    position: fixed;
+    bottom: 24px;
+    /* safe-area + margin */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--brand-royal-blue);
+    height: var(--nav-height);
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 16px;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.nav-btn {
+    color: var(--brand-royal-blue);
+    background-color: var(--base-white);
+    padding: 6px 16px;
+    border-radius: 9999px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.nav-arrow {
+    padding: 8px;
+    color: var(--base-white);
+    font-size: 18px;
+}
+
+.nav-arrow.disabled {
+    color: var(--action-disabled);
+    pointer-events: none;
+}
+
+/* Bottom Sheet */
+.sheet-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 900;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s;
+}
+
+.sheet-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.section-sheet {
+    position: fixed;
+    bottom: calc(var(--nav-height) + 40px);
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    width: calc(100% - 32px);
+    max-width: 400px;
+    /* Limit width on desktop */
+    background-color: var(--bg-page);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    z-index: 950;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.section-sheet.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.sheet-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--bg-soft);
+    text-align: center;
+}
+
+.sheet-list li:last-child {
+    border-bottom: none;
+}
+
+.sheet-list a {
+    font-size: 16px;
+    color: var(--text-main);
+    display: block;
+    width: 100%;
+}
+
+.sheet-list a.current {
+    font-weight: 700;
+    color: var(--brand-royal-blue);
+}
+
+/* Responsive Desktop */
+@media (min-width: 1024px) {
+    .site-header {
+        justify-content: center;
+        padding: 0 40px;
+    }
+
+    .desktop-nav {
+        display: flex;
+        /* Show on desktop */
+    }
+
+    /* On desktop, bottom nav might still be used as per design spec, 
+       but typically we might hide it if top nav is sufficient.
+       However, Design Spec 4.1 says "Common use Mobile/Desktop".
+       So we keep it. */
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - JSG Investment</title>
+    <link rel="stylesheet" href="styles/tokens.css">
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="/" class="logo">JSG Investment</a>
+            <nav class="desktop-nav">
+                <a href="about.html">About</a>
+                <a href="team.html">Team</a>
+                <a href="philosophy.html">Philosophy</a>
+                <a href="portfolio.html">Portfolio</a>
+                <a href="notice.html">Notice</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="site-main">
+        <div class="container">
+            <h1 class="h1-title">Portfolio</h1>
+            <p style="margin-bottom: 24px;">JSG 인베스트먼트와 함께하고 있는 혁신 기업들입니다.</p>
+
+            <div class="portfolio-grid">
+                <!-- BioTech One -->
+                <div class="portfolio-card">
+                    <div class="portfolio-content">
+                        <div class="portfolio-header">
+                            <h3 class="company-name">BioTech One</h3>
+                            <span class="company-sector">Bio / Healthcare</span>
+                        </div>
+                        <p class="company-desc">차세대 유전체 분석 솔루션을 개발하는 바이오 테크 기업</p>
+                    </div>
+                    <img src="images/lilly.png" alt="BioTech One" class="portfolio-img">
+                </div>
+
+                <!-- Future MedTech -->
+                <div class="portfolio-card">
+                    <div class="portfolio-content">
+                        <div class="portfolio-header">
+                            <h3 class="company-name">Future MedTech</h3>
+                            <span class="company-sector">Medical Device</span>
+                        </div>
+                        <p class="company-desc">AI 기반의 조기 진단 의료기기 제조사</p>
+                    </div>
+                    <img src="images/olive.jpg" alt="Future MedTech" class="portfolio-img">
+                </div>
+
+                <!-- Green Energy Lab -->
+                <div class="portfolio-card">
+                    <div class="portfolio-content">
+                        <div class="portfolio-header">
+                            <h3 class="company-name">Green Energy Lab</h3>
+                            <span class="company-sector">Clean Tech</span>
+                        </div>
+                        <p class="company-desc">고효율 에너지 저장 장치 및 친환경 소재 연구</p>
+                    </div>
+                    <img src="images/CIS.png" alt="Green Energy Lab" class="portfolio-img">
+                </div>
+
+                <!-- Nano Systems -->
+                <div class="portfolio-card">
+                    <div class="portfolio-content">
+                        <div class="portfolio-header">
+                            <h3 class="company-name">Nano Systems</h3>
+                            <span class="company-sector">Deep Tech</span>
+                        </div>
+                        <p class="company-desc">반도체 공정용 초정밀 나노 계측 장비 개발</p>
+                    </div>
+                    <img src="images/tomocube.png" alt="Nano Systems" class="portfolio-img">
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="philosophy.html" class="nav-arrow">←</a>
+        <button id="sheet-toggle" class="nav-btn">Portfolio ▲</button>
+        <a href="notice.html" class="nav-arrow">→</a>
+    </nav>
+
+    <div class="section-sheet">
+        <ul class="sheet-list">
+            <li><a href="about.html">About JSG</a></li>
+            <li><a href="team.html">Team</a></li>
+            <li><a href="philosophy.html">Philosophy</a></li>
+            <li><a href="portfolio.html" class="current">Portfolio</a></li>
+            <li><a href="notice.html">Notice</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </div>
+
+    <script src="scripts/ui.js"></script>
+</body>
+
+</html>
