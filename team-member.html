@@ -29,40 +29,26 @@
     <main class="site-main">
         <div class="container">
             <section class="page-hero">
-                <div class="page-hero-surface" style="--hero-image: url('images/contact.jpg');">
+                <div class="page-hero-surface" style="--hero-image: url('images/team.jpg');">
                     <div class="page-hero-media">
-                        <img src="images/contact.jpg" alt="Contact">
+                        <img src="images/team.jpg" alt="Team">
                     </div>
                     <div class="page-hero-text">
-                        <p class="page-hero-kicker">Contact</p>
-                        <p class="page-hero-sub">문의사항은 아래 연락처로 접수합니다.</p>
+                        <p class="page-hero-kicker">Team</p>
+                        <p class="page-hero-sub">JSG Investment의 핵심 인력과 자문위원을 소개합니다.</p>
                     </div>
                 </div>
             </section>
 
-            <div class="contact-section">
-                <h2 class="h2-title">Location</h2>
-                <div class="contact-card">
-                    <div class="contact-row">
-                        <p class="contact-value">서울특별시 강남구 테헤란로 14길 6</p>
-                        <p class="contact-subtext">JSG Investment</p>
-                    </div>
-                    <a href="#" class="contact-btn">지도 열기</a>
-                </div>
-            </div>
-
-            <div class="contact-section">
-                <h2 class="h2-title">Contact Information</h2>
-
-                <div class="contact-card">
-                    <div class="contact-row">
-                        <span class="contact-label">전화</span>
-                        <span class="contact-value">[대표 전화번호]</span>
-                    </div>
-
-                    <div class="contact-row">
-                        <span class="contact-label">이메일</span>
-                        <span class="contact-value">[문의 이메일 주소]</span>
+            <!-- Dynamic Content Mount Point -->
+            <div id="team-member-app">
+                <div class="team-card" style="justify-content: space-between;">
+                    <div class="team-content">
+                        <div class="team-header">
+                            <h3 class="team-name">Loading...</h3>
+                            <span class="team-role">Team</span>
+                        </div>
+                        <p class="team-bio" style="margin: 0;">프로필을 불러오는 중입니다.</p>
                     </div>
                 </div>
             </div>
@@ -71,23 +57,23 @@
     </main>
 
     <nav class="bottom-nav">
-        <a href="notice.html" class="nav-arrow">◀</a>
-        <button id="sheet-toggle" class="nav-btn">Contact ▲</button>
-        <a href="about.html" class="nav-arrow">▶</a>
+        <a href="about.html" class="nav-arrow">◀</a>
+        <button id="sheet-toggle" class="nav-btn">Team ▲</button>
+        <a href="philosophy.html" class="nav-arrow">▶</a>
     </nav>
-
     <div class="section-sheet">
         <ul class="sheet-list">
             <li><a href="about.html">About JSG</a></li>
-            <li><a href="team.html">Team</a></li>
+            <li><a href="team.html" class="current">Team</a></li>
             <li><a href="philosophy.html">Philosophy</a></li>
             <li><a href="portfolio.html">Portfolio</a></li>
             <li><a href="notice.html">Notice</a></li>
-            <li><a href="contact.html" class="current">Contact</a></li>
+            <li><a href="contact.html">Contact</a></li>
         </ul>
     </div>
 
     <script src="scripts/ui.js"></script>
+    <script src="scripts/team.js"></script>
 </body>
 
 </html>
