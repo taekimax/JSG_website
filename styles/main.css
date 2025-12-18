@@ -392,7 +392,8 @@
     max-width: 46%;
 }
 
-.member-pager {
+.member-pager,
+.notice-pager {
     margin-top: 36px;
     margin-bottom: 24px;
     padding: 10px 12px;
@@ -405,7 +406,8 @@
     gap: 10px;
 }
 
-.member-pager-link {
+.member-pager-link,
+.notice-pager-link {
     flex: 1 1 0;
     min-width: 0;
     font-size: 13px;
@@ -419,30 +421,36 @@
     -webkit-line-clamp: 2;
 }
 
-.member-pager-link.prev {
+.member-pager-link.prev,
+.notice-pager-link.prev {
     text-align: left;
 }
 
-.member-pager-link.next {
+.member-pager-link.next,
+.notice-pager-link.next {
     text-align: right;
 }
 
-.member-pager-link:hover {
+.member-pager-link:hover,
+.notice-pager-link:hover {
     color: var(--brand-royal-blue);
 }
 
-.member-pager-link.disabled {
+.member-pager-link.disabled,
+.notice-pager-link.disabled {
     color: var(--text-muted);
     opacity: 0.7;
     pointer-events: none;
 }
 
-.member-pager-spacer {
+.member-pager-spacer,
+.notice-pager-spacer {
     flex: 1 1 0;
     min-width: 0;
 }
 
-.member-pager-team {
+.member-pager-team,
+.notice-pager-list {
     flex: 0 0 auto;
     background-color: var(--base-white);
     color: var(--brand-deep-blue);
@@ -455,12 +463,15 @@
     white-space: nowrap;
 }
 
-.member-pager-team:hover {
+.member-pager-team:hover,
+.notice-pager-list:hover {
     color: var(--brand-royal-blue);
 }
 
 .member-pager-team:focus-visible,
-.member-pager-link:focus-visible {
+.notice-pager-list:focus-visible,
+.member-pager-link:focus-visible,
+.notice-pager-link:focus-visible {
     outline: 2px solid var(--brand-royal-blue);
     outline-offset: 3px;
 }

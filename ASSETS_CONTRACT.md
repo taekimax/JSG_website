@@ -29,12 +29,12 @@ Required keys in every page manifest:
 - `schemaVersion` (integer, starting at 1)
 - `page` (string: `about`, `team`, `portfolio`, etc.)
 - `assetVersion` (string; used for cache-busting)
-- `updatedAt` (string ISO datetime; informational)
 - `heroImage` (string path; optional for some pages)
 - `texts` (object; optional; string paths)
 
 Optional keys:
 - `$schema` (editor support only; should not be treated as an asset reference)
+- `updatedAt` (string ISO datetime; informational)
 
 Notices manifest (`assets/notices/notices-manifest.json`) required keys:
 - `noticesJson` (must be `assets/notices/notices.json`)

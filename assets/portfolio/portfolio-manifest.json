@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "page": "portfolio",
+  "assetVersion": "2025-12-17",
+  "heroImage": "assets/portfolio/portfolio-hero.jpg",
+  "companies": [
+    {
+      "id": "biotech-one",
+      "order": 10,
+      "name": "BioTech One",
+      "sector": "Bio / Healthcare",
+      "logo": "assets/portfolio/biotech-one.png",
+      "descriptionText": "assets/portfolio/biotech-one.txt"
+    },
+    {
+      "id": "future-medtech",
+      "order": 20,
+      "name": "Future MedTech",
+      "sector": "Medical Device",
+      "logo": "assets/portfolio/future-medtech.jpg",
+      "descriptionText": "assets/portfolio/future-medtech.txt"
+    },
+    {
+      "id": "green-energy-lab",
+      "order": 30,
+      "name": "Green Energy Lab",
+      "sector": "Clean Tech",
+      "logo": "assets/portfolio/green-energy-lab.png",
+      "descriptionText": "assets/portfolio/green-energy-lab.txt"
+    },
+    {
+      "id": "nano-systems",
+      "order": 40,
+      "name": "Nano Systems",
+      "sector": "Deep Tech",
+      "logo": "assets/portfolio/nano-systems.png",
+      "descriptionText": "assets/portfolio/nano-systems.txt"
+    }
+  ]
+}

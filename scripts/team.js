@@ -134,9 +134,43 @@ document.addEventListener('DOMContentLoaded', async () => {
     app.innerHTML = '<div class="team-card"><div class="team-content"><p class="team-bio" style="margin:0; color: var(--text-muted);">Loading...</p></div></div>';
 
     try {
-        const response = await fetch('data/team.json');
+        const response = await fetch('assets/team/team-manifest.json');
         const data = await response.json();
-        const members = Array.isArray(data) ? data : (data.members || []);
+        const assetVersion = data.assetVersion || '';
+        const rawMembers = Array.isArray(data) ? data : (data.members || []);
+
+        const withVersion = (url) => {
+            const raw = String(url || '').trim();
+            const version = String(assetVersion || '').trim();
+            if (!raw || !version) return raw;
+            const separator = raw.includes('?') ? '&' : '?';
+            return `${raw}${separator}v=${encodeURIComponent(version)}`;
+        };
+
+        const groupWeight = (group) => {
+            if (group === 'core') return 0;
+            if (group === 'advisory') return 1;
+            return 2;
+        };
+
+        const members = rawMembers.slice().sort((a, b) => {
+            const groupDiff = groupWeight(a.group) - groupWeight(b.group);
+            if (groupDiff !== 0) return groupDiff;
+            const orderDiff = (a.order ?? 0) - (b.order ?? 0);
+            if (orderDiff !== 0) return orderDiff;
+            return String(a.id || '').localeCompare(String(b.id || ''));
+        }).map(member => ({
+            ...member,
+            image: withVersion(member.image)
+        }));
+
+        if (data.heroImage) {
+            const heroSurface = document.querySelector('.page-hero .page-hero-surface');
+            const heroImg = document.querySelector('.page-hero .page-hero-media img');
+            const versionedHero = withVersion(data.heroImage);
+            if (heroImg) heroImg.src = versionedHero;
+            if (heroSurface) heroSurface.style.setProperty('--hero-image', `url('${versionedHero}')`);
+        }
 
         const currentId = getUrlParam('id');
         if (!currentId) {

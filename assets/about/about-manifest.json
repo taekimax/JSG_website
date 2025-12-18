@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "page": "about",
+  "assetVersion": "2025-12-18",
+  "texts": {
+    "heroKicker": "assets/about/hero-kicker.txt",
+    "heroSubKo": "assets/about/hero-sub-ko.txt",
+    "heroSubEn": "assets/about/hero-sub-en.txt",
+    "section1Title": "assets/about/section-1-title.txt",
+    "section1Body": "assets/about/section-1-body.txt",
+    "section2Title": "assets/about/section-2-title.txt",
+    "section2Body": "assets/about/section-2-body.txt"
+  }
+}

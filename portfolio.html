@@ -29,9 +29,9 @@
     <main class="site-main">
         <div class="container">
             <section class="page-hero">
-                <div class="page-hero-surface" style="--hero-image: url('images/portfolio.jpg');">
+                <div class="page-hero-surface" style="--hero-image: url('assets/portfolio/portfolio-hero.jpg');">
                     <div class="page-hero-media">
-                        <img src="images/portfolio.jpg" alt="Portfolio">
+                        <img src="assets/portfolio/portfolio-hero.jpg" alt="Portfolio">
                     </div>
                     <div class="page-hero-text">
                         <p class="page-hero-kicker">Portfolio</p>
@@ -40,55 +40,7 @@
                 </div>
             </section>
 
-            <div class="portfolio-grid">
-                <!-- BioTech One -->
-                <div class="portfolio-card">
-                    <div class="portfolio-content">
-                        <div class="portfolio-header">
-                            <h3 class="company-name">BioTech One</h3>
-                            <span class="company-sector">Bio / Healthcare</span>
-                        </div>
-                        <p class="company-desc">차세대 유전체 분석 솔루션을 개발하는 바이오 테크 기업</p>
-                    </div>
-                    <img src="images/lilly.png" alt="BioTech One" class="portfolio-img">
-                </div>
-
-                <!-- Future MedTech -->
-                <div class="portfolio-card">
-                    <div class="portfolio-content">
-                        <div class="portfolio-header">
-                            <h3 class="company-name">Future MedTech</h3>
-                            <span class="company-sector">Medical Device</span>
-                        </div>
-                        <p class="company-desc">AI 기반의 조기 진단 의료기기 제조사</p>
-                    </div>
-                    <img src="images/olive.jpg" alt="Future MedTech" class="portfolio-img">
-                </div>
-
-                <!-- Green Energy Lab -->
-                <div class="portfolio-card">
-                    <div class="portfolio-content">
-                        <div class="portfolio-header">
-                            <h3 class="company-name">Green Energy Lab</h3>
-                            <span class="company-sector">Clean Tech</span>
-                        </div>
-                        <p class="company-desc">고효율 에너지 저장 장치 및 친환경 소재 연구</p>
-                    </div>
-                    <img src="images/CIS.png" alt="Green Energy Lab" class="portfolio-img">
-                </div>
-
-                <!-- Nano Systems -->
-                <div class="portfolio-card">
-                    <div class="portfolio-content">
-                        <div class="portfolio-header">
-                            <h3 class="company-name">Nano Systems</h3>
-                            <span class="company-sector">Deep Tech</span>
-                        </div>
-                        <p class="company-desc">반도체 공정용 초정밀 나노 계측 장비 개발</p>
-                    </div>
-                    <img src="images/tomocube.png" alt="Nano Systems" class="portfolio-img">
-                </div>
-            </div>
+            <div id="portfolio-app" class="portfolio-grid"></div>
 
         </div>
     </main>
@@ -111,6 +63,8 @@
     </div>
 
     <script src="scripts/ui.js"></script>
+    <script src="scripts/assets.js"></script>
+    <script src="scripts/portfolio.js"></script>
 </body>
 
 </html>
