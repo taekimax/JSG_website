@@ -11,10 +11,11 @@ Primary rulebook describing the *live* implementation in `C:\dev\jsg_website`. K
 - Stack: HTML5 + Vanilla CSS + Vanilla JS. Multi-page app (full reloads), static hosting.
 
 ## 2) Repo Map & Sources
-- Root pages: `landing.html` (main animation entry), `index.html` (redirect to landing), `about.html`, `team.html`, `philosophy.html`, `portfolio.html`, `notice.html`, `contact.html`.
-- Data & assets: `data/notices.json`, `images/` (logos/headshots), `data/uploads/` (notice attachments, optional).
+- Root pages: `landing.html` (main animation entry), `index.html` (redirect to landing), `about.html`, `team.html`, `team-member.html`, `philosophy.html`, `portfolio.html`, `notice.html`, `contact.html`.
+- Data & assets: `assets/` (page-based manifests + images + text), `assets/notices/notices.json` (notice metadata), `assets/notices/posts/` (notice bodies as `.txt`), `assets/notices/attachments/` (notice attachments).
 - Styles: `styles/tokens.css` (design tokens), `styles/reset.css`, `styles/layout.css` (header/bottom-nav/sheet), `styles/main.css` (page components), `styles/landing.css`.
-- Scripts: `scripts/ui.js` (bottom sheet + nav highlight), `scripts/notice.js` (list/detail rendering from JSON), `scripts/landingAnimation.js` (landing shards animation).
+- Scripts: `scripts/ui.js` (bottom sheet + nav highlight), `scripts/notice.js` (notice list/detail rendering from `assets/notices/*`), `scripts/landingAnimation.js` (landing shards animation).
+- Validation: `Validate.bat` / `tools/validate-assets.mjs` validates manifests + referenced files.
 
 ## 3) Design Tokens & Breakpoints (from tokens.css)
 - Backgrounds: BG/Page `#FFFFFF`, BG/Soft `#F9FAFB`.
@@ -41,7 +42,7 @@ Primary rulebook describing the *live* implementation in `C:\dev\jsg_website`. K
 - Team cards: horizontal flex even on mobile; text left, portrait image right (`.team-img` 30%/max 120px, aspect 3:4, border-left). Roles are uppercase blue, bios muted.
 - Portfolio cards: horizontal flex; text left, logo image right (`<img class="portfolio-img">` currently with real logos).
 - Philosophy: deep-blue gradient hero band with centered copy; value cards lift on hover and keep purple `.phil-strip` gradient; values: Respect / Health / Integrity (not Justice/Safety/Growth); English + Korean blurbs.
-- Notice list/detail: list with title, date, category pipe; `isImportant` renders crimson badge. Detail view shows title/date/category, HTML content, optional attachments list, and a back button styled via `.contact-btn`.
+- Notice list/detail: list with title, date, category pipe; `isImportant` renders crimson badge ("필수"). Detail view shows title/date/category, body loaded from `.txt` (plain text, preserves line breaks), optional attachments list, and a prev/next + back-to-list pager.
 - Contact blocks: sections for Location and Contact Information with muted labels and CTA button.
 
 ## 6) Page Snapshots
@@ -49,18 +50,24 @@ Primary rulebook describing the *live* implementation in `C:\dev\jsg_website`. K
 - `about.html`: stacked hero band with centered logo, h1, and bilingual lead; purple gradient dividers separate the two narrative text sections in a single-column flow.
 - `team.html`: Gradient hero with darkened team image + title/lead; Core Team (박상진, 최승만, 박준혁) with headshots for two; Advisory Board of six with text-only cards. Single-column grid across breakpoints.
 - `philosophy.html`: Deep-blue gradient hero with bilingual lead; purple-gradient dividers and three hoverable value cards (Respect/Health/Integrity) in a single-column flow.
-- `portfolio.html`: Gradient hero with darkened portfolio image + title/lead; four sample companies (BioTech One, Future MedTech, Green Energy Lab, Nano Systems) with sectors and descriptions; real logos (`images/lilly.png`, `olive.jpg`, `CIS.png`, `tomocube.png`) on the right.
-- `notice.html`: Gradient hero with darkened notice image + title/lead; uses `scripts/notice.js` to fetch `data/notices.json`. `?id=` query renders detail; otherwise renders sorted list (date desc). Attachments download from `data/uploads/{filename}` if present.
+- `portfolio.html`: Gradient hero with darkened portfolio image + title/lead; four sample companies with sectors/descriptions and logo assets in `assets/portfolio/` (e.g. `assets/portfolio/biotech-one.png`).
+- `notice.html`: Gradient hero with darkened notice image + title/lead; uses `scripts/notice.js` to fetch `assets/notices/notices-manifest.json` + `assets/notices/notices.json`. `?id=` query renders detail and loads body from `assets/notices/posts/{id}.txt`; otherwise renders sorted list (date desc). Attachments download from `assets/notices/attachments/{filename}` if present.
 - `contact.html`: Gradient hero with darkened contact image + title/lead; placeholder address/phone/email text; "지도 열기" button is a dead link.
 
 ## 7) Content & Data Rules
 - All copy stays in Korean-first with embedded English per current pages. Do not invent new palette values or fonts.
-- Notices: structure defined by `data/notices.json` (`id`, `title`, `date`, `category`, `isImportant`, `content` HTML, optional `attachments`). Keep CrimsonRed only for important badges.
-- Contact info remains placeholder brackets for now. Portfolio/company data is sample but uses actual logo assets already in `images/`.
+- Notices:
+  - Metadata: `assets/notices/notices.json` (`id`, `title`, `date`, `category`, `isImportant`, optional `attachments`)
+  - Body: `assets/notices/posts/{id}.txt` (plain text)
+  - Attachments: `assets/notices/attachments/{filename}`
+  - `id` is a 6-digit string (e.g. `"000001"`) and the body filename matches `{id}.txt`.
+  - Posting guide lives in `assets/notices/posts/example.txt`.
+  - Keep CrimsonRed only for important badges.
+- Contact info remains placeholder brackets for now. Portfolio/company data is sample but uses assets already in `assets/portfolio/`.
 
 ## 8) Interactivity & Behavior
 - `ui.js`: builds overlay, toggles `.section-sheet` via `#sheet-toggle`, closes on overlay click or ESC; applies `.current` to matching desktop nav links based on `window.location.pathname`.
-- `notice.js`: client-side fetch/render; gracefully handles missing/invalid `id` with an error message and back link. Must be served over HTTP so `data/notices.json` loads; opening via `file://` triggers the "공지사항을 불러올 수 없습니다." error state.
+- `notice.js`: client-side fetch/render; uses `assets/notices/notices-manifest.json` for cache-busting (`assetVersion`) and base paths (`attachmentsBase`, `postsBase`). Gracefully handles missing/invalid `id` with an error message and pager. Must be served over HTTP so `fetch()` works; opening via `file://` triggers the "공지사항을 불러올 수 없습니다." error state.
 - Landing animation: shard expansion/fade; redirects to About after animation or on Enter/Enter key; reduced-motion sends directly to About.
 
 ## 9) Guardrails for Future Work

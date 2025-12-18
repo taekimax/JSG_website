@@ -316,12 +316,12 @@ const main = async () => {
     }
   }
 
-  let uploadsBase = 'assets/notices/uploads/';
+  let attachmentsBase = 'assets/notices/attachments/';
   if (await fileExists(noticesManifest)) {
     try {
       const manifest = await readJson(noticesManifest);
       const noticesJsonRef = String(manifest?.noticesJson || '').trim();
-      const uploadsBaseRef = String(manifest?.uploadsBase || '').trim();
+      const attachmentsBaseRef = String(manifest?.attachmentsBase || '').trim();
 
       if (!noticesJsonRef) {
         errors.push('assets/notices/notices-manifest.json: missing required key "noticesJson"');
@@ -329,12 +329,12 @@ const main = async () => {
         errors.push(`assets/notices/notices-manifest.json: noticesJson must be assets/notices/notices.json (got: ${noticesJsonRef})`);
       }
 
-      if (!uploadsBaseRef) {
-        errors.push('assets/notices/notices-manifest.json: missing required key "uploadsBase"');
-      } else if (uploadsBaseRef.replaceAll('\\', '/').trim() !== 'assets/notices/uploads/') {
-        errors.push(`assets/notices/notices-manifest.json: uploadsBase must be assets/notices/uploads/ (got: ${uploadsBaseRef})`);
+      if (!attachmentsBaseRef) {
+        errors.push('assets/notices/notices-manifest.json: missing required key "attachmentsBase"');
+      } else if (attachmentsBaseRef.replaceAll('\\', '/').trim() !== 'assets/notices/attachments/') {
+        errors.push(`assets/notices/notices-manifest.json: attachmentsBase must be assets/notices/attachments/ (got: ${attachmentsBaseRef})`);
       } else {
-        uploadsBase = uploadsBaseRef.replaceAll('\\', '/');
+        attachmentsBase = attachmentsBaseRef.replaceAll('\\', '/');
       }
     } catch (e) {
       errors.push(`assets/notices/notices-manifest.json: invalid JSON (${e.message})`);
@@ -354,7 +354,7 @@ const main = async () => {
           }
           if (Array.isArray(notice.attachments)) {
             for (const filename of notice.attachments) {
-              const rel = `${uploadsBase}${filename}`;
+              const rel = `${attachmentsBase}${filename}`;
               referenced.add(rel);
             }
           }

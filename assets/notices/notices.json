@@ -1,43 +1,42 @@
 [
   {
-    "id": "notice-005",
+    "id": "000005",
     "title": "2024년 정기 주주총회 소집 공고",
     "date": "2024-03-15",
     "isImportant": true,
     "category": "공시",
-    "attachments": ["2024_agm_agenda.pdf", "proxy_form.docx"],
-    "content": "<p>주주님의 건승과 댁내의 평안을 기원합니다.</p><p>당사는 상법 제363조와 정관 제19조에 의거 제5기 정기주주총회를 아래와 같이 개최하오니 참석하여 주시기 바랍니다.</p><p><strong>1. 일시:</strong> 2024년 3월 29일 (금) 오전 09:00<br><strong>2. 장소:</strong> 서울특별시 강남구 테헤란로 123 JSG타워 10층 대회의실<br><strong>3. 회의 목적 사항:</strong><br>가. 보고사항: 감사보고, 영업보고<br>나. 부의안건<br>- 제1호 의안: 제5기 재무제표 승인의 건<br>- 제2호 의안: 이사 선임의 건</p>"
+    "attachments": ["2024_agm_agenda.pdf", "proxy_form.docx"]
   },
   {
-    "id": "notice-004",
+    "id": "000004",
     "title": "신기술금융사 등록 완료 안내",
     "date": "2023-12-01",
     "isImportant": false,
     "category": "일반",
-    "content": "<p>JSG 인베스트먼트가 금융위원회로부터 여신전문금융업법상 신기술사업금융업 등록을 완료하였습니다.</p><p>이번 등록을 통해 당사는 유망 신기술 사업자에 대한 투자를 더욱 활성화하고, 제도권 금융회사로서의 책임을 다할 것입니다.</p>"
+    "attachments": []
   },
   {
-    "id": "notice-003",
+    "id": "000003",
     "title": "사무실 이전 안내",
     "date": "2023-10-10",
     "isImportant": false,
     "category": "일반",
-    "content": "<p>JSG 인베스트먼트가 사세 확장에 따라 사무실을 이전하게 되었습니다.</p><p>새로운 공간에서 더 큰 도약을 준비하겠습니다.</p><p><strong>이전 주소:</strong> 서울특별시 강남구 테헤란로 123 JSG타워 10층</p>"
+    "attachments": []
   },
   {
-    "id": "notice-002",
+    "id": "000002",
     "title": "제3회 바이오/헬스케어 투자 포럼 개최",
     "date": "2023-09-05",
     "isImportant": false,
     "category": "행사",
-    "content": "<p>당사가 주최하는 제3회 바이오/헬스케어 투자 포럼이 오는 9월 20일 개최됩니다.</p><p>관심 있는 스타트업 및 투자자 여러분의 많은 참여 바랍니다.</p>"
+    "attachments": []
   },
   {
-    "id": "notice-001",
+    "id": "000001",
     "title": "홈페이지 리뉴얼 오픈",
     "date": "2023-08-01",
     "isImportant": false,
     "category": "일반",
-    "content": "<p>JSG 인베스트먼트의 공식 홈페이지가 새롭게 리뉴얼되었습니다.</p><p>PC와 모바일 어디서든 편리하게 정보를 확인하실 수 있습니다.</p>"
+    "attachments": []
   }
 ]

@@ -31,7 +31,7 @@
 
 - 매니페스트(캐시 버전 관리): `assets/{page}/{page}-manifest.json`
 - 텍스트(카피): `assets/{page}/*.txt`
-- 이미지/첨부: `assets/{page}/*.(jpg|png|...)`, `assets/notices/uploads/*`
+- 이미지/첨부: `assets/{page}/*.(jpg|png|...)`, `assets/notices/attachments/*`
 
 ---
 
@@ -76,7 +76,7 @@
 - 수정 후: `assets/about/about-manifest.json`의 `assetVersion` 변경
 
 로고 교체(About 상단 로고 포함):
-- 파일 교체: `assets/shared/logo.png` (파일명 유지)
+- 파일 교체: `assets/shared/logo.jpg` (파일명 유지)
 - 수정 후: `assets/shared/shared-manifest.json`의 `assetVersion` 변경
 
 ### 5.3 Philosophy (philosophy.html)
@@ -106,20 +106,24 @@
 공지 데이터:
 - `assets/notices/notices.json`
 
+공지 본문(TXT):
+- `assets/notices/posts/{id}.txt` (예: `assets/notices/posts/000001.txt`)
+
 첨부 파일:
-- `assets/notices/uploads/*`
+- `assets/notices/attachments/*`
 - 공지의 `attachments` 배열에 파일명을 추가하면 상세 화면에서 다운로드 링크가 생성됩니다.
   - 예: `"attachments": ["proxy_form.docx"]`
 
 공지 추가 절차(권장):
 1. `assets/notices/notices.json`에 새 항목 추가
-2. 첨부가 있으면 파일을 `assets/notices/uploads/`에 넣기
-3. `assets/notices/notices-manifest.json`의 `assetVersion` 변경
+2. 본문 파일을 `assets/notices/posts/{id}.txt`로 생성
+3. 첨부가 있으면 파일을 `assets/notices/attachments/`에 넣기
+4. `assets/notices/notices-manifest.json`의 `assetVersion` 변경
 
 필드 규칙(요약):
 - `id`: 고유값(중복 금지)
 - `date`: `YYYY-MM-DD`
-- `content`: **HTML 문자열**(상세 화면에서 그대로 렌더링됨)
+- `attachments`: 선택(없으면 생략하거나 `[]`)
   - 보안/안정성을 위해 아래는 금지:
     - `<script>`, `onload=...` 같은 이벤트 핸들러, 임의 iframe/embed
   - 권장 태그 예:
@@ -168,4 +172,3 @@
 ## 9) 참고(개발자용)
 
 디자인/UX 규칙 및 구성 원칙은 `agents.md`에 정리되어 있습니다.
-

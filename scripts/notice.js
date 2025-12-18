@@ -37,15 +37,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         const currentId = getUrlParam('id');
 
+        const attachmentsBase = manifest.attachmentsBase || 'assets/notices/attachments/';
         if (currentId) {
-            renderDetail(notices, currentId, app, manifest.uploadsBase, assetVersion);
+            await renderDetail(notices, currentId, app, attachmentsBase, manifest.postsBase, assetVersion);
         } else {
             renderList(notices, app);
         }
 
     } catch (error) {
         console.error('Failed to fetch notices:', error);
-        app.innerHTML = '<div class="notice-error">공지사항을 불러을 수 없습니다.</div>';
+        app.innerHTML = '<div class="notice-error">공지사항을 불러올 수 없습니다.</div>';
     }
 });
 
@@ -69,7 +70,7 @@ function renderList(notices, container) {
         }
 
         item.innerHTML = `
-            <a href="notice.html?id=${notice.id}" class="notice-link">${notice.title}</a>
+            <a href="notice.html?id=${encodeURIComponent(notice.id)}" class="notice-link">${notice.title}</a>
             <div class="notice-meta">
                 ${badgeHtml}
                 <span>${notice.date}</span>
@@ -82,13 +83,41 @@ function renderList(notices, container) {
     container.appendChild(listContainer);
 }
 
-function renderDetail(notices, id, container, uploadsBase, assetVersion) {
+function normalizeBasePath(base, fallback) {
+    const value = String(base || fallback || '').trim();
+    if (!value) return '';
+    const normalized = value.replaceAll('\\', '/');
+    return normalized.endsWith('/') ? normalized : `${normalized}/`;
+}
+
+async function fetchNoticeBodyText(id, postsBase, assetVersion) {
+    const normalizedBase = normalizeBasePath(postsBase, 'assets/notices/posts/');
+    const safeId = String(id || '').trim();
+    if (!normalizedBase || !safeId) {
+        throw new Error('Missing posts base or notice id');
+    }
+
+    const withVersion = (url) => {
+        const raw = String(url || '').trim();
+        const version = String(assetVersion || '').trim();
+        if (!raw || !version) return raw;
+        const separator = raw.includes('?') ? '&' : '?';
+        return `${raw}${separator}v=${encodeURIComponent(version)}`;
+    };
+
+    const url = withVersion(`${normalizedBase}${encodeURIComponent(safeId)}.txt`);
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch notice body: ${response.status} ${response.statusText}`);
+    }
+    return await response.text();
+}
+
+async function renderDetail(notices, id, container, attachmentsBase, postsBase, assetVersion) {
     const notice = notices.find(n => n.id === id);
 
     if (!notice) {
-        container.innerHTML = '<div class="notice-error">존재하지 않는 게시물입니다. <a href="notice.html">목록으로 돌아가기</a></div>';
-        const backLink = container.querySelector('a[href="notice.html"]');
-        if (backLink) backLink.remove();
+        container.innerHTML = '<div class="notice-error">해당 공지사항을 찾을 수 없습니다.</div>';
         container.appendChild(buildNoticePager(notices, id));
         return;
     }
@@ -102,18 +131,22 @@ function renderDetail(notices, id, container, uploadsBase, assetVersion) {
                     <span>분류: ${notice.category}</span>
                 </div>
             </div>
-            <div class="notice-body text-block">
-                ${notice.content}
-            </div>
-            ${renderAttachments(notice.attachments, uploadsBase, assetVersion)}
-            <div class="notice-footer">
-                <a href="notice.html" class="contact-btn" style="background-color: var(--border-light); color: var(--text-main);">목록으로</a>
-            </div>
+            <div class="notice-body text-block" aria-live="polite"></div>
+            ${renderAttachments(notice.attachments, attachmentsBase, assetVersion)}
         </div>
     `;
 
-    const footer = container.querySelector('.notice-footer');
-    if (footer) footer.remove();
+    const body = container.querySelector('.notice-body');
+    if (body) {
+        body.textContent = '본문을 불러오는 중입니다...';
+        try {
+            const text = await fetchNoticeBodyText(id, postsBase, assetVersion);
+            body.textContent = text;
+        } catch (error) {
+            console.error('Failed to fetch notice body:', error);
+            body.textContent = '본문을 불러올 수 없습니다.';
+        }
+    }
 
     const detail = container.querySelector('.notice-detail');
     if (detail) detail.appendChild(buildNoticePager(notices, id));
@@ -184,11 +217,10 @@ function buildNoticePager(notices, currentId) {
     return pager;
 }
 
-function renderAttachments(attachments, uploadsBase, assetVersion) {
+function renderAttachments(attachments, attachmentsBase, assetVersion) {
     if (!attachments || attachments.length === 0) return '';
 
-    const base = String(uploadsBase || 'assets/notices/uploads/').replaceAll('\\', '/');
-    const normalizedBase = base.endsWith('/') ? base : `${base}/`;
+    const normalizedBase = normalizeBasePath(attachmentsBase, 'assets/notices/attachments/');
 
     const withVersion = (url) => {
         const raw = String(url || '').trim();
@@ -198,14 +230,28 @@ function renderAttachments(attachments, uploadsBase, assetVersion) {
         return `${raw}${separator}v=${encodeURIComponent(version)}`;
     };
 
-    const listHtml = attachments.map(filename => `
-        <li class="attachment-item">
-            <a href="${withVersion(normalizedBase + encodeURIComponent(filename))}" download class="attachment-link">
-                <span class="attachment-icon">📎</span>
-                ${filename}
-            </a>
-        </li>
-    `).join('');
+    const listHtml = attachments
+        .map((filename) => {
+            const rawName = String(filename || '').trim();
+            if (!rawName) return '';
+
+            const normalizedName = rawName.replaceAll('\\', '/').replace(/^\/+/, '');
+            const safeName = normalizedName
+                .split('/')
+                .map(segment => encodeURIComponent(segment))
+                .join('/');
+
+            return `
+                <li class="attachment-item">
+                    <a href="${withVersion(normalizedBase + safeName)}" download class="attachment-link">
+                        <span class="attachment-icon">📎</span>
+                        ${normalizedName}
+                    </a>
+                </li>
+            `;
+        })
+        .filter(Boolean)
+        .join('');
 
     return `
         <div class="notice-attachments">

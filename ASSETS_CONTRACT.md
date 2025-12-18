@@ -38,7 +38,7 @@ Optional keys:
 
 Notices manifest (`assets/notices/notices-manifest.json`) required keys:
 - `noticesJson` (must be `assets/notices/notices.json`)
-- `uploadsBase` (must be `assets/notices/uploads/`)
+- `attachmentsBase` (must be `assets/notices/attachments/`)
 
 Ordering/grouping rules:
 - Any list that must render predictably uses `order` (number, ascending).
