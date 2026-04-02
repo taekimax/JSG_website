@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createContainer, createNoticeRuntime, readRepoFile } from './notice-render-harness.mjs';
+import { createContainer, createNoticeRuntime } from './notice-render-harness.mjs';
 
 function extractNoticeIdsFromLinks(html) {
   const ids = [];
@@ -69,10 +69,10 @@ test('notice detail renderer includes record hooks and preserves pager and attac
   assert.match(container.innerHTML, /class="notice-record"/);
   assert.match(container.innerHTML, /class="notice-record-body"/);
   assert.match(container.innerHTML, /본문 계약 테스트/);
-  assert.match(container.innerHTML, /class="notice-pager"/);
-  assert.match(container.innerHTML, /class="notice-pager-link prev" href="notice\.html\?id=notice-next"/);
-  assert.match(container.innerHTML, /class="notice-pager-link next" href="notice\.html\?id=notice-prev"/);
-  assert.match(container.innerHTML, /class="notice-pager-list" href="notice\.html"/);
+  assert.match(container.innerHTML, /<article class="notice-record">[\s\S]*class="notice-pager"[\s\S]*<\/article>/);
+  assert.match(container.innerHTML, /<article class="notice-record">[\s\S]*class="notice-pager-link prev" href="notice\.html\?id=notice-next"/);
+  assert.match(container.innerHTML, /<article class="notice-record">[\s\S]*class="notice-pager-link next" href="notice\.html\?id=notice-prev"/);
+  assert.match(container.innerHTML, /<article class="notice-record">[\s\S]*class="notice-pager-list" href="notice\.html"/);
   assert.match(container.innerHTML, /href="assets\/notices\/attachments\/policy%20guide\.pdf\?v=contract-1"/);
   assert.match(container.innerHTML, /href="assets\/notices\/attachments\/folder\/attachment\.txt\?v=contract-1"/);
   assert.ok(
@@ -81,8 +81,46 @@ test('notice detail renderer includes record hooks and preserves pager and attac
   );
 });
 
-test('notice loading state keeps localized record-style markup', async () => {
-  const source = await readRepoFile('scripts/notice.js');
-  assert.match(source, /class="notice-record-item notice-loading"/);
-  assert.match(source, /불러오는 중/);
+test('notice loading state is applied through the DOMContentLoaded path before fetches resolve', async () => {
+  let resolveManifest;
+  let resolveNotices;
+  const manifestResponse = new Promise((resolve) => {
+    resolveManifest = resolve;
+  });
+  const noticesResponse = new Promise((resolve) => {
+    resolveNotices = resolve;
+  });
+
+  const runtime = await createNoticeRuntime({
+    fetchImpl: async (url) => {
+      if (String(url).includes('notices-manifest.json')) {
+        return manifestResponse;
+      }
+      return noticesResponse;
+    }
+  });
+
+  const readyPromise = runtime.runDomContentLoaded();
+
+  assert.match(runtime.app.innerHTML, /class="notice-record-item notice-loading"/);
+  assert.match(runtime.app.innerHTML, /불러오는 중/);
+
+  resolveManifest({
+    async json() {
+      return {
+        noticesJson: 'assets/notices/notices.json',
+        attachmentsBase: 'assets/notices/attachments/',
+        postsBase: 'assets/notices/posts/',
+        assetVersion: 'contract-1'
+      };
+    }
+  });
+
+  resolveNotices({
+    async json() {
+      return [];
+    }
+  });
+
+  await readyPromise;
 });

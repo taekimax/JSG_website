@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
 
 function escapeHtml(value) {
-  return String(value)
+  return String(value ?? '')
     .replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;')
@@ -61,33 +61,67 @@ class FakeElement {
 
 class FakeContainer {
   constructor() {
-    this.innerHTML = '';
+    this._innerHTML = '';
+    this.children = [];
+    this.bodyText = null;
+    this.hasNoticeBody = false;
+    this.hasNoticeRecord = false;
+    this.recordChildren = [];
+  }
+
+  set innerHTML(value) {
+    this._innerHTML = String(value);
+    this.children = [];
+    this.bodyText = null;
+    this.recordChildren = [];
+    this.hasNoticeBody = this._innerHTML.includes('class="notice-record-body"');
+    this.hasNoticeRecord = this._innerHTML.includes('class="notice-record"');
+  }
+
+  get innerHTML() {
+    let html = this._innerHTML;
+
+    if (this.hasNoticeBody) {
+      const content = this.bodyText === null ? '' : escapeHtml(this.bodyText);
+      html = html.replace(
+        /(<div class="notice-record-body" aria-live="polite">)([\s\S]*?)(<\/div>)/,
+        `$1${content}$3`
+      );
+    }
+
+    if (this.hasNoticeRecord && this.recordChildren.length > 0) {
+      html = html.replace(
+        /<\/article>\s*$/,
+        `${this.recordChildren.map(renderNode).join('')}</article>`
+      );
+    }
+
+    if (this.children.length > 0) {
+      html += this.children.map(renderNode).join('');
+    }
+
+    return html;
   }
 
   appendChild(child) {
-    this.innerHTML += renderNode(child);
+    this.children.push(child);
     return child;
   }
 
   querySelector(selector) {
-    if (selector === '.notice-record-body' && this.innerHTML.includes('class="notice-record-body"')) {
-      const body = {};
-      Object.defineProperty(body, 'textContent', {
-        set: (value) => {
-          const text = escapeHtml(value);
-          const pattern = /(<div class="notice-record-body" aria-live="polite">)([\s\S]*?)(<\/div>)/;
-          if (pattern.test(this.innerHTML)) {
-            this.innerHTML = this.innerHTML.replace(pattern, `$1${text}$3`);
-          }
-        }
-      });
-      return body;
+    if (selector === '.notice-record-body' && this.hasNoticeBody) {
+      return {
+        set textContent(value) {
+          this.__container.bodyText = String(value);
+        },
+        __container: this
+      };
     }
 
-    if (selector === '.notice-record' && this.innerHTML.includes('class="notice-record"')) {
+    if (selector === '.notice-record' && this.hasNoticeRecord) {
       return {
         appendChild: (child) => {
-          this.innerHTML += renderNode(child);
+          this.recordChildren.push(child);
           return child;
         }
       };
@@ -105,17 +139,32 @@ export function createContainer() {
   return new FakeContainer();
 }
 
-export async function createNoticeRuntime({ fetchImpl } = {}) {
+export async function createNoticeRuntime({ fetchImpl, search = '' } = {}) {
   const source = await readRepoFile('scripts/notice.js');
+  const listeners = new Map();
+  const app = createContainer();
+  const heroImg = { src: '' };
+  const heroStyle = {};
+  const heroSurface = {
+    style: {
+      setProperty(name, value) {
+        heroStyle[name] = String(value);
+      }
+    }
+  };
 
   const context = vm.createContext({
-    window: { location: { search: '' } },
+    window: { location: { search } },
     document: {
-      addEventListener() {},
-      getElementById() {
-        return null;
+      addEventListener(eventName, callback) {
+        listeners.set(eventName, callback);
       },
-      querySelector() {
+      getElementById(id) {
+        return id === 'notice-app' ? app : null;
+      },
+      querySelector(selector) {
+        if (selector === '.page-hero .page-hero-surface') return heroSurface;
+        if (selector === '.page-hero .page-hero-media img') return heroImg;
         return null;
       },
       createElement(tagName) {
@@ -133,9 +182,19 @@ export async function createNoticeRuntime({ fetchImpl } = {}) {
   vm.runInContext(source, context, { filename: 'scripts/notice.js' });
 
   return {
+    app,
+    heroImg,
+    heroStyle,
     renderList: context.renderList,
     renderDetail: context.renderDetail,
     renderAttachments: context.renderAttachments,
-    buildNoticePager: context.buildNoticePager
+    buildNoticePager: context.buildNoticePager,
+    async runDomContentLoaded() {
+      const handler = listeners.get('DOMContentLoaded');
+      if (!handler) {
+        throw new Error('DOMContentLoaded handler was not registered');
+      }
+      await handler();
+    }
   };
 }
