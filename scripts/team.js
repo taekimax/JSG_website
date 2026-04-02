@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             ? `${member.nameEn} profile`
             : `${member.nameKo} 프로필 보기`;
         const imageHtml = member.image
-            ? `<img src="${escapeHtml(member.image)}" alt="${escapeHtml(member.nameEn || member.nameKo)}" class="team-img">`
+            ? `<img src="${escapeHtml(member.image)}" alt="${escapeHtml(member.nameEn || member.nameKo)}" class="team-img" loading="lazy" decoding="async">`
             : `<div class="member-photo-placeholder" aria-hidden="true"></div>`;
 
         return `
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             : '';
 
         const imgHtml = member.image
-            ? `<img src="${escapeHtml(member.image)}" alt="${escapeHtml(member.nameKo)}" class="team-img member-hero-img">`
+            ? `<img src="${escapeHtml(member.image)}" alt="${escapeHtml(member.nameKo)}" class="team-img member-hero-img" loading="eager" decoding="async">`
             : `<div class="member-photo-placeholder" aria-hidden="true"></div>`;
 
         const highlightsHtml = (member.highlights || []).length

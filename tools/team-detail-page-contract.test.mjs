@@ -1,19 +1,44 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { renderTeamApp } from './team-render-harness.mjs';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const repoRoot = path.resolve(__dirname, '..');
+test('team detail renderer selects member by id and keeps pager ordering with upgraded hooks', async () => {
+  const manifest = {
+    assetVersion: 'contract-1',
+    members: [
+      { id: 'adv-z', group: 'advisory', order: 20, nameKo: '자문Z', roleKo: '자문', image: 'assets/team/adv-z.png', highlights: ['advisory'] },
+      { id: 'core-b', group: 'core', order: 20, nameKo: '코어B', roleKo: '심사역', image: 'assets/team/core-b.png', highlights: ['core'] },
+      { id: 'core-a', group: 'core', order: 20, nameKo: '코어A', roleKo: '심사역', image: 'assets/team/core-a.png', highlights: ['core'] },
+      { id: 'core-c', group: 'core', order: 10, nameKo: '코어C', roleKo: '심사역', image: 'assets/team/core-c.png', highlights: ['core'] }
+    ]
+  };
 
-async function readRepoFile(relativePath) {
-  return fs.readFile(path.join(repoRoot, relativePath), 'utf8');
-}
+  const { html } = await renderTeamApp({
+    manifest,
+    search: '?id=core-a'
+  });
 
-test('team detail renderer emits the upgraded identity and media hooks', async () => {
-  const source = await readRepoFile('scripts/team.js');
-  assert.match(source, /class="team-card-media"/);
-  assert.match(source, /class="member-identity"/);
-  assert.match(source, /class="member-pager"/);
+  assert.match(html, /<h1 class="h1-title member-name">코어A/);
+  assert.match(html, /class="team-card-media"/);
+  assert.match(html, /class="member-identity"/);
+  assert.match(html, /class="member-pager"/);
+  assert.match(html, /class="team-img member-hero-img" loading="eager" decoding="async"/);
+  assert.match(html, /class="member-pager-link prev" href="team-member\.html\?id=core-c"/);
+  assert.match(html, /class="member-pager-link next" href="team-member\.html\?id=core-b"/);
+  assert.match(html, /class="member-pager-team" href="team\.html"/);
+});
+
+test('team detail renderer shows missing-member message when id is unknown', async () => {
+  const manifest = {
+    members: [
+      { id: 'core-a', group: 'core', order: 10, nameKo: '코어A', roleKo: '심사역', image: 'assets/team/core-a.png', highlights: [] }
+    ]
+  };
+
+  const { html } = await renderTeamApp({
+    manifest,
+    search: '?id=not-found'
+  });
+
+  assert.match(html, /존재하지 않는 멤버입니다\./);
 });

@@ -289,6 +289,17 @@
     box-shadow: 0 24px 40px -28px rgba(15, 23, 42, 0.7);
 }
 
+@media (prefers-reduced-motion: reduce) {
+    .team-card-link {
+        transition: none;
+    }
+
+    .team-card-link:hover {
+        transform: none;
+        box-shadow: 0 20px 38px -30px rgba(15, 23, 42, 0.55);
+    }
+}
+
 .team-card-link:focus-visible {
     outline: 2px solid var(--brand-royal-blue);
     outline-offset: 4px;
