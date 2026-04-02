@@ -51,8 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 function renderList(notices, container) {
-    // Basic sorting by date desc
-    const sorted = notices.sort((a, b) => new Date(b.date) - new Date(a.date));
+    const sorted = sortNoticesByDateDesc(notices);
 
     // Clear container
     container.innerHTML = '';
@@ -61,8 +60,8 @@ function renderList(notices, container) {
     listContainer.className = 'notice-list';
 
     sorted.forEach(notice => {
-        const item = document.createElement('div');
-        item.className = 'notice-item';
+        const item = document.createElement('article');
+        item.className = 'notice-record-item';
         
         let badgeHtml = '';
         if (notice.isImportant) {
@@ -70,11 +69,13 @@ function renderList(notices, container) {
         }
 
         item.innerHTML = `
-            <a href="notice.html?id=${encodeURIComponent(notice.id)}" class="notice-link">${notice.title}</a>
+            <header class="notice-record-item-header">
+                <a href="notice.html?id=${encodeURIComponent(notice.id)}" class="notice-link">${notice.title}</a>
+            </header>
             <div class="notice-meta">
                 ${badgeHtml}
-                <span>${notice.date}</span>
-                <span class="notice-category">| ${notice.category}</span>
+                <span class="notice-date">${notice.date}</span>
+                <span class="notice-category">${notice.category}</span>
             </div>
         `;
         listContainer.appendChild(item);
@@ -123,20 +124,20 @@ async function renderDetail(notices, id, container, attachmentsBase, postsBase, 
     }
 
     container.innerHTML = `
-        <div class="notice-detail">
-            <div class="notice-header">
+        <article class="notice-record">
+            <header class="notice-header">
                 <span class="notice-date-detail">${notice.date}</span>
                 <h1 class="h1-title" style="margin-top: 8px; margin-bottom: 24px;">${notice.title}</h1>
                 <div class="notice-meta-detail">
                     <span>분류: ${notice.category}</span>
                 </div>
-            </div>
-            <div class="notice-body text-block" aria-live="polite"></div>
+            </header>
+            <div class="notice-record-body" aria-live="polite"></div>
             ${renderAttachments(notice.attachments, attachmentsBase, assetVersion)}
-        </div>
+        </article>
     `;
 
-    const body = container.querySelector('.notice-body');
+    const body = container.querySelector('.notice-record-body');
     if (body) {
         body.textContent = '본문을 불러오는 중입니다...';
         try {
@@ -148,7 +149,7 @@ async function renderDetail(notices, id, container, attachmentsBase, postsBase, 
         }
     }
 
-    const detail = container.querySelector('.notice-detail');
+    const detail = container.querySelector('.notice-record');
     if (detail) detail.appendChild(buildNoticePager(notices, id));
 }
 

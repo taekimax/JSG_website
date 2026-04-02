@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const heroSurfaceEl = hero?.querySelector('.page-hero-surface');
     const heroImgEl = hero?.querySelector('.page-hero-media img');
 
-    app.innerHTML = '<div class="portfolio-card"><div class="portfolio-content"><p class="company-desc" style="margin:0; color: var(--text-muted);">Loading...</p></div></div>';
+    app.innerHTML = '<div class="portfolio-card"><div class="portfolio-content"><p class="company-desc" style="margin:0; color: var(--text-muted);">Loading...</p></div><div class="portfolio-card-media"><div class="portfolio-img-placeholder" aria-hidden="true"></div></div></div>';
 
     try {
         const manifest = await window.JsgAssets.fetchJson('assets/portfolio/portfolio-manifest.json');
@@ -66,10 +66,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             const img = document.createElement('img');
             img.className = 'portfolio-img';
             img.alt = company.name || '';
+            img.loading = 'lazy';
+            img.decoding = 'async';
             img.src = window.JsgAssets.versionedUrl(company.logo, assetVersion);
 
-            card.appendChild(content);
-            card.appendChild(img);
+            const media = document.createElement('div');
+            media.className = 'portfolio-card-media';
+            media.appendChild(img);
+
+            card.append(content, media);
 
             app.appendChild(card);
         });
