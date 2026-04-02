@@ -26,6 +26,7 @@
 - Team 데이터/이미지: `assets/team/`
 - Portfolio 데이터/이미지/설명: `assets/portfolio/`
 - Notices 데이터/첨부: `assets/notices/`
+- Contact 카피/히어로: `assets/contact/`
 
 각 페이지는 보통 아래 파일을 가집니다:
 
@@ -131,6 +132,13 @@
 
 상세 화면 내비게이션:
 - 상세(`notice.html?id=...`)에서는 하단에 이전/목록/다음 내비게이션이 표시됩니다.
+
+### 5.7 Contact (contact.html)
+- 히어로 이미지 교체: `assets/contact/contact-hero.jpg` (파일명 유지)
+- 카피 수정: `assets/contact/*.txt`
+  - 예: `assets/contact/phone-value.txt`, `assets/contact/email-value.txt`
+- 지도 링크와 텍스트 파일 경로: `assets/contact/contact-manifest.json`
+- 수정 후: `assets/contact/contact-manifest.json`의 `assetVersion` 변경
 
 ---
 

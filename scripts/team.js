@@ -45,28 +45,45 @@ document.addEventListener('DOMContentLoaded', async () => {
         return `${member.nameKo}${title ? ` ${title}` : ''}`;
     };
 
+    const summarizeHighlights = (member) => {
+        const highlights = Array.isArray(member?.highlights) ? member.highlights : [];
+        return highlights.map(item => String(item).trim()).filter(Boolean).join(', ');
+    };
+
+    const renderMemberCard = (member) => {
+        const bio = summarizeHighlights(member);
+        const profileLabel = member.nameEn
+            ? `${member.nameEn} profile`
+            : `${member.nameKo} 프로필 보기`;
+        const imageHtml = member.image
+            ? `<img src="${escapeHtml(member.image)}" alt="${escapeHtml(member.nameEn || member.nameKo)}" class="team-img">`
+            : `<div class="member-photo-placeholder" aria-hidden="true"></div>`;
+
+        return `
+            <a class="team-card team-card-link" href="team-member.html?id=${encodeURIComponent(member.id)}" aria-label="${escapeHtml(profileLabel)}">
+                ${imageHtml}
+                <div class="team-content">
+                    <div class="team-header">
+                        <h3 class="team-name">${escapeHtml(member.nameKo)}</h3>
+                        <span class="team-role">${escapeHtml(member.roleKo || '')}</span>
+                    </div>
+                    <p class="team-bio">${escapeHtml(bio)}</p>
+                </div>
+            </a>
+        `;
+    };
+
     const renderMemberList = (members) => {
         const renderGroup = (label, group) => {
             const groupMembers = members.filter(m => m.group === group);
             if (groupMembers.length === 0) return '';
-
-            const listHtml = groupMembers.map(m => {
-                const metaText = m.nameEn || m.roleKo || '';
-                return `
-                    <li class="member-list-item">
-                        <a class="member-list-link" href="team-member.html?id=${encodeURIComponent(m.id)}">
-                            ${escapeHtml(m.nameKo)}${metaText ? `<span class="member-list-en">${escapeHtml(metaText)}</span>` : ''}
-                        </a>
-                    </li>
-                `;
-            }).join('');
+            const cardsHtml = groupMembers.map(renderMemberCard).join('');
+            const titleStyle = group === 'advisory' ? ' style="margin-top: 48px;"' : '';
 
             return `
-                <h2 class="h2-title">${escapeHtml(label)}</h2>
-                <div class="about-card">
-                    <ul class="member-list">
-                        ${listHtml}
-                    </ul>
+                <h2 class="h2-title"${titleStyle}>${escapeHtml(label)}</h2>
+                <div class="team-grid">
+                    ${cardsHtml}
                 </div>
             `;
         };
@@ -164,6 +181,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             image: withVersion(member.image)
         }));
 
+        window.__teamMembers = members;
+
         if (data.heroImage) {
             const heroSurface = document.querySelector('.page-hero .page-hero-surface');
             const heroImg = document.querySelector('.page-hero .page-hero-media img');
@@ -188,7 +207,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        window.__teamMembers = members;
         renderMemberDetail(member);
     } catch (error) {
         console.error('Failed to fetch team data:', error);
