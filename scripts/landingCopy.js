@@ -1,11 +1,14 @@
 document.addEventListener('DOMContentLoaded', async () => {
     if (!window.JsgAssets) return;
 
-    const kickerEl = document.querySelector('.hero-panel--accent .hero-kicker');
+    const stageEl = document.querySelector('.landing-stage');
+    if (!stageEl) return;
+
+    const kickerEl = stageEl.querySelector('.hero-kicker');
     if (!kickerEl) return;
 
-    const leadEl = document.querySelector('.hero-panel--accent .hero-lead');
-    const subEl = document.querySelector('.hero-panel--accent .hero-sub');
+    const leadEl = stageEl.querySelector('.hero-lead');
+    const subEl = stageEl.querySelector('.hero-sub');
     const enterBtn = document.getElementById('enterBtn');
 
     try {
