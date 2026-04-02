@@ -64,19 +64,28 @@
 .site-main {
     padding-top: calc(var(--header-height) + 20px);
     padding-bottom: calc(var(--nav-height) + 40px);
-    /* Space for bottom nav */
     padding-left: 16px;
     padding-right: 16px;
     min-height: 100vh;
-    background: linear-gradient(165deg, #1f2937 0%, #162032 48%, #0f172a 100%);
+}
+
+.site-main--interior {
+    background:
+        radial-gradient(140% 120% at 12% 0%, rgba(142, 207, 255, 0.2) 0%, rgba(142, 207, 255, 0) 55%),
+        linear-gradient(168deg, var(--shell-depth) 0%, var(--shell-bg) 54%, #050b14 100%);
 }
 
 .container {
     max-width: var(--max-width-desktop);
     margin: 0 auto;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.92) 100%);
-    border: 1px solid rgba(229, 231, 235, 0.32);
-    border-radius: 20px;
+}
+
+.content-shell {
+    background:
+        linear-gradient(180deg, rgba(247, 243, 236, 0.98) 0%, rgba(228, 221, 210, 0.84) 100%),
+        linear-gradient(122deg, rgba(142, 207, 255, 0.12) 0%, rgba(142, 207, 255, 0) 46%);
+    border: 1px solid rgba(24, 32, 43, 0.18);
+    border-radius: 22px;
     padding: 20px 48px 32px;
     box-shadow: 0 24px 48px -32px rgba(0, 0, 0, 0.48);
 }
@@ -99,9 +108,16 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+.section-pager {
+    background:
+        linear-gradient(170deg, rgba(24, 34, 51, 0.98) 0%, rgba(11, 19, 32, 0.98) 100%);
+    border: 1px solid rgba(142, 207, 255, 0.24);
+    box-shadow: 0 12px 36px -20px rgba(0, 0, 0, 0.72);
+}
+
 .nav-btn {
-    color: var(--brand-deep-blue);
-    background-color: var(--base-white);
+    color: var(--text-strong);
+    background-color: var(--surface-main);
     padding: 6px 18px;
     border-radius: 9999px;
     font-weight: 700;
@@ -114,9 +130,9 @@
 }
 
 .nav-arrow {
-    padding: 8px;
-    color: var(--base-white);
+    color: var(--text-inverse);
     font-size: 18px;
+    padding: 8px;
 }
 
 .nav-arrow.disabled {
@@ -196,7 +212,7 @@
         padding: 0 40px;
     }
 
-    .container {
+    .content-shell {
         padding: 20px 64px 32px;
     }
 

@@ -3,6 +3,13 @@
   /* Backgrounds */
   --bg-page: #ffffff;
   --bg-soft: #f9fafb;
+  --shell-bg: #0b1320;
+  --shell-depth: #182233;
+  --surface-main: #f7f3ec;
+  --surface-muted: #e4ddd2;
+  --text-strong: #18202b;
+  --text-inverse: #f4f1eb;
+  --accent-cool: #8ecfff;
 
   /* Brand & Primary */
   --brand-royal-blue: #1d4ed8;
