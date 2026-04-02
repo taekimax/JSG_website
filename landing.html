@@ -12,32 +12,27 @@
 
 <body>
     <div id="app">
-        <!-- Background Reveal Layer (Mimics About Page) - REMOVED -->
-
-        <!-- Animation Canvas -->
         <div id="canvasWrap">
             <canvas id="c"></canvas>
             <div id="veil"></div>
         </div>
 
-        <!-- Foreground UI -->
-        <div id="centerUI">
-            <div class="hero-panel">
+        <main class="landing-stage">
+            <section class="hero-panel hero-panel--accent">
                 <p class="hero-kicker">Loading...</p>
                 <p class="hero-lead">Loading...</p>
                 <p class="hero-sub">Loading...</p>
-            </div>
-            <div class="cta-standalone">
-                <button id="enterBtn" type="button">\n                    Loading...\n                    <small>Loading...</small>\n                </button>
-            </div>
-        </div>
+                <button id="enterBtn" type="button">
+                    Loading...
+                    <small>Loading...</small>
+                </button>
+            </section>
+        </main>
     </div>
 
-    <!-- Animation Script -->
     <script src="scripts/assets.js"></script>
     <script src="scripts/landingCopy.js"></script>
     <script src="scripts/landingAnimation.js"></script>
 </body>
 
 </html>
-

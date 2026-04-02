@@ -12,8 +12,9 @@
     const off = document.createElement("canvas");
     const offCtx = off.getContext("2d", { willReadFrequently: true });
 
-    const C_SOLID = "#1d4ed8";
-    const C_WHITE = "#ffffff";
+    const C_MIDNIGHT = "#2f58be";
+    const C_DEEP = "#0a1639";
+    const C_ICE = "#eef3ff";
 
     function hexToRgb(hex) {
         const h = hex.replace("#", "");
@@ -38,8 +39,9 @@
         return `rgba(${Math.round(r)},${Math.round(g)},${Math.round(b)},${a})`;
     }
 
-    const RGB_BLUE = hexToRgb(C_SOLID);
-    const RGB_WHITE = hexToRgb(C_WHITE);
+    const RGB_MIDNIGHT = hexToRgb(C_MIDNIGHT);
+    const RGB_DEEP = hexToRgb(C_DEEP);
+    const RGB_ICE = hexToRgb(C_ICE);
 
     function resize() {
         dpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
@@ -64,10 +66,10 @@
         offCtx.font = `900 ${Math.floor(fontSize)}px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial`;
         offCtx.textAlign = "center";
         offCtx.textBaseline = "middle";
-        offCtx.fillStyle = C_SOLID;
+        offCtx.fillStyle = C_MIDNIGHT;
         offCtx.fillText("JSG", cx, cy);
         offCtx.lineWidth = fontSize * 0.12;
-        offCtx.strokeStyle = C_SOLID;
+        offCtx.strokeStyle = C_MIDNIGHT;
         offCtx.strokeText("JSG", cx, cy);
 
         const img = offCtx.getImageData(0, 0, W, H).data;
@@ -121,24 +123,27 @@
         ctx.font = `900 ${Math.floor(fontSize)}px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.shadowColor = "rgba(190, 220, 255, 0.55)";
-        ctx.shadowBlur = 22;
+        ctx.shadowColor = "rgba(90, 131, 255, 0.5)";
+        ctx.shadowBlur = 30;
         const grad = ctx.createLinearGradient(cx - fontSize, cy - fontSize, cx + fontSize, cy + fontSize);
-        grad.addColorStop(0, "rgba(225, 238, 255, 0.98)");
-        grad.addColorStop(0.45, "rgba(149, 188, 255, 1)");
-        grad.addColorStop(1, "rgba(52, 108, 255, 0.98)");
+        grad.addColorStop(0, "rgba(236, 243, 255, 0.98)");
+        grad.addColorStop(0.5, "rgba(118, 156, 255, 1)");
+        grad.addColorStop(1, "rgba(52, 89, 201, 0.96)");
         ctx.fillStyle = grad;
         ctx.fillText("JSG", cx, cy);
         ctx.restore();
 
         for (const p of shards) {
             const spin = t * (0.7 + p.seed * 1.0);
-            const shimmer = 0.28 + 0.5 * (0.5 + 0.5 * Math.sin(t * 1.05 + p.seed * Math.PI * 2));
-            const darkBias = 0.8;
-            const r = lerp(RGB_BLUE.r * darkBias, RGB_WHITE.r, shimmer);
-            const g = lerp(RGB_BLUE.g * darkBias, RGB_WHITE.g, shimmer);
-            const b = lerp(RGB_BLUE.b * darkBias, RGB_WHITE.b, shimmer);
-            drawShard(p.x, p.y, p.size, p.rotation + spin, spin * 1.1, spin * 0.9, r, g, b, 0.92);
+            const shimmer = 0.2 + 0.55 * (0.5 + 0.5 * Math.sin(t * 1.02 + p.seed * Math.PI * 2));
+            const deepMix = 0.45 + 0.3 * (0.5 + 0.5 * Math.cos(t * 0.7 + p.seed * Math.PI * 2));
+            const baseR = lerp(RGB_DEEP.r, RGB_MIDNIGHT.r, deepMix);
+            const baseG = lerp(RGB_DEEP.g, RGB_MIDNIGHT.g, deepMix);
+            const baseB = lerp(RGB_DEEP.b, RGB_MIDNIGHT.b, deepMix);
+            const r = lerp(baseR, RGB_ICE.r, shimmer);
+            const g = lerp(baseG, RGB_ICE.g, shimmer);
+            const b = lerp(baseB, RGB_ICE.b, shimmer);
+            drawShard(p.x, p.y, p.size, p.rotation + spin, spin * 1.1, spin * 0.9, r, g, b, 0.9);
         }
 
         requestAnimationFrame(loop);
