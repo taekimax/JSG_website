@@ -740,10 +740,16 @@
 
 .portfolio-card-media {
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
     order: 1;
     min-height: 220px;
     border-bottom: 1px solid var(--border-light);
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.06), rgba(15, 23, 42, 0.02));
+    background:
+        radial-gradient(90% 80% at 20% 18%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0)),
+        linear-gradient(145deg, rgba(15, 23, 42, 0.08), rgba(148, 163, 184, 0.16));
 }
 
 .portfolio-content {
@@ -760,17 +766,21 @@
 
 .portfolio-img,
 .portfolio-img-placeholder {
-    width: 100%;
-    max-width: none;
-    min-height: 220px;
-    aspect-ratio: 5 / 4;
+    width: min(100%, 320px);
+    max-width: 320px;
+    min-height: 160px;
+    aspect-ratio: 4 / 3;
     flex-shrink: 0;
 }
 
 .portfolio-img {
     display: block;
-    object-fit: cover;
-    background-color: rgba(15, 23, 42, 0.05);
+    object-fit: contain;
+    object-position: center;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 12px;
 }
 
 .portfolio-img-placeholder {
@@ -832,6 +842,12 @@
 
 .notice-record-item:last-child {
     border-bottom: none;
+}
+
+.notice-loading {
+    color: var(--text-muted);
+    font-size: 14px;
+    letter-spacing: 0.01em;
 }
 
 .notice-record-item:hover {
@@ -1025,16 +1041,18 @@
 
     .portfolio-card-media {
         order: 1;
-        min-height: 100%;
+        min-height: 240px;
         border-bottom: none;
         border-right: 1px solid var(--border-light);
+        padding: 26px;
     }
 
     .portfolio-img,
     .portfolio-img-placeholder {
-        width: 100%;
-        min-height: 100%;
-        aspect-ratio: auto;
+        width: min(100%, 360px);
+        max-width: 360px;
+        min-height: 180px;
+        aspect-ratio: 16 / 11;
     }
 
     .notice-record-item {

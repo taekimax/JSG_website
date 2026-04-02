@@ -9,7 +9,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     // Render Loading State
-    app.innerHTML = '<div class="notice-loading">Loading...</div>';
+    app.innerHTML = `
+        <div class="notice-list">
+            <article class="notice-record-item notice-loading">
+                <span>불러오는 중...</span>
+            </article>
+        </div>
+    `;
 
     try {
         const manifestResponse = await fetch('assets/notices/notices-manifest.json');

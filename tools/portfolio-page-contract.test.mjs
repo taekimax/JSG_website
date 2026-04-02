@@ -18,6 +18,8 @@ test('portfolio stylesheet defines the image class rendered by portfolio.js', as
   ]);
 
   assert.match(js, /img\.className = 'portfolio-img'/);
+  assert.match(js, /media\.className = 'portfolio-card-media'/);
   assert.match(css, /\.portfolio-img(?:\s*,\s*\.portfolio-img-placeholder|\s*)\s*\{/);
+  assert.match(css, /\.portfolio-img\s*\{[\s\S]*?object-fit:\s*contain/);
   assert.match(css, /@media \(min-width: 768px\)[\s\S]*?\.portfolio-img(?:\s*,\s*\.portfolio-img-placeholder|\s*)\s*\{/);
 });
