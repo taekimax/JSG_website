@@ -5,18 +5,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     const heroSurfaceEl = hero?.querySelector('.page-hero-surface');
     const heroImgEl = hero?.querySelector('.page-hero-media img');
     const mapLinkEl = document.getElementById('contact-map-link');
+    const locationCardEl = document.querySelector('.contact-card--location');
+    const contactCardEl = document.querySelector('.contact-section:last-of-type .contact-card');
     const textTargets = {
         heroKicker: document.getElementById('contact-hero-kicker'),
         heroLead: document.getElementById('contact-hero-lead'),
         locationTitle: document.getElementById('contact-location-title'),
-        locationAddress: document.getElementById('contact-location-address'),
-        locationSubtext: document.getElementById('contact-location-subtext'),
+        locationAddress: locationCardEl?.querySelector('#contact-location-address'),
+        locationSubtext: locationCardEl?.querySelector('#contact-location-subtext'),
         mapLabel: mapLinkEl,
         contactTitle: document.getElementById('contact-title'),
-        phoneLabel: document.getElementById('contact-phone-label'),
-        phoneValue: document.getElementById('contact-phone-value'),
-        emailLabel: document.getElementById('contact-email-label'),
-        emailValue: document.getElementById('contact-email-value')
+        phoneLabel: contactCardEl?.querySelector('#contact-phone-label'),
+        phoneValue: contactCardEl?.querySelector('#contact-phone-value'),
+        emailLabel: contactCardEl?.querySelector('#contact-email-label'),
+        emailValue: contactCardEl?.querySelector('#contact-email-value')
     };
 
     if (!textTargets.heroKicker) return;

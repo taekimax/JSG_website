@@ -48,9 +48,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const setCard = (card, title, en, ko) => {
             if (!card) return;
+            const copyPair = card.querySelector('.phil-copy-pair');
             window.JsgAssets.setText(card.querySelector('.phil-title'), title.trim());
-            window.JsgAssets.setText(card.querySelector('.phil-desc-en'), en.trim());
-            window.JsgAssets.setText(card.querySelector('.phil-desc-ko'), ko.trim());
+            window.JsgAssets.setText(copyPair?.querySelector('.phil-desc-en'), en.trim());
+            window.JsgAssets.setText(copyPair?.querySelector('.phil-desc-ko'), ko.trim());
         };
 
         setCard(cards[0], respectTitle, respectDescEn, respectDescKo);
