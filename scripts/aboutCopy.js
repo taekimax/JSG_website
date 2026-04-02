@@ -2,11 +2,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!window.JsgAssets) return;
 
     const hero = document.querySelector('.page-hero');
-    const bilingualStackEl = hero?.querySelector('.bilingual-stack');
-    const kickerEl = bilingualStackEl?.querySelector('.page-hero-kicker');
+    const kickerEl = hero?.querySelector('.page-hero-kicker');
     if (!kickerEl) return;
 
-    const heroSubEls = bilingualStackEl.querySelectorAll('.page-hero-sub');
+    const heroSubEls = hero.querySelectorAll('.page-hero-sub');
     const sectionEls = document.querySelectorAll('.about-section');
 
     try {
