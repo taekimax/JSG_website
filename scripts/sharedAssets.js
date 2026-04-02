@@ -17,7 +17,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         document.querySelectorAll('[data-shared-hero="logo"]').forEach(element => {
-            element.style.setProperty('--hero-image', `url('${versionedLogo}')`);
+            const resolvedLogo = window.JsgAssets.absoluteUrl(versionedLogo);
+            element.style.setProperty('--hero-image', `url('${resolvedLogo}')`);
         });
     } catch (error) {
         console.error('Failed to load shared assets manifest:', error);

@@ -61,6 +61,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const getRoleEn = (member) => String(member?.roleEn || fallbackRoleEn(member) || '').trim();
     const getSummaryEn = (member) => String(member?.summaryEn || getRoleEn(member) || '').trim();
+    const toAbsoluteUrl = (url) => {
+        try {
+            if (typeof URL === 'function') return new URL(url, window.location.href).href;
+        } catch {
+            return url;
+        }
+        return url;
+    };
 
     const renderMemberCard = (member) => {
         const profileLabel = member.nameEn
@@ -215,8 +223,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             const heroSurface = document.querySelector('.page-hero .page-hero-surface');
             const heroImg = document.querySelector('.page-hero .page-hero-media img');
             const versionedHero = withVersion(data.heroImage);
+            const resolvedHero = toAbsoluteUrl(versionedHero);
             if (heroImg) heroImg.src = versionedHero;
-            if (heroSurface) heroSurface.style.setProperty('--hero-image', `url('${versionedHero}')`);
+            if (heroSurface) heroSurface.style.setProperty('--hero-image', `url('${resolvedHero}')`);
         }
 
         const currentId = getUrlParam('id');

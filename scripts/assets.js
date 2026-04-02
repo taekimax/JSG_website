@@ -26,6 +26,17 @@
         return `${raw}${separator}v=${encodeURIComponent(version)}`;
     };
 
+    const absoluteUrl = (url) => {
+        const raw = String(url || '').trim();
+        if (!raw) return raw;
+
+        try {
+            return new URL(raw, window.location.href).href;
+        } catch {
+            return raw;
+        }
+    };
+
     const fetchJson = async (url) => {
         const response = await fetch(url, { cache: shouldBypassCache ? 'no-store' : 'no-cache' });
         if (!response.ok) throw new Error(`Failed to fetch JSON: ${url} (${response.status})`);
@@ -58,14 +69,16 @@
     const setHeroImage = (surface, image, heroImageUrl, assetVersion) => {
         if (!heroImageUrl) return;
         const versioned = versionedUrl(heroImageUrl, assetVersion);
+        const resolved = absoluteUrl(versioned);
         if (image) image.src = versioned;
-        if (surface) surface.style.setProperty('--hero-image', `url('${versioned}')`);
+        if (surface) surface.style.setProperty('--hero-image', `url('${resolved}')`);
     };
 
     window.JsgAssets = {
         fetchJson,
         fetchText,
         renderParagraphs,
+        absoluteUrl,
         setHeroImage,
         setText,
         splitParagraphs,

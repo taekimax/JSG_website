@@ -34,8 +34,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             const heroSurface = document.querySelector('.page-hero .page-hero-surface');
             const heroImg = document.querySelector('.page-hero .page-hero-media img');
             const versionedHero = withVersion(manifest.heroImage);
+            const resolvedHero = toAbsoluteUrl(versionedHero);
             if (heroImg) heroImg.src = versionedHero;
-            if (heroSurface) heroSurface.style.setProperty('--hero-image', `url('${versionedHero}')`);
+            if (heroSurface) heroSurface.style.setProperty('--hero-image', `url('${resolvedHero}')`);
         }
 
         const noticesResponse = await fetch(withVersion(manifest.noticesJson));
@@ -55,6 +56,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         app.innerHTML = '<div class="notice-error">공지사항을 불러올 수 없습니다.</div>';
     }
 });
+
+function toAbsoluteUrl(url) {
+    try {
+        if (typeof URL === 'function') return new URL(url, window.location.href).href;
+    } catch {
+        return url;
+    }
+    return url;
+}
 
 function renderList(notices, container) {
     const sorted = sortNoticesByDateDesc(notices);
