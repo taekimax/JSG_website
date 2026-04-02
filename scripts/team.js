@@ -61,7 +61,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         return `
             <a class="team-card team-card-link" href="team-member.html?id=${encodeURIComponent(member.id)}" aria-label="${escapeHtml(profileLabel)}">
-                ${imageHtml}
+                <div class="team-card-media">
+                    ${imageHtml}
+                </div>
                 <div class="team-content">
                     <div class="team-header">
                         <h3 class="team-name">${escapeHtml(member.nameKo)}</h3>
@@ -78,19 +80,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             const groupMembers = members.filter(m => m.group === group);
             if (groupMembers.length === 0) return '';
             const cardsHtml = groupMembers.map(renderMemberCard).join('');
-            const titleStyle = group === 'advisory' ? ' style="margin-top: 48px;"' : '';
 
             return `
-                <h2 class="h2-title"${titleStyle}>${escapeHtml(label)}</h2>
-                <div class="team-grid">
-                    ${cardsHtml}
-                </div>
+                <section class="team-group">
+                    <h2 class="h2-title">${escapeHtml(label)}</h2>
+                    <div class="team-grid">
+                        ${cardsHtml}
+                    </div>
+                </section>
             `;
         };
 
         app.innerHTML = `
-            ${renderGroup('Core Team', 'core')}
-            ${renderGroup('Advisory Board', 'advisory')}
+            <div class="team-index-layout">
+                ${renderGroup('Core Team', 'core')}
+                ${renderGroup('Advisory Board', 'advisory')}
+            </div>
         `;
     };
 
@@ -106,8 +111,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const highlightsHtml = (member.highlights || []).length
             ? `
-                <h2 class="h2-title" style="margin-top: 36px;">Profile</h2>
-                <div class="about-card">
+                <h2 class="h2-title member-profile-title">Profile</h2>
+                <div class="about-card member-profile-card">
                     <ul class="member-highlights">
                         ${(member.highlights || []).map(item => `<li>${escapeHtml(item)}</li>`).join('')}
                     </ul>
@@ -129,16 +134,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             : `<span class="member-pager-spacer" aria-hidden="true"></span>`;
 
         app.innerHTML = `
-            <div class="team-card member-hero-card">
+            <article class="team-card member-hero-card">
+                <div class="team-card-media">
+                    ${imgHtml}
+                </div>
                 <div class="team-content member-hero-content">
                     <p class="member-kicker">${escapeHtml(groupLabel)}</p>
-                    <div class="team-header" style="margin-bottom: 10px;">
+                    <div class="member-identity">
                         <h1 class="h1-title member-name">${escapeHtml(member.nameKo)}${nameEnHtml}</h1>
                         <span class="team-role">${escapeHtml(member.roleKo || '')}</span>
                     </div>
                 </div>
-                ${imgHtml}
-            </div>
+            </article>
             ${highlightsHtml}
             <div class="member-pager" aria-label="Member navigation">
                 ${prevHtml}
@@ -148,7 +155,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         `;
     };
 
-    app.innerHTML = '<div class="team-card"><div class="team-content"><p class="team-bio" style="margin:0; color: var(--text-muted);">Loading...</p></div></div>';
+    app.innerHTML = `
+        <div class="team-card team-loading-card">
+            <div class="team-content">
+                <p class="team-bio team-loading-copy">Loading...</p>
+            </div>
+        </div>
+    `;
 
     try {
         const response = await fetch('assets/team/team-manifest.json');

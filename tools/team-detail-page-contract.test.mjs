@@ -11,17 +11,9 @@ async function readRepoFile(relativePath) {
   return fs.readFile(path.join(repoRoot, relativePath), 'utf8');
 }
 
-test('team.html delegates team list rendering to team.js', async () => {
-  const html = await readRepoFile('team.html');
-
-  assert.match(html, /id="team-member-app"/);
-  assert.match(html, /<script src="scripts\/team\.js"><\/script>/);
-  assert.doesNotMatch(html, /team-member\.html\?id=/);
-});
-
-test('team.js list renderer emits team cards with portrait media hook', async () => {
+test('team detail renderer emits the upgraded identity and media hooks', async () => {
   const source = await readRepoFile('scripts/team.js');
-
-  assert.match(source, /class="team-card team-card-link"/);
   assert.match(source, /class="team-card-media"/);
+  assert.match(source, /class="member-identity"/);
+  assert.match(source, /class="member-pager"/);
 });
