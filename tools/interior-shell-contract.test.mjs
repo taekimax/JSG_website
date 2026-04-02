@@ -27,3 +27,12 @@ test('interior pages opt into the shared cinematic shell', async () => {
     assert.match(html, /class="bottom-nav section-pager"/);
   }
 });
+
+test('page-level CSS does not override shared interior shell backgrounds', async () => {
+  const css = await readRepoFile('styles/main.css');
+
+  assert.doesNotMatch(
+    css,
+    /\.[a-z0-9-]+-page\s+\.site-main(?:--interior)?\s*\{[^}]*background(?:-image|-color)?\s*:/is
+  );
+});

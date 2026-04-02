@@ -490,10 +490,6 @@
 }
 
 /* Philosophy Page */
-.philosophy-page .site-main {
-    background: linear-gradient(165deg, #1f2937 0%, #162032 48%, #0f172a 100%);
-}
-
 .phil-hero {
     margin-top: 16px;
     margin-bottom: 32px;

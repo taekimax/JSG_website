@@ -115,7 +115,7 @@
     box-shadow: 0 12px 36px -20px rgba(0, 0, 0, 0.72);
 }
 
-.nav-btn {
+.section-pager .nav-btn {
     color: var(--text-strong);
     background-color: var(--surface-main);
     padding: 6px 18px;
@@ -129,13 +129,13 @@
     white-space: nowrap;
 }
 
-.nav-arrow {
+.section-pager .nav-arrow {
     color: var(--text-inverse);
     font-size: 18px;
     padding: 8px;
 }
 
-.nav-arrow.disabled {
+.section-pager .nav-arrow.disabled {
     color: var(--action-disabled);
     pointer-events: none;
 }
