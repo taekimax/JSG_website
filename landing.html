@@ -11,20 +11,36 @@
 </head>
 
 <body>
-    <div id="app">
-        <div id="canvasWrap">
+    <div id="app" data-variant="aurora">
+        <div id="canvasWrap" aria-hidden="true">
             <canvas id="c"></canvas>
             <div id="veil"></div>
         </div>
 
-        <main class="landing-stage">
-            <section class="hero-panel hero-panel--accent">
-                <p class="hero-kicker">Loading...</p>
-                <p class="hero-lead">Loading...</p>
-                <p class="hero-sub">Loading...</p>
-                <button id="enterBtn" type="button">
-                    Loading...
-                    <small>Loading...</small>
+        <main class="landing-stage" data-variant="aurora">
+            <div class="landing-variant-switcher" aria-label="Landing comparison">
+                <span class="landing-compare-label">[landing]</span>
+                <button type="button" class="landing-variant-btn is-active" data-landing-variant="aurora" aria-pressed="true">A</button>
+                <button type="button" class="landing-variant-btn" data-landing-variant="mirror" aria-pressed="false">B</button>
+                <button type="button" class="landing-variant-btn" data-landing-variant="lattice" aria-pressed="false">C</button>
+            </div>
+
+            <section class="landing-hero" aria-labelledby="landing-wordmark">
+                <p class="hero-kicker">JSG Investment</p>
+
+                <div class="hero-wordmark-stack">
+                    <span class="hero-wordmark-ghost" aria-hidden="true">JSG</span>
+                    <h1 class="hero-wordmark" id="landing-wordmark">JSG</h1>
+                </div>
+
+                <div class="hero-copy">
+                    <p class="hero-statement">JSG는 이성적이고 투명한 판단으로, 건강하고 지속 가능한 성장을 이끄는 과감한 혁신가에게 투자합니다. JSG 인베스트먼트는 서울 소재 금융위원회 등록 신기술금융사입니다.</p>
+                    <p class="hero-statement">At JSG, we back bold innovators to foster healthy, sustainable growth with disciplined reasoning and radical transparency. We are a Seoul-based venture capital firm registered with Korea's Financial Services Commission as a New-Technology Finance Company.</p>
+                </div>
+
+                <button id="enterBtn" type="button" aria-label="Enter JSG site">
+                    <span class="enter-btn-label">들어가기</span>
+                    <span class="enter-btn-label">Enter</span>
                 </button>
             </section>
         </main>

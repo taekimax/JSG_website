@@ -4,14 +4,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     const hero = document.querySelector('.page-hero');
     const heroSurfaceEl = hero?.querySelector('.page-hero-surface');
     const heroImgEl = hero?.querySelector('.page-hero-media img');
-    const mapLinkEl = document.getElementById('contact-map-link');
+    const mapImageEl = document.getElementById('contact-map-image');
+    const mapCaptionEl = document.getElementById('contact-map-caption');
     const textTargets = {
         heroKicker: document.getElementById('contact-hero-kicker'),
         heroLead: document.getElementById('contact-hero-lead'),
         locationTitle: document.getElementById('contact-location-title'),
         locationAddress: document.getElementById('contact-location-address'),
         locationSubtext: document.getElementById('contact-location-subtext'),
-        mapLabel: mapLinkEl,
+        mapCaption: document.getElementById('contact-map-caption'),
         contactTitle: document.getElementById('contact-title'),
         phoneLabel: document.getElementById('contact-phone-label'),
         phoneValue: document.getElementById('contact-phone-value'),
@@ -40,12 +41,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             window.JsgAssets.setText(textTargets[key], text);
         });
 
-        const mapUrl = String(manifest.mapUrl || '').trim();
-        if (mapLinkEl && mapUrl) {
-            mapLinkEl.href = mapUrl;
-            mapLinkEl.target = '_blank';
-            mapLinkEl.rel = 'noreferrer noopener';
-            mapLinkEl.removeAttribute('aria-disabled');
+        if (mapImageEl && manifest.mapImage) {
+            mapImageEl.src = window.JsgAssets.versionedUrl(manifest.mapImage, assetVersion);
+        }
+
+        const mapLabel = await window.JsgAssets.fetchText(window.JsgAssets.versionedUrl(texts.mapLabel, assetVersion));
+        if (mapImageEl && mapLabel.trim()) {
+            mapImageEl.alt = mapLabel.trim();
+        }
+
+        if (mapCaptionEl && !mapCaptionEl.textContent.trim() && textTargets.mapCaption) {
+            mapCaptionEl.textContent = textTargets.mapCaption.textContent;
         }
     } catch (error) {
         console.error('Failed to load contact copy:', error);

@@ -1,9 +1,11 @@
 {
   "schemaVersion": 1,
   "page": "contact",
-  "assetVersion": "2026-04-02",
+  "assetVersion": "2026-04-03",
   "heroImage": "assets/contact/contact-hero.jpg",
-  "mapUrl": "https://www.google.com/maps/search/?api=1&query=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EA%B0%95%EB%82%A8%EA%B5%AC%20%ED%85%8C%ED%97%A4%EB%9E%80%EB%A1%9C%2014%EA%B8%B8%206",
+  "mapUrl": "https://www.google.com/maps/search/?api=1&query=%EC%84%9C%EC%9A%B8%20%EA%B0%95%EB%82%A8%EA%B5%AC%20%EB%8C%80%EC%B9%98%EB%8F%99%20%EC%82%BC%ED%9D%A52%EB%B9%8C%EB%94%A9%208%EC%B8%B5",
+  "mapImage": "assets/contact/contact-map-placeholder.svg",
+  "mapCaption": "assets/contact/map-caption.txt",
   "texts": {
     "heroKicker": "assets/contact/hero-kicker.txt",
     "heroLead": "assets/contact/hero-lead.txt",
@@ -11,6 +13,7 @@
     "locationAddress": "assets/contact/location-address.txt",
     "locationSubtext": "assets/contact/location-subtext.txt",
     "mapLabel": "assets/contact/map-label.txt",
+    "mapCaption": "assets/contact/map-caption.txt",
     "contactTitle": "assets/contact/contact-title.txt",
     "phoneLabel": "assets/contact/phone-label.txt",
     "phoneValue": "assets/contact/phone-value.txt",

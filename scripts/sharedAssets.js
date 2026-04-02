@@ -16,11 +16,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (src === logoPath || src.startsWith(`${logoPath}?`)) img.src = versionedLogo;
         });
 
-        document.querySelectorAll(`[style*="${logoPath}"]`).forEach(element => {
+        document.querySelectorAll('[data-shared-hero="logo"]').forEach(element => {
             element.style.setProperty('--hero-image', `url('${versionedLogo}')`);
         });
     } catch (error) {
         console.error('Failed to load shared assets manifest:', error);
     }
 });
-

@@ -1,22 +1,34 @@
 document.addEventListener('DOMContentLoaded', async () => {
     if (!window.JsgAssets) return;
 
-    const stageEl = document.querySelector('.landing-stage');
-    if (!stageEl) return;
+    const stage = document.querySelector('.landing-stage');
+    if (!stage) return;
 
-    const kickerEl = stageEl.querySelector('.hero-kicker');
-    if (!kickerEl) return;
-
-    const leadEl = stageEl.querySelector('.hero-lead');
-    const subEl = stageEl.querySelector('.hero-sub');
+    const kickerEl = stage.querySelector('.hero-kicker');
+    const statementEls = stage.querySelectorAll('.hero-statement');
+    const variantButtons = stage.querySelectorAll('[data-landing-variant]');
     const enterBtn = document.getElementById('enterBtn');
+
+    if (!kickerEl || statementEls.length < 2 || !enterBtn) return;
+
+    const syncVariantButtons = () => {
+        const activeVariant = stage.dataset.variant || 'aurora';
+        variantButtons.forEach((button) => {
+            const isActive = button.dataset.landingVariant === activeVariant;
+            button.classList.toggle('is-active', isActive);
+            button.setAttribute('aria-pressed', String(isActive));
+        });
+    };
+
+    syncVariantButtons();
+    stage.addEventListener('landingvariantchange', syncVariantButtons);
 
     try {
         const manifest = await window.JsgAssets.fetchJson('assets/landing/landing-manifest.json');
         const assetVersion = manifest.assetVersion;
         const texts = manifest.texts || {};
 
-        const [kicker, lead, sub, ctaLabel, ctaSub] = await Promise.all([
+        const [kicker, leadKo, leadEn, ctaLabel, ctaSub] = await Promise.all([
             window.JsgAssets.fetchText(window.JsgAssets.versionedUrl(texts.heroKicker, assetVersion)),
             window.JsgAssets.fetchText(window.JsgAssets.versionedUrl(texts.heroLead, assetVersion)),
             window.JsgAssets.fetchText(window.JsgAssets.versionedUrl(texts.heroSub, assetVersion)),
@@ -25,17 +37,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         ]);
 
         window.JsgAssets.setText(kickerEl, kicker.trim());
-        window.JsgAssets.setText(leadEl, lead.trim());
-        window.JsgAssets.setText(subEl, sub.trim());
+        window.JsgAssets.setText(statementEls[0], leadKo.trim());
+        window.JsgAssets.setText(statementEls[1], leadEn.trim());
 
-        if (enterBtn) {
-            enterBtn.textContent = '';
-            enterBtn.appendChild(document.createTextNode(`${ctaLabel.trim()}\n`));
-
-            const small = document.createElement('small');
-            small.textContent = ctaSub.trim();
-            enterBtn.appendChild(small);
-        }
+        enterBtn.textContent = '';
+        [ctaLabel, ctaSub].forEach((label) => {
+            const span = document.createElement('span');
+            span.className = 'enter-btn-label';
+            span.textContent = label.trim();
+            enterBtn.appendChild(span);
+        });
     } catch (error) {
         console.error('Failed to load landing copy:', error);
     }

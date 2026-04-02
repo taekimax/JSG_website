@@ -7,6 +7,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     const hero = document.querySelector('.page-hero');
     const heroSurfaceEl = hero?.querySelector('.page-hero-surface');
     const heroImgEl = hero?.querySelector('.page-hero-media img');
+    const currentId = new URLSearchParams(window.location.search).get('id');
+
+    const escapeHtml = (value) => String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+
+    const buildParagraphs = (text) => window.JsgAssets.splitParagraphs(text || '')
+        .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
+        .join('');
 
     app.innerHTML = '<div class="portfolio-card"><div class="portfolio-content"><p class="company-desc" style="margin:0; color: var(--text-muted);">Loading...</p></div><div class="portfolio-card-media"><div class="portfolio-img-placeholder" aria-hidden="true"></div></div></div>';
 
@@ -19,15 +31,46 @@ document.addEventListener('DOMContentLoaded', async () => {
         const companies = Array.isArray(manifest.companies) ? manifest.companies.slice() : [];
         companies.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
-        const descriptions = await Promise.all(companies.map(company =>
-            window.JsgAssets.fetchText(window.JsgAssets.versionedUrl(company.descriptionText, assetVersion))
-        ));
+        const descriptions = Object.fromEntries(await Promise.all(companies.map(async (company) => {
+            const description = await window.JsgAssets.fetchText(window.JsgAssets.versionedUrl(company.descriptionText, assetVersion));
+            return [company.id, description];
+        })));
 
         app.innerHTML = '';
 
-        companies.forEach((company, index) => {
-            const card = document.createElement('div');
-            card.className = 'portfolio-card';
+        if (currentId) {
+            const company = companies.find((entry) => entry.id === currentId);
+            if (!company) {
+                app.innerHTML = `
+                    <div class="about-card">
+                        <p style="margin: 0; color: var(--text-muted);">선택한 포트폴리오를 찾을 수 없습니다.</p>
+                        <p style="margin: 12px 0 0;"><a href="portfolio.html" class="portfolio-detail-back">Back to Portfolio</a></p>
+                    </div>
+                `;
+                return;
+            }
+
+            const detail = document.createElement('div');
+            detail.className = 'portfolio-detail';
+            detail.innerHTML = `
+                <div class="portfolio-detail-media">
+                    <img class="portfolio-img" loading="lazy" decoding="async" src="${escapeHtml(window.JsgAssets.versionedUrl(company.logo, assetVersion))}" alt="${escapeHtml(company.name || '')}">
+                </div>
+                <div class="portfolio-detail-copy">
+                    <span class="company-sector">${escapeHtml(company.sector || '')}</span>
+                    <h1 class="portfolio-detail-name">${escapeHtml(company.name || '')}</h1>
+                    <div class="portfolio-detail-body">${buildParagraphs(descriptions[company.id] || '')}</div>
+                    <a href="portfolio.html" class="portfolio-detail-back">Back to Portfolio</a>
+                </div>
+            `;
+            app.appendChild(detail);
+            return;
+        }
+
+        companies.forEach((company) => {
+            const link = document.createElement('a');
+            link.className = 'portfolio-card portfolio-card--link';
+            link.href = `portfolio.html?id=${encodeURIComponent(company.id)}`;
 
             const content = document.createElement('div');
             content.className = 'portfolio-content';
@@ -45,38 +88,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             header.appendChild(nameEl);
             header.appendChild(sectorEl);
-
             content.appendChild(header);
 
-            const paragraphs = window.JsgAssets.splitParagraphs(descriptions[index] || '');
-            if (paragraphs.length === 0) {
-                const p = document.createElement('p');
-                p.className = 'company-desc';
-                p.textContent = '';
-                content.appendChild(p);
-            } else {
-                paragraphs.forEach(paragraph => {
-                    const p = document.createElement('p');
-                    p.className = 'company-desc';
-                    p.textContent = paragraph;
-                    content.appendChild(p);
-                });
-            }
-
-            const img = document.createElement('img');
-            img.className = 'portfolio-img';
-            img.alt = company.name || '';
-            img.loading = 'lazy';
-            img.decoding = 'async';
-            img.src = window.JsgAssets.versionedUrl(company.logo, assetVersion);
+            const paragraph = document.createElement('p');
+            paragraph.className = 'company-desc';
+            paragraph.textContent = window.JsgAssets.splitParagraphs(descriptions[company.id] || '').join(' ');
+            content.appendChild(paragraph);
 
             const media = document.createElement('div');
             media.className = 'portfolio-card-media';
-            media.appendChild(img);
-
-            card.append(content, media);
-
-            app.appendChild(card);
+            media.innerHTML = `<img class="portfolio-img" loading="lazy" decoding="async" src="${escapeHtml(window.JsgAssets.versionedUrl(company.logo, assetVersion))}" alt="${escapeHtml(company.name || '')}">`;
+            link.append(content, media);
+            app.appendChild(link);
         });
     } catch (error) {
         console.error('Failed to render portfolio:', error);

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const kickerEl = hero?.querySelector('.page-hero-kicker');
     if (!kickerEl) return;
 
-    const heroLeadEl = hero.querySelector('.page-hero-sub');
+    const heroLeadEls = hero.querySelectorAll('.page-hero-sub');
     const heroSurfaceEl = hero.querySelector('.page-hero-surface');
     const heroImgEl = hero.querySelector('.page-hero-media img');
     const cards = document.querySelectorAll('.philosophy-card');
@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const [
             heroKicker,
             heroLead,
+            heroLeadEn,
             respectTitle,
             respectDescEn,
             respectDescKo,
@@ -32,6 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         ] = await Promise.all([
             window.JsgAssets.fetchText(window.JsgAssets.versionedUrl(texts.heroKicker, assetVersion)),
             window.JsgAssets.fetchText(window.JsgAssets.versionedUrl(texts.heroLead, assetVersion)),
+            window.JsgAssets.fetchText(window.JsgAssets.versionedUrl(texts.heroLeadEn, assetVersion)),
             window.JsgAssets.fetchText(window.JsgAssets.versionedUrl(texts.respectTitle, assetVersion)),
             window.JsgAssets.fetchText(window.JsgAssets.versionedUrl(texts.respectDescEn, assetVersion)),
             window.JsgAssets.fetchText(window.JsgAssets.versionedUrl(texts.respectDescKo, assetVersion)),
@@ -44,7 +46,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         ]);
 
         window.JsgAssets.setText(kickerEl, heroKicker.trim());
-        window.JsgAssets.setText(heroLeadEl, heroLead.trim());
+        if (heroLeadEls[0]) window.JsgAssets.setText(heroLeadEls[0], heroLead.trim());
+        if (heroLeadEls[1]) window.JsgAssets.setText(heroLeadEls[1], heroLeadEn.trim());
 
         const setCard = (card, title, en, ko) => {
             if (!card) return;

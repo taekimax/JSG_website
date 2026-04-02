@@ -36,3 +36,11 @@ test('page-level CSS does not override shared interior shell backgrounds', async
     /\.[a-z0-9-]+-page\s+\.site-main(?:--interior)?\s*\{[^}]*background(?:-image|-color)?\s*:/is
   );
 });
+
+test('desktop layout does not keep the floating pager over interior content', async () => {
+  const css = await readRepoFile('styles/layout.css');
+  assert.match(
+    css,
+    /@media\s*\(min-width:\s*1024px\)[\s\S]*?\.bottom-nav\s*\{[\s\S]*?display:\s*none/is
+  );
+});

@@ -212,6 +212,10 @@
         padding: 0 40px;
     }
 
+    .site-main {
+        padding-bottom: 72px;
+    }
+
     .content-shell {
         padding: 20px 64px 32px;
     }
@@ -221,8 +225,7 @@
         /* Show on desktop */
     }
 
-    /* On desktop, bottom nav might still be used as per design spec, 
-       but typically we might hide it if top nav is sufficient.
-       However, Design Spec 4.1 says "Common use Mobile/Desktop".
-       So we keep it. */
+    .bottom-nav {
+        display: none;
+    }
 }

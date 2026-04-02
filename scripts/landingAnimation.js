@@ -1,152 +1,311 @@
 (() => {
-    const canvas = document.getElementById("c");
-    const ctx = canvas.getContext("2d", { alpha: true });
-    const enterBtn = document.getElementById("enterBtn");
+    const stage = document.querySelector('.landing-stage');
+    const app = document.getElementById('app');
+    const canvas = document.getElementById('c');
+    const wordmark = document.querySelector('.hero-wordmark');
+    const enterBtn = document.getElementById('enterBtn');
+    const variantButtons = Array.from(document.querySelectorAll('[data-landing-variant]'));
+
+    if (!stage || !canvas || !wordmark || !enterBtn) return;
+
+    const ctx = canvas.getContext('2d', { alpha: false });
+    if (!ctx) return;
 
     const DPR_CAP = 1.5;
+    const TAU = Math.PI * 2;
+    const PARTICLE_COUNT = 240;
+    const STAR_COUNT = 160;
+    const CONNECTION_STEP = 13;
+    const VARIANTS = {
+        aurora: {
+            fillA: '#020712',
+            fillB: '#081325',
+            nebula: 'rgba(90, 144, 255, 0.22)',
+            glow: 'rgba(255, 219, 154, 0.22)',
+            particle: '#f4d6a4',
+            particleB: '#8bb8ff',
+            line: 'rgba(129, 171, 255, 0.2)'
+        },
+        mirror: {
+            fillA: '#02060f',
+            fillB: '#0a1322',
+            nebula: 'rgba(246, 210, 144, 0.18)',
+            glow: 'rgba(245, 195, 101, 0.25)',
+            particle: '#f7d18e',
+            particleB: '#d6ecff',
+            line: 'rgba(247, 209, 142, 0.18)'
+        },
+        lattice: {
+            fillA: '#02060f',
+            fillB: '#07111f',
+            nebula: 'rgba(87, 174, 225, 0.16)',
+            glow: 'rgba(117, 207, 255, 0.18)',
+            particle: '#b4e8ff',
+            particleB: '#88a7ff',
+            line: 'rgba(141, 214, 255, 0.18)'
+        }
+    };
+
     let dpr = 1;
-    let W = 0, H = 0;
-    let fontSize = 180;
-    let shards = [];
+    let width = 0;
+    let height = 0;
+    let centerX = 0;
+    let centerY = 0;
+    let revealStart = performance.now();
+    let running = true;
+    let stars = [];
+    let particles = [];
 
-    const off = document.createElement("canvas");
-    const offCtx = off.getContext("2d", { willReadFrequently: true });
+    function clamp(value, min, max) {
+        return Math.max(min, Math.min(max, value));
+    }
 
-    const C_MIDNIGHT = "#2f58be";
-    const C_DEEP = "#0a1639";
-    const C_ICE = "#eef3ff";
+    function easeOutCubic(value) {
+        return 1 - Math.pow(1 - value, 3);
+    }
+
+    function currentVariant() {
+        return stage.dataset.variant || 'aurora';
+    }
 
     function hexToRgb(hex) {
-        const h = hex.replace("#", "");
-        let r = 0, g = 0, b = 0;
-        if (h.length === 3) {
-            r = parseInt(h[0] + h[0], 16);
-            g = parseInt(h[1] + h[1], 16);
-            b = parseInt(h[2] + h[2], 16);
-        } else {
-            r = parseInt(h.slice(0, 2), 16);
-            g = parseInt(h.slice(2, 4), 16);
-            b = parseInt(h.slice(4, 6), 16);
-        }
-        return { r, g, b };
+        const clean = String(hex).replace('#', '');
+        return {
+            r: parseInt(clean.slice(0, 2), 16),
+            g: parseInt(clean.slice(2, 4), 16),
+            b: parseInt(clean.slice(4, 6), 16)
+        };
     }
 
-    function lerp(a, b, t) {
-        return a + (b - a) * t;
+    function mixColor(a, b, t, alpha) {
+        const colorA = hexToRgb(a);
+        const colorB = hexToRgb(b);
+        const r = Math.round(colorA.r + (colorB.r - colorA.r) * t);
+        const g = Math.round(colorA.g + (colorB.g - colorA.g) * t);
+        const bValue = Math.round(colorA.b + (colorB.b - colorA.b) * t);
+        return `rgba(${r}, ${g}, ${bValue}, ${alpha})`;
     }
 
-    function rgbastr(r, g, b, a) {
-        return `rgba(${Math.round(r)},${Math.round(g)},${Math.round(b)},${a})`;
+    function createStars() {
+        stars = Array.from({ length: STAR_COUNT }, () => ({
+            x: Math.random(),
+            y: Math.random(),
+            depth: Math.random(),
+            size: 0.6 + Math.random() * 1.8,
+            twinkle: Math.random() * TAU,
+            drift: (Math.random() - 0.5) * 0.0018
+        }));
     }
 
-    const RGB_MIDNIGHT = hexToRgb(C_MIDNIGHT);
-    const RGB_DEEP = hexToRgb(C_DEEP);
-    const RGB_ICE = hexToRgb(C_ICE);
+    function createParticle(index) {
+        const band = index % 3;
+        const lane = Math.floor(index / 3);
+
+        return {
+            band,
+            lane,
+            seed: Math.random(),
+            theta: Math.random() * TAU,
+            spin: 0.14 + Math.random() * 0.32,
+            radius: 90 + Math.random() * 280,
+            depth: -320 + Math.random() * 640,
+            size: 1.4 + Math.random() * 3.4,
+            startX: (Math.random() - 0.5) * width * 1.6,
+            startY: (Math.random() - 0.5) * height * 1.3,
+            startZ: 360 + Math.random() * 820,
+            pulse: Math.random() * TAU
+        };
+    }
+
+    function reseedParticles() {
+        particles = Array.from({ length: PARTICLE_COUNT }, (_, index) => createParticle(index));
+        revealStart = performance.now();
+        stage.classList.remove('is-revealed');
+        requestAnimationFrame(() => stage.classList.add('is-revealed'));
+    }
+
+    function refreshMetrics() {
+        const rect = wordmark.getBoundingClientRect();
+        centerX = rect.left + rect.width / 2;
+        centerY = rect.top + rect.height / 2;
+    }
 
     function resize() {
         dpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
-        W = Math.max(1, Math.floor(window.innerWidth));
-        H = Math.max(1, Math.floor(window.innerHeight));
-        canvas.width = Math.floor(W * dpr);
-        canvas.height = Math.floor(H * dpr);
-        canvas.style.width = W + "px";
-        canvas.style.height = H + "px";
+        width = Math.max(1, Math.floor(window.innerWidth));
+        height = Math.max(1, Math.floor(window.innerHeight));
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        fontSize = Math.min(W * 0.32, 240);
-        generateShards();
+        refreshMetrics();
+        createStars();
+        reseedParticles();
     }
 
-    function generateShards() {
-        off.width = W;
-        off.height = H;
-        offCtx.clearRect(0, 0, W, H);
+    function getVariantTarget(particle, timeSeconds, variantName) {
+        const orbitTime = timeSeconds * (particle.spin + particle.seed * 0.16);
 
-        const cx = W / 2;
-        const cy = H / 2;
-        offCtx.font = `900 ${Math.floor(fontSize)}px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial`;
-        offCtx.textAlign = "center";
-        offCtx.textBaseline = "middle";
-        offCtx.fillStyle = C_MIDNIGHT;
-        offCtx.fillText("JSG", cx, cy);
-        offCtx.lineWidth = fontSize * 0.12;
-        offCtx.strokeStyle = C_MIDNIGHT;
-        offCtx.strokeText("JSG", cx, cy);
+        if (variantName === 'mirror') {
+            const column = (particle.lane % 9) - 4;
+            const row = Math.floor(particle.lane / 9) - 4;
+            const spacing = 48;
+            const wave = Math.sin(orbitTime * 1.4 + particle.seed * TAU) * 16;
+            return {
+                x: column * spacing + (row % 2 === 0 ? 0 : spacing * 0.5),
+                y: row * spacing * 0.88 - 28 + wave * 0.42,
+                z: Math.cos(orbitTime + column * 0.34) * 140 + particle.band * 56
+            };
+        }
 
-        const img = offCtx.getImageData(0, 0, W, H).data;
-        const step = Math.max(10, Math.floor(Math.min(W, H) / 55));
+        if (variantName === 'lattice') {
+            const laneFactor = (particle.lane % 20) / 19;
+            const layer = Math.floor(particle.lane / 20) - 3;
+            return {
+                x: (laneFactor - 0.5) * 520 + Math.sin(orbitTime * 1.7 + particle.seed * 8) * 16,
+                y: layer * 56 + Math.cos(orbitTime * 1.15 + laneFactor * TAU) * 24 - 14,
+                z: Math.sin(orbitTime * 1.3 + layer) * 180 + Math.cos(laneFactor * TAU) * 90
+            };
+        }
 
-        shards = [];
-        for (let y = 0; y < H; y += step) {
-            for (let x = 0; x < W; x += step) {
-                const idx = (y * W + x) * 4;
-                const a = img[idx + 3];
-                if (a > 100) {
-                    shards.push({
-                        x,
-                        y,
-                        size: 8 + Math.random() * 10,
-                        rotation: Math.random() * Math.PI * 2,
-                        seed: Math.random()
-                    });
-                }
+        return {
+            x: Math.cos(particle.theta + orbitTime) * (particle.radius + Math.sin(orbitTime * 0.6) * 24),
+            y: Math.sin(particle.theta * 1.25 + orbitTime * 1.2) * 102 + Math.cos(orbitTime * 0.72 + particle.seed * TAU) * 34 - 16,
+            z: Math.cos(particle.theta + orbitTime * 0.8) * 220 + particle.band * 38
+        };
+    }
+
+    function projectPoint(point) {
+        const focalLength = Math.min(width, height) * 0.9;
+        const depthOffset = 760;
+        const scale = focalLength / (focalLength + point.z + depthOffset);
+        return {
+            x: centerX + point.x * scale,
+            y: centerY + point.y * scale,
+            scale
+        };
+    }
+
+    function paintBackdrop(config) {
+        const gradient = ctx.createLinearGradient(0, 0, 0, height);
+        gradient.addColorStop(0, config.fillA);
+        gradient.addColorStop(1, config.fillB);
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, width, height);
+
+        const nebula = ctx.createRadialGradient(centerX, centerY - height * 0.18, 0, centerX, centerY - height * 0.12, Math.max(width, height) * 0.75);
+        nebula.addColorStop(0, config.nebula);
+        nebula.addColorStop(0.58, 'rgba(18, 28, 48, 0.08)');
+        nebula.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = nebula;
+        ctx.fillRect(0, 0, width, height);
+    }
+
+    function drawStars(timeSeconds) {
+        for (const star of stars) {
+            const x = (star.x * width + timeSeconds * width * star.drift + width) % width;
+            const y = star.y * height;
+            const alpha = 0.24 + (0.5 + 0.5 * Math.sin(timeSeconds * 1.8 + star.twinkle)) * 0.45;
+            const radius = star.size * (0.8 + star.depth * 0.9);
+
+            ctx.fillStyle = `rgba(229, 239, 255, ${alpha})`;
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, TAU);
+            ctx.fill();
+
+            if (radius > 1.4) {
+                ctx.strokeStyle = `rgba(255, 240, 208, ${alpha * 0.35})`;
+                ctx.lineWidth = 0.5;
+                ctx.beginPath();
+                ctx.moveTo(x - radius * 3.4, y);
+                ctx.lineTo(x + radius * 3.4, y);
+                ctx.moveTo(x, y - radius * 3.4);
+                ctx.lineTo(x, y + radius * 3.4);
+                ctx.stroke();
             }
         }
     }
 
-    function drawShard(x, y, size, rotation, rotX, rotY, r, g, b, alpha) {
-        ctx.save();
-        ctx.translate(x, y);
-        ctx.rotate(rotation);
-        ctx.scale(0.6 + 0.4 * Math.cos(rotX), 0.6 + 0.4 * Math.cos(rotY));
-        ctx.fillStyle = rgbastr(r, g, b, alpha);
-        ctx.beginPath();
-        ctx.moveTo(0, -size);
-        ctx.lineTo(size * 0.6, 0);
-        ctx.lineTo(0, size * 0.8);
-        ctx.lineTo(-size * 0.6, 0);
-        ctx.closePath();
-        ctx.fill();
-        ctx.restore();
-    }
+    function drawParticles(timeSeconds) {
+        const variantName = currentVariant();
+        const config = VARIANTS[variantName] || VARIANTS.aurora;
+        const revealProgress = easeOutCubic(clamp((performance.now() - revealStart) / 1800, 0, 1));
+        const projected = [];
 
-    let running = true;
+        const halo = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, Math.min(width, height) * 0.22);
+        halo.addColorStop(0, config.glow);
+        halo.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        ctx.fillStyle = halo;
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, Math.min(width, height) * 0.22, 0, TAU);
+        ctx.fill();
+
+        particles.forEach((particle, index) => {
+            const target = getVariantTarget(particle, timeSeconds, variantName);
+            const x = particle.startX + (target.x - particle.startX) * revealProgress;
+            const y = particle.startY + (target.y - particle.startY) * revealProgress;
+            const z = particle.startZ + (target.z - particle.startZ) * revealProgress;
+            const point = projectPoint({ x, y, z });
+            const twinkle = 0.45 + 0.55 * (0.5 + 0.5 * Math.sin(timeSeconds * 2.2 + particle.pulse));
+            const size = particle.size * point.scale * (0.92 + twinkle * 0.6);
+
+            projected.push({ ...point, index, size });
+
+            ctx.fillStyle = mixColor(config.particle, config.particleB, twinkle * 0.65, 0.42 + point.scale * 0.56);
+            ctx.beginPath();
+            ctx.arc(point.x, point.y, Math.max(0.8, size), 0, TAU);
+            ctx.fill();
+        });
+
+        ctx.lineWidth = 1;
+        for (let index = 0; index < projected.length; index += 1) {
+            const start = projected[index];
+            const end = projected[(index + CONNECTION_STEP) % projected.length];
+            const dx = end.x - start.x;
+            const dy = end.y - start.y;
+            const distance = Math.hypot(dx, dy);
+            if (distance > Math.min(width, height) * 0.28) continue;
+
+            ctx.strokeStyle = config.line;
+            ctx.beginPath();
+            ctx.moveTo(start.x, start.y);
+            ctx.lineTo(end.x, end.y);
+            ctx.stroke();
+        }
+    }
 
     function loop(now) {
         if (!running) return;
-        const t = now * 0.001;
-        const cx = W / 2;
-        const cy = H / 2;
 
-        ctx.clearRect(0, 0, W, H);
+        refreshMetrics();
 
-        ctx.save();
-        ctx.font = `900 ${Math.floor(fontSize)}px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial`;
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.shadowColor = "rgba(90, 131, 255, 0.5)";
-        ctx.shadowBlur = 30;
-        const grad = ctx.createLinearGradient(cx - fontSize, cy - fontSize, cx + fontSize, cy + fontSize);
-        grad.addColorStop(0, "rgba(236, 243, 255, 0.98)");
-        grad.addColorStop(0.5, "rgba(118, 156, 255, 1)");
-        grad.addColorStop(1, "rgba(52, 89, 201, 0.96)");
-        ctx.fillStyle = grad;
-        ctx.fillText("JSG", cx, cy);
-        ctx.restore();
-
-        for (const p of shards) {
-            const spin = t * (0.7 + p.seed * 1.0);
-            const shimmer = 0.2 + 0.55 * (0.5 + 0.5 * Math.sin(t * 1.02 + p.seed * Math.PI * 2));
-            const deepMix = 0.45 + 0.3 * (0.5 + 0.5 * Math.cos(t * 0.7 + p.seed * Math.PI * 2));
-            const baseR = lerp(RGB_DEEP.r, RGB_MIDNIGHT.r, deepMix);
-            const baseG = lerp(RGB_DEEP.g, RGB_MIDNIGHT.g, deepMix);
-            const baseB = lerp(RGB_DEEP.b, RGB_MIDNIGHT.b, deepMix);
-            const r = lerp(baseR, RGB_ICE.r, shimmer);
-            const g = lerp(baseG, RGB_ICE.g, shimmer);
-            const b = lerp(baseB, RGB_ICE.b, shimmer);
-            drawShard(p.x, p.y, p.size, p.rotation + spin, spin * 1.1, spin * 0.9, r, g, b, 0.9);
-        }
+        const timeSeconds = now * 0.001;
+        paintBackdrop(VARIANTS[currentVariant()] || VARIANTS.aurora);
+        drawStars(timeSeconds);
+        drawParticles(timeSeconds);
 
         requestAnimationFrame(loop);
+    }
+
+    function syncButtons(nextVariant) {
+        variantButtons.forEach((button) => {
+            const isActive = button.dataset.landingVariant === nextVariant;
+            button.classList.toggle('is-active', isActive);
+            button.setAttribute('aria-pressed', String(isActive));
+        });
+    }
+
+    function setVariant(nextVariant) {
+        if (!Object.hasOwn(VARIANTS, nextVariant)) return;
+        stage.dataset.variant = nextVariant;
+        if (app) app.dataset.variant = nextVariant;
+        syncButtons(nextVariant);
+        reseedParticles();
+        stage.dispatchEvent(new CustomEvent('landingvariantchange', {
+            bubbles: true,
+            detail: { variant: nextVariant }
+        }));
     }
 
     function navigateToAbout() {
@@ -154,15 +313,20 @@
         window.location.href = "about.html";
     }
 
-    resize();
-    requestAnimationFrame(loop);
-
-    if (enterBtn) {
-        enterBtn.addEventListener("click", navigateToAbout, { passive: true });
-    }
-    window.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") navigateToAbout();
-        if (e.key === "Escape") window.location.replace("about.html");
+    variantButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            setVariant(button.dataset.landingVariant || 'aurora');
+        });
     });
 
+    enterBtn.addEventListener('click', navigateToAbout, { passive: true });
+    window.addEventListener('resize', resize, { passive: true });
+    window.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') navigateToAbout();
+    });
+
+    stage.classList.add('is-revealed');
+    resize();
+    syncButtons(currentVariant());
+    requestAnimationFrame(loop);
 })();

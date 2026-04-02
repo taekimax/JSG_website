@@ -45,13 +45,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         return `${member.nameKo}${title ? ` ${title}` : ''}`;
     };
 
-    const summarizeHighlights = (member) => {
-        const highlights = Array.isArray(member?.highlights) ? member.highlights : [];
-        return highlights.map(item => String(item).trim()).filter(Boolean).join(', ');
+    const fallbackRoleEn = (member) => {
+        const role = String(member?.roleKo || '').trim();
+
+        if (role.includes('대표이사') && role.includes('회장')) return 'Chief Executive Officer / Chairman';
+        if (role.includes('부사장') && role.includes('심사역')) return 'Vice President / Investment Director';
+        if (role.includes('팀장') && role.includes('심사역')) return 'Team Lead / Investment Manager';
+        if (role.includes('자문위원')) return 'Advisor';
+        if (role.includes('교수')) return 'Professor';
+        if (role.includes('CEO')) return 'Chief Executive Officer';
+        if (role.includes('사외이사')) return 'Outside Director';
+        if (role.includes('과장')) return 'Department Head';
+        return role;
     };
 
+    const getRoleEn = (member) => String(member?.roleEn || fallbackRoleEn(member) || '').trim();
+    const getSummaryEn = (member) => String(member?.summaryEn || getRoleEn(member) || '').trim();
+
     const renderMemberCard = (member) => {
-        const bio = summarizeHighlights(member);
         const profileLabel = member.nameEn
             ? `${member.nameEn} profile`
             : `${member.nameKo} 프로필 보기`;
@@ -60,16 +71,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             : `<div class="member-photo-placeholder" aria-hidden="true"></div>`;
 
         return `
-            <a class="team-card team-card-link" href="team-member.html?id=${encodeURIComponent(member.id)}" aria-label="${escapeHtml(profileLabel)}">
-                <div class="team-card-media">
+            <a class="team-card team-card-link team-card--stacked" href="team-member.html?id=${encodeURIComponent(member.id)}" aria-label="${escapeHtml(profileLabel)}">
+                <div class="team-card-media team-card-media--portrait">
                     ${imageHtml}
                 </div>
-                <div class="team-content">
+                <div class="team-card-copy">
                     <div class="team-header">
                         <h3 class="team-name">${escapeHtml(member.nameKo)}</h3>
-                        <span class="team-role">${escapeHtml(member.roleKo || '')}</span>
+                        ${member.nameEn ? `<p class="team-name-en">${escapeHtml(member.nameEn)}</p>` : ''}
                     </div>
-                    <p class="team-bio">${escapeHtml(bio)}</p>
+                    <p class="team-role">${escapeHtml(member.roleKo || '')}</p>
+                    ${getRoleEn(member) ? `<p class="team-role-en">${escapeHtml(getRoleEn(member))}</p>` : ''}
+                    ${getSummaryEn(member) ? `<p class="team-card-summary">${escapeHtml(getSummaryEn(member))}</p>` : ''}
                 </div>
             </a>
         `;
@@ -134,15 +147,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             : `<span class="member-pager-spacer" aria-hidden="true"></span>`;
 
         app.innerHTML = `
-            <article class="team-card member-hero-card">
-                <div class="team-card-media">
+            <article class="team-card member-hero-card member-hero-card--stacked">
+                <div class="team-card-media team-card-media--portrait">
                     ${imgHtml}
                 </div>
-                <div class="team-content member-hero-content">
+                <div class="team-card-copy member-hero-content">
                     <p class="member-kicker">${escapeHtml(groupLabel)}</p>
                     <div class="member-identity">
                         <h1 class="h1-title member-name">${escapeHtml(member.nameKo)}${nameEnHtml}</h1>
-                        <span class="team-role">${escapeHtml(member.roleKo || '')}</span>
+                        <p class="team-role">${escapeHtml(member.roleKo || '')}</p>
+                        ${getRoleEn(member) ? `<p class="team-role-en">${escapeHtml(getRoleEn(member))}</p>` : ''}
+                        ${getSummaryEn(member) ? `<p class="team-card-summary">${escapeHtml(getSummaryEn(member))}</p>` : ''}
                     </div>
                 </div>
             </article>

@@ -1,11 +1,12 @@
 {
   "schemaVersion": 1,
   "page": "philosophy",
-  "assetVersion": "2025-12-17",
+  "assetVersion": "2026-04-03",
   "heroImage": "assets/philosophy/philosophy-hero.jpg",
   "texts": {
     "heroKicker": "assets/philosophy/hero-kicker.txt",
     "heroLead": "assets/philosophy/hero-lead.txt",
+    "heroLeadEn": "assets/philosophy/hero-lead-en.txt",
     "respectTitle": "assets/philosophy/respect-title.txt",
     "respectDescEn": "assets/philosophy/respect-desc-en.txt",
     "respectDescKo": "assets/philosophy/respect-desc-ko.txt",

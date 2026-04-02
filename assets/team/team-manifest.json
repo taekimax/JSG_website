@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "page": "team",
-  "assetVersion": "2025-12-17",
+  "assetVersion": "2026-04-03",
   "heroImage": "assets/team/team-hero.jpg",
   "members": [
     {
@@ -11,6 +11,8 @@
       "nameKo": "박상진",
       "nameEn": "Park Sang-jin",
       "roleKo": "대표이사 / 회장",
+      "roleEn": "Chief Executive Officer / Chairman",
+      "summaryEn": "Biotech operator and serial company builder with cross-border board experience.",
       "image": "assets/team/park-sang-jin.png",
       "highlights": [
         "(미국) Invent Medical 등기 이사",
@@ -30,6 +32,8 @@
       "nameKo": "최승만",
       "nameEn": "Choi Seung-man",
       "roleKo": "부사장 / 심사역",
+      "roleEn": "Vice President / Investment Director",
+      "summaryEn": "Investment executive with valuation, energy, and venture strategy experience.",
       "image": "assets/team/choi-seung-man.png",
       "highlights": [
         "기업기술가치평가사",
@@ -49,6 +53,8 @@
       "nameKo": "박준혁",
       "nameEn": "Park Jun-hyuk",
       "roleKo": "팀장 / 심사역",
+      "roleEn": "Team Lead / Investment Manager",
+      "summaryEn": "Healthcare-focused investment professional with biomedical engineering training.",
       "image": "assets/team/park-jun-hyuk.png",
       "highlights": [
         "JSG Investment 팀장",
@@ -65,8 +71,10 @@
       "group": "advisory",
       "order": 110,
       "nameKo": "김명천",
-      "nameEn": "",
+      "nameEn": "Kim Myung-chun",
       "roleKo": "자문위원 / 강동경희대병원 응급의학과 교수",
+      "roleEn": "Advisor / Professor of Emergency Medicine, Kyung Hee University Hospital at Gangdong",
+      "summaryEn": "Emergency medicine professor bringing clinical diligence and hospital leadership insight.",
       "image": "assets/team/kim-myung-chun.png",
       "highlights": [
         "강동경의대병원 응급의학과 교수",
@@ -84,8 +92,10 @@
       "group": "advisory",
       "order": 120,
       "nameKo": "김재홍",
-      "nameEn": "",
+      "nameEn": "Kim Jae-hong",
       "roleKo": "가천대 의예과 교수",
+      "roleEn": "Professor, Gachon University College of Medicine",
+      "summaryEn": "Medical school professor with biochemical and genetic medicine expertise.",
       "image": "assets/team/kim-jae-hong.png",
       "highlights": [
         "가천대 의예과 교수",
@@ -101,8 +111,10 @@
       "group": "advisory",
       "order": 130,
       "nameKo": "김석범",
-      "nameEn": "",
+      "nameEn": "Kim Seok-beom",
       "roleKo": "HSBC은행 CEO",
+      "roleEn": "Chief Executive Officer, HSBC Bank Korea",
+      "summaryEn": "Banking executive advising from a finance, credit, and private wealth perspective.",
       "image": "assets/team/kim-seok-beom.png",
       "highlights": [
         "시티은행 프라이빗뱅크 이사",
@@ -118,8 +130,10 @@
       "group": "advisory",
       "order": 140,
       "nameKo": "이종기",
-      "nameEn": "",
+      "nameEn": "Lee Jong-ki",
       "roleKo": "플루스바이오팜 사외이사",
+      "roleEn": "Outside Director, Plus Biopharm",
+      "summaryEn": "Manufacturing and biotech advisor focused on company operations and portfolio stewardship.",
       "image": "assets/team/lee-jong-ki.png",
       "highlights": [
         "㈜플루스바이오팜 이사",
@@ -136,8 +150,10 @@
       "group": "advisory",
       "order": 150,
       "nameKo": "송상훈",
-      "nameEn": "",
+      "nameEn": "Song Sang-hoon",
       "roleKo": "서울의대 진단검사의학과 교수",
+      "roleEn": "Professor of Laboratory Medicine, Seoul National University College of Medicine",
+      "summaryEn": "Laboratory medicine professor advising on diagnostics and translational healthcare.",
       "image": "assets/team/song-sang-hoon.png",
       "highlights": [
         "서울대병원 임상교수",
@@ -154,8 +170,10 @@
       "group": "advisory",
       "order": 160,
       "nameKo": "이도훈",
-      "nameEn": "",
+      "nameEn": "Lee Do-hoon",
       "roleKo": "국립암센터 진단검사의학과장",
+      "roleEn": "Head of Laboratory Medicine, National Cancer Center",
+      "summaryEn": "Diagnostic medicine leader with oncology and national-center clinical expertise.",
       "image": "assets/team/lee-do-hoon.png",
       "highlights": [
         "국립암센터 전문의",

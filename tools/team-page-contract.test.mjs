@@ -10,7 +10,7 @@ test('team.html delegates team list rendering to team.js', async () => {
   assert.doesNotMatch(html, /team-member\.html\?id=/);
 });
 
-test('team list renderer honors manifest ordering and portrait media hooks', async () => {
+test('team list renderer uses stacked horizontal bilingual cards with manifest ordering intact', async () => {
   const manifest = {
     assetVersion: 'contract-1',
     heroImage: 'assets/team/team-hero.jpg',
@@ -32,9 +32,11 @@ test('team list renderer honors manifest ordering and portrait media hooks', asy
     extractMemberIdsFromLinks(html),
     ['core-c', 'core-a', 'core-b', 'adv-z']
   );
-  assert.match(html, /class="team-card team-card-link"/);
-  assert.match(html, /class="team-card-media"/);
-  assert.match(html, /class="team-img" loading="lazy" decoding="async"/);
+  assert.match(html, /class="team-card team-card-link team-card--stacked"/);
+  assert.match(html, /class="team-card-media team-card-media--portrait"/);
+  assert.match(html, /class="team-card-copy"/);
+  assert.match(html, /class="team-name-en"/);
+  assert.match(html, /class="team-card-summary"/);
   assert.match(html, /Core Team/);
   assert.match(html, /Advisory Board/);
 });
