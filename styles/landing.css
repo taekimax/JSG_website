@@ -11,6 +11,7 @@
 
 html,
 body {
+  height: 100%;
   min-height: 100%;
   margin: 0;
   background:
@@ -37,12 +38,15 @@ body {
 }
 
 #landingHeroRoot {
-  min-height: min(100svh, 1080px);
+  min-height: 100vh;
+  min-height: min(100vh, 1080px);
+  background: var(--landing-bg);
 }
 
 .landingHero {
   position: relative;
-  min-height: min(100svh, 1080px);
+  min-height: 100vh;
+  min-height: min(100vh, 1080px);
   padding: clamp(20px, 2.6vw, 34px);
   background: var(--landing-bg);
   overflow: clip;
@@ -53,6 +57,24 @@ body {
   position: absolute;
   inset: 0;
   touch-action: pan-y;
+}
+
+.landing-hero-svg {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.landing-hero-svg__scene {
+  width: min(92vw, 1160px);
+  height: auto;
+  max-height: min(72vh, 760px);
+  opacity: 0.98;
 }
 
 .landingHero__canvas::after {
@@ -75,7 +97,7 @@ body {
 .landingHero__content {
   position: relative;
   z-index: 1;
-  min-height: calc(min(100svh, 1080px) - clamp(40px, 5.2vw, 68px));
+  min-height: calc(min(100vh, 1080px) - clamp(40px, 5.2vw, 68px));
   display: grid;
   align-items: end;
   pointer-events: none;
@@ -86,8 +108,16 @@ body {
   margin-inline: auto;
   display: grid;
   gap: 12px;
+  justify-items: center;
   padding-top: clamp(96px, 16vh, 180px);
   padding-bottom: clamp(4px, 1vh, 12px);
+}
+
+.landingHero__copyColumn {
+  width: min(720px, 100%);
+  display: grid;
+  gap: 12px;
+  justify-items: center;
 }
 
 .hero-kicker {
@@ -109,7 +139,7 @@ body {
 }
 
 .hero-copy {
-  width: min(720px, 100%);
+  width: 100%;
 }
 
 .hero-copy--stack {
@@ -166,8 +196,32 @@ body {
 }
 
 .landingHero__ctaWrap {
-  justify-self: center;
+  width: 100%;
+  display: grid;
+  justify-items: center;
   pointer-events: auto;
+}
+
+.landingHero__buildBadge {
+  position: absolute;
+  right: clamp(14px, 2vw, 24px);
+  top: clamp(14px, 2vw, 24px);
+  z-index: 2;
+  margin: 0;
+  padding: 7px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(8, 11, 19, 0.74);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 18px 34px -28px rgba(0, 0, 0, 0.88);
+  pointer-events: none;
+  font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  color: rgba(236, 244, 255, 0.46);
 }
 
 #enterBtn {
@@ -241,14 +295,26 @@ body {
     0 18px 48px rgba(0, 0, 0, 0.5);
 }
 
+@media (max-width: 1024px) {
+  .landing-hero-svg__scene {
+    width: min(94vw, 980px);
+    max-height: min(64vh, 620px);
+  }
+}
+
 @media (max-width: 767px) {
   .landingHero {
-    min-height: 88svh;
+    min-height: 88vh;
     padding: 16px 14px 18px;
   }
 
+  .landing-hero-svg__scene {
+    width: min(84vw, 600px);
+    max-height: min(36vh, 300px);
+  }
+
   .landingHero__content {
-    min-height: calc(88svh - 34px);
+    min-height: calc(88vh - 34px);
   }
 
   .landingHero__contentInner {
@@ -258,6 +324,10 @@ body {
 
   .hero-copy {
     width: 100%;
+  }
+
+  .landingHero__copyColumn {
+    gap: 10px;
   }
 
   .hero-statement {
@@ -277,6 +347,12 @@ body {
   #enterBtn {
     width: 100%;
   }
+
+  .landingHero__buildBadge {
+    right: 12px;
+    top: 12px;
+    font-size: 0.64rem;
+  }
 }
 
 @media (max-height: 720px) {
@@ -290,6 +366,12 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .landing-hero-svg__scene * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
   #enterBtn {
     transition: none;
   }

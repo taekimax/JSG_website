@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { HeroCanvas } from '@/components/hero/HeroCanvas';
-import { useHeroPointer } from '@/hooks/useHeroPointer';
-import { useQualityTier } from '@/hooks/useQualityTier';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { LandingHeroSvg } from '@/components/hero/LandingHeroSvg';
+import { LANDING_HERO_BUILD_LABEL, isLocalPreviewHost } from '@/lib/heroBuild';
 import type { LandingCopy } from '@/types/hero';
 
 type LandingHeroSectionProps = {
@@ -31,10 +29,9 @@ async function fetchText(url: string, signal: AbortSignal) {
 }
 
 export function LandingHeroSection({ children, className }: LandingHeroSectionProps) {
-  const reducedMotion = useReducedMotion();
-  const qualityTier = useQualityTier(reducedMotion);
-  const { surfaceRef, pointerRef, handlers } = useHeroPointer();
   const [copy, setCopy] = useState<LandingCopy>(defaultCopy);
+  const showBuildBadge =
+    typeof window !== 'undefined' && isLocalPreviewHost(window.location.hostname);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -98,36 +95,44 @@ export function LandingHeroSection({ children, className }: LandingHeroSectionPr
 
   return (
     <section className={sectionClassName} aria-labelledby="landing-hero-title">
-      <div ref={surfaceRef} className="landingHero__canvas" aria-hidden="true" {...handlers}>
-        <HeroCanvas reducedMotion={reducedMotion} qualityTier={qualityTier} pointerRef={pointerRef} />
+      <div className="landingHero__canvas" aria-hidden="true">
+        <LandingHeroSvg />
       </div>
 
       <div className="landingHero__content">
         <div className="landingHero__contentInner">
-          <p className="hero-kicker">{copy.kicker}</p>
+          <div className="landingHero__copyColumn">
+            <p className="hero-kicker">{copy.kicker}</p>
 
-          <div className="hero-copy hero-copy--stack">
-            <p className="hero-statement hero-statement--ko">{copy.leadKo}</p>
-            <p className="hero-statement hero-statement--en">{copy.leadEn}</p>
+            <div className="hero-copy hero-copy--stack">
+              <p className="hero-statement hero-statement--ko">{copy.leadKo}</p>
+              <p className="hero-statement hero-statement--en">{copy.leadEn}</p>
+            </div>
+
+            <div className="landingHero__ctaWrap">
+              <button
+                id="enterBtn"
+                type="button"
+                aria-label="Enter JSG site"
+                onClick={() => {
+                  window.location.href = 'about.html';
+                }}
+              >
+                <span className="enter-btn-label">{copy.ctaLabel}</span>
+                <span className="enter-btn-label">{copy.ctaSub}</span>
+              </button>
+            </div>
+
+            {children}
           </div>
-
-          <div className="landingHero__ctaWrap">
-            <button
-              id="enterBtn"
-              type="button"
-              aria-label="Enter JSG site"
-              onClick={() => {
-                window.location.href = 'about.html';
-              }}
-            >
-              <span className="enter-btn-label">{copy.ctaLabel}</span>
-              <span className="enter-btn-label">{copy.ctaSub}</span>
-            </button>
-          </div>
-
-          {children}
         </div>
       </div>
+
+      {showBuildBadge ? (
+        <p className="landingHero__buildBadge" aria-hidden="true">
+          {LANDING_HERO_BUILD_LABEL}
+        </p>
+      ) : null}
 
       <h1 id="landing-hero-title" className="sr-only">
         JSG
