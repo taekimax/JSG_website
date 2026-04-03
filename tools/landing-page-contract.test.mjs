@@ -11,40 +11,76 @@ async function readRepoFile(relativePath) {
   return fs.readFile(path.join(repoRoot, relativePath), 'utf8');
 }
 
-test('landing page exposes three comparable landing variants and equal bilingual copy hooks', async () => {
+test('landing page exposes the new hero root, canvas/content contract, and generated module hook', async () => {
   const html = await readRepoFile('landing.html');
 
-  assert.match(html, /class="landing-stage"/);
-  assert.match(html, /class="landing-variant-switcher"/);
-  assert.match(html, /data-landing-variant="aurora"/);
-  assert.match(html, /data-landing-variant="mirror"/);
-  assert.match(html, /data-landing-variant="lattice"/);
-  assert.equal((html.match(/class="hero-statement"/g) || []).length, 2);
+  assert.match(html, /id="landingHeroRoot"/);
+  assert.match(html, /class="landingHero"/);
+  assert.match(html, /class="landingHero__canvas"/);
+  assert.match(html, /class="landingHero__content"/);
+  assert.match(html, /class="hero-copy hero-copy--stack"/);
   assert.match(html, /id="enterBtn"/);
-  assert.doesNotMatch(html, /Loading\.\.\./);
-  assert.match(html, /<script src="scripts\/assets\.js"><\/script>/);
-  assert.match(html, /<script src="scripts\/landingCopy\.js"><\/script>/);
-  assert.match(html, /<script src="scripts\/landingAnimation\.js"><\/script>/);
+  assert.match(html, /id="landing-hero-title"/);
+  assert.equal((html.match(/class="landingHero__fallbackGlyph"/g) || []).length, 3);
+  assert.match(html, /<script type="module" src="generated\/landing-hero\/landing-hero\.js"><\/script>/);
+  assert.doesNotMatch(html, /landing-variant-switcher/);
+  assert.doesNotMatch(html, /scripts\/landingCopy\.js/);
+  assert.doesNotMatch(html, /scripts\/landingAnimation\.js/);
 });
 
-test('landing scripts keep variant switching, runtime copy hydration, and about navigation contracts', async () => {
-  const [copyScript, animationScript] = await Promise.all([
-    readRepoFile('scripts/landingCopy.js'),
-    readRepoFile('scripts/landingAnimation.js'),
+test('landing hero source keeps react mount, manifest hydration, reduced-motion handling, and about navigation contracts', async () => {
+  const [entrySource, sectionSource, reducedMotionHookSource, configSource, layoutSource] = await Promise.all([
+    readRepoFile('src/landing/main.tsx'),
+    readRepoFile('src/components/hero/LandingHeroSection.tsx'),
+    readRepoFile('src/hooks/useReducedMotion.ts'),
+    readRepoFile('src/config/heroConfig.ts'),
+    readRepoFile('src/lib/glyph/glyphLayout.ts'),
   ]);
 
-  assert.match(copyScript, /querySelectorAll\('\.hero-statement'\)/);
-  assert.match(copyScript, /querySelectorAll\('\[data-landing-variant\]'\)/);
-  assert.match(copyScript, /fetchJson\('assets\/landing\/landing-manifest\.json'\)/);
-  assert.match(animationScript, /document\.querySelector\('\.landing-stage'\)/);
-  assert.match(animationScript, /dataset\.variant/);
-  assert.match(animationScript, /window\.location\.href = "about\.html"/);
+  assert.match(entrySource, /createRoot/);
+  assert.match(entrySource, /landingHeroRoot/);
+  assert.match(entrySource, /LandingHeroSection/);
+
+  assert.match(sectionSource, /assets\/landing\/landing-manifest\.json/);
+  assert.match(sectionSource, /useReducedMotion/);
+  assert.match(sectionSource, /about\.html/);
+  assert.match(sectionSource, /landingHero__canvas/);
+  assert.match(sectionSource, /landingHero__content/);
+
+  assert.match(reducedMotionHookSource, /prefers-reduced-motion/);
+
+  assert.match(configSource, /clearColor:\s*'#05060a'/);
+  assert.match(configSource, /gapRatioDesktop:\s*0\.21/);
+  assert.match(
+    configSource,
+    /targetWidthRatio:\s*\{[\s\S]*desktop:\s*0\.56,[\s\S]*tablet:\s*0\.64,[\s\S]*mobile:\s*0\.8,[\s\S]*\}/,
+  );
+  assert.match(configSource, /maxHeightRatio:/);
+  assert.match(configSource, /groupCenterY:/);
+  assert.match(configSource, /opacity:\s*0\.82/);
+  assert.match(configSource, /emissiveIntensity:\s*1\.05/);
+  assert.match(configSource, /clickImpulse:\s*1\.0/);
+  assert.match(layoutSource, /widthFitScale|heightFitScale|Math\.min/);
+  assert.match(layoutSource, /groupCenterY|groupOffsetY/);
 });
 
-test('landing stylesheet keeps the full-screen stage responsive and preserves desktop-only variant controls', async () => {
+test('landing stylesheet keeps the hero section, canvas layering, fallback lockup, and mobile scroll contract', async () => {
   const css = await readRepoFile('styles/landing.css');
-  assert.match(css, /min-height:\s*100dvh/);
-  assert.match(css, /\.landing-variant-switcher/);
-  assert.match(css, /@media\s*\(max-width:\s*640px\)/);
-  assert.match(css, /@media\s*\(max-height:\s*720px\)/);
+
+  assert.match(css, /\.landingHero\s*\{/);
+  assert.match(css, /\.landingHero__canvas\s*\{/);
+  assert.match(css, /\.landingHero__content\s*\{/);
+  assert.match(css, /\.landingHero__fallbackGlyph\s*\{/);
+  assert.match(css, /touch-action:\s*pan-y/);
+  assert.match(css, /pointer-events:\s*none/);
+  assert.match(css, /pointer-events:\s*auto/);
+  assert.match(css, /\.landingHero__ctaWrap\s*\{[\s\S]*justify-self:\s*center;/);
+  assert.match(css, /@media\s*\(max-width:\s*767px\)/);
+});
+
+test('landing production bundle is browser-safe and does not ship unresolved process.env guards', async () => {
+  const bundle = await readRepoFile('generated/landing-hero/landing-hero.js');
+
+  assert.doesNotMatch(bundle, /process\.env\.NODE_ENV/);
+  assert.match(bundle, /landingHeroRoot/);
 });

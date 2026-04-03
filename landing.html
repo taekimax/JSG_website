@@ -5,50 +5,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>JSG Investment Inc.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/tokens.css">
     <link rel="stylesheet" href="styles/reset.css">
     <link rel="stylesheet" href="styles/landing.css">
 </head>
 
 <body>
-    <div id="app" data-variant="aurora">
-        <div id="canvasWrap" aria-hidden="true">
-            <canvas id="c"></canvas>
-            <div id="veil"></div>
-        </div>
-
-        <main class="landing-stage" data-variant="aurora">
-            <div class="landing-variant-switcher" aria-label="Landing comparison">
-                <span class="landing-compare-label">[landing]</span>
-                <button type="button" class="landing-variant-btn is-active" data-landing-variant="aurora" aria-pressed="true">A</button>
-                <button type="button" class="landing-variant-btn" data-landing-variant="mirror" aria-pressed="false">B</button>
-                <button type="button" class="landing-variant-btn" data-landing-variant="lattice" aria-pressed="false">C</button>
+    <div id="landingHeroRoot">
+        <section class="landingHero" aria-labelledby="landing-hero-title">
+            <div class="landingHero__canvas" aria-hidden="true">
+                <div class="landingHero__fallbackGraphic">
+                    <div class="landingHero__fallbackLockup">
+                        <span class="landingHero__fallbackGlyph">J</span>
+                        <span class="landingHero__fallbackGlyph">S</span>
+                        <span class="landingHero__fallbackGlyph">G</span>
+                    </div>
+                </div>
             </div>
 
-            <section class="landing-hero" aria-labelledby="landing-wordmark">
-                <p class="hero-kicker">JSG Investment</p>
+            <div class="landingHero__content">
+                <div class="landingHero__contentInner">
+                    <p class="hero-kicker">JSG Investment</p>
 
-                <div class="hero-wordmark-stack">
-                    <span class="hero-wordmark-ghost" aria-hidden="true">JSG</span>
-                    <h1 class="hero-wordmark" id="landing-wordmark">JSG</h1>
+                    <div class="hero-copy hero-copy--stack">
+                        <p class="hero-statement hero-statement--ko">JSG는 이성적이고 투명한 판단으로, 건강하고 지속 가능한 성장을 이끄는 과감한 혁신가에게 투자합니다. JSG 인베스트먼트는 서울 소재 금융위원회 등록 신기술금융사입니다.</p>
+                        <p class="hero-statement hero-statement--en">At JSG, we back bold innovators to foster healthy, sustainable growth with disciplined reasoning and radical transparency. We are a Seoul-based venture capital firm registered with Korea's Financial Services Commission as a New-Technology Finance Company.</p>
+                    </div>
+
+                    <div class="landingHero__ctaWrap">
+                        <button id="enterBtn" type="button" aria-label="Enter JSG site">
+                            <span class="enter-btn-label">들어가기</span>
+                            <span class="enter-btn-label">Enter</span>
+                        </button>
+                    </div>
                 </div>
+            </div>
 
-                <div class="hero-copy">
-                    <p class="hero-statement">JSG는 이성적이고 투명한 판단으로, 건강하고 지속 가능한 성장을 이끄는 과감한 혁신가에게 투자합니다. JSG 인베스트먼트는 서울 소재 금융위원회 등록 신기술금융사입니다.</p>
-                    <p class="hero-statement">At JSG, we back bold innovators to foster healthy, sustainable growth with disciplined reasoning and radical transparency. We are a Seoul-based venture capital firm registered with Korea's Financial Services Commission as a New-Technology Finance Company.</p>
-                </div>
-
-                <button id="enterBtn" type="button" aria-label="Enter JSG site">
-                    <span class="enter-btn-label">들어가기</span>
-                    <span class="enter-btn-label">Enter</span>
-                </button>
-            </section>
-        </main>
+            <h1 id="landing-hero-title" class="sr-only">JSG</h1>
+        </section>
     </div>
 
-    <script src="scripts/assets.js"></script>
-    <script src="scripts/landingCopy.js"></script>
-    <script src="scripts/landingAnimation.js"></script>
+    <script type="module" src="generated/landing-hero/landing-hero.js"></script>
 </body>
 
 </html>

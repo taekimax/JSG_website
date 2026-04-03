@@ -1,0 +1,28 @@
+{
+  "name": "jsg-website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:landing": "vite build",
+    "typecheck:landing": "tsc --noEmit",
+    "test:landing": "node --test tools/landing-page-contract.test.mjs",
+    "test:assets": "node tools/validate-assets.mjs",
+    "verify:landing": "npm run typecheck:landing && npm run build:landing && npm run test:landing && npm run test:assets"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "three": "^0.183.2"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@types/node": "^24.7.2",
+    "@types/three": "^0.183.1",
+    "@vitejs/plugin-react": "^6.0.1",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.3"
+  }
+}
