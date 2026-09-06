@@ -118,7 +118,7 @@
 .home-page :is(.contact-value, .contact-label, .contact-subtext, .contact-map-caption) { color: inherit; }
 .home-page :is(.contact-value, .contact-label) { margin: 0; font-size: 20px; font-weight: 400; line-height: 1.6; word-break: keep-all; overflow-wrap: anywhere; }
 .home-page .contact-address { display: grid; gap: 4px; min-width: 0; }
-.home-page .contact-map-frame { margin: 32px 0 0; border: 0; border-radius: 12px; background: var(--bg-soft); }
+.home-page .contact-map-frame { width: min(100%, 572px); aspect-ratio: 10 / 7; margin: 32px 0 0; border: 0; border-radius: 12px; background: var(--bg-soft); overflow: hidden; }
 .home-page .home-section--navy :is(a, button, summary):focus-visible { outline: 2px solid var(--base-white); outline-offset: 6px; }
 .home-page .site-footer { display: block; padding-block: 56px 32px; font-size: 14px; }
 @media (max-width: 1023px) {
@@ -141,6 +141,7 @@
     .home-page .portfolio-band-heading { margin-bottom: 32px; }
     .home-page .contact-row { grid-template-columns: 48px minmax(0, 1fr); gap: 16px; }
     .home-page :is(.contact-value, .contact-label) { font-size: 17px; }
+    .home-page .contact-map-frame { width: 100%; }
 }
 
 .home-page .home-section:where(:not(#about)) .page-hero-text { color: inherit; }
