@@ -12,18 +12,17 @@ async function readRepoFile(relativePath) {
 }
 
 test('About, Philosophy, and Contact expose the updated editorial hooks', async () => {
-  const [aboutHtml, philosophyHtml, contactHtml] = await Promise.all([
-    readRepoFile('about.html'),
-    readRepoFile('philosophy.html'),
-    readRepoFile('contact.html'),
-  ]);
+  const home = await readRepoFile('about.html');
+  const aboutHtml = home.split('<section id="about"')[1].split('<section id="team"')[0];
+  const philosophyHtml = home.split('<section id="philosophy"')[1].split('<section id="portfolio"')[0];
+  const contactHtml = home.split('<section id="contact"')[1];
 
   assert.match(
-    aboutHtml,
-    /<div class="page-hero-text bilingual-stack">[\s\S]*?<p class="page-hero-kicker">[\s\S]*?<p class="page-hero-sub">[\s\S]*?<p class="page-hero-sub">/,
+    home.split('<footer')[1],
+    /<div class="page-hero-text bilingual-stack">[\s\S]*?<p class="page-hero-kicker">[\s\S]*?<p class="page-hero-sub"[^>]*>[\s\S]*?<p class="page-hero-sub"[^>]*>/,
   );
   assert.equal((aboutHtml.match(/class="text-block about-section"/g) || []).length, 2);
-  assert.equal((aboutHtml.match(/class="page-hero-sub"/g) || []).length, 2);
+  assert.equal((home.split('<footer')[1].match(/class="page-hero-sub"/g) || []).length, 2);
 
   assert.match(
     philosophyHtml,
@@ -39,19 +38,13 @@ test('About, Philosophy, and Contact expose the updated editorial hooks', async 
     );
   });
 
-  assert.match(contactHtml, /class="contact-card contact-card--location"/);
+  assert.match(contactHtml, /class="contact-card"/);
   assert.match(contactHtml, /class="contact-map-frame"/);
   assert.match(contactHtml, /id="contact-map-image"/);
-  assert.match(contactHtml, /id="contact-map-caption"/);
   for (const id of [
     'contact-hero-kicker',
-    'contact-hero-lead',
-    'contact-location-title',
     'contact-location-address',
-    'contact-location-subtext',
     'contact-map-image',
-    'contact-map-caption',
-    'contact-title',
     'contact-phone-label',
     'contact-phone-value',
     'contact-email-label',
@@ -78,7 +71,6 @@ test('hydration scripts use stable hooks rather than presentation-only wrappers'
 
   assert.match(contactScript, /getElementById\('contact-location-address'\)/);
   assert.match(contactScript, /getElementById\('contact-map-image'\)/);
-  assert.match(contactScript, /getElementById\('contact-map-caption'\)/);
   assert.match(contactScript, /getElementById\('contact-phone-value'\)/);
   assert.match(contactScript, /getElementById\('contact-email-value'\)/);
   assert.doesNotMatch(contactScript, /\.contact-map-frame/);

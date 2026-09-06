@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "page": "philosophy",
-  "assetVersion": "2026-04-03",
+  "assetVersion": "2026-09-07",
   "heroImage": "assets/philosophy/philosophy-hero.jpg",
   "texts": {
     "heroKicker": "assets/philosophy/hero-kicker.txt",
@@ -16,5 +16,6 @@
     "integrityTitle": "assets/philosophy/integrity-title.txt",
     "integrityDescEn": "assets/philosophy/integrity-desc-en.txt",
     "integrityDescKo": "assets/philosophy/integrity-desc-ko.txt"
-  }
+  },
+  "postsJson": "assets/philosophy/posts.json"
 }

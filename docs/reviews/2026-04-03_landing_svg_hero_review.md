@@ -1,5 +1,7 @@
 # 2026-04-03 Landing SVG Hero Review
 
+> 역사 자료 — 2026-09-06부터 이 실험 worktree의 실행 지침으로 사용하지 않습니다. 아래의 승인, 요구사항, 작업 절차, 검증 결과는 당시 기록입니다. 현재 작업은 루트 `AGENTS.md`와 이번 사용자 결정에 따릅니다.
+
 ## Mission
 
 Replace the landing-page WebGL hero with a simpler SVG-based hero using the user-provided reference files, preserve the current art direction, remove hover/pointer interaction, and keep the bilingual copy plus `about.html` entry CTA intact.

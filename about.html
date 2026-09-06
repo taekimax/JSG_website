@@ -4,76 +4,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSG Investment Inc.</title>
+    <title>JSG INVESTMENT</title>
+    <link rel="preload" href="assets/fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="assets/fonts/JetBrainsMonoNerdFont-Regular.ttf" as="font" type="font/ttf" crossorigin>
     <link rel="stylesheet" href="styles/tokens.css">
     <link rel="stylesheet" href="styles/reset.css">
     <link rel="stylesheet" href="styles/layout.css">
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/about-editorial.css">
+    <link rel="stylesheet" href="styles/home.css">
 </head>
 
-<body>
+<body id="top" class="about-editorial home-page">
+    <a class="skip-link" href="#main-content">본문으로 이동</a>
     <header class="site-header">
         <div class="header-inner">
-            <a href="/" class="logo">JSG Investment</a>
-            <nav class="desktop-nav">
-                <a href="about.html">About</a>
-                <a href="team.html">Team</a>
-                <a href="philosophy.html">Philosophy</a>
-                <a href="portfolio.html">Portfolio</a>
-                <a href="notice.html">Notice</a>
-                <a href="contact.html">Contact</a>
+            <a href="about.html" class="logo" aria-label="JSG INVESTMENT"><img class="brand-mark" src="assets/shared/jsg-emblem.png" alt="" width="80" height="80"><span class="brand-wordmark">JSG INVESTMENT</span></a>
+            <button class="menu-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false">
+                <span class="menu-toggle-label">Menu</span><span class="menu-toggle-icon" aria-hidden="true"></span>
+            </button>
+            <nav id="primary-navigation" class="desktop-nav" aria-label="주요 메뉴">
+                <a href="about.html#about" aria-current="page">About</a>
+                <a href="about.html#team">Team</a>
+                <a href="about.html#philosophy">Philosophy</a>
+                <a href="about.html#portfolio">Portfolio</a>
+                <a href="about.html#notice">Notice</a>
+                <a href="about.html#contact">Contact</a>
             </nav>
         </div>
     </header>
 
-    <main class="site-main site-main--interior">
-        <div class="container content-shell">
-            <section class="page-hero">
-                <div class="page-hero-surface" data-shared-hero="logo">
-                    <div class="page-hero-media about-hero-media">
-                        <img src="assets/shared/logo.jpg" alt="About JSG">
-                    </div>
+    <main id="main-content" class="site-main site-main--interior" tabindex="-1">
+        <section id="about" class="home-section" aria-label="About" tabindex="-1">
+
+            <div class="about-title-band">
+                <div class="section-inner about-title-grid">
+                    <h1 id="about-title-ko" data-break-before="길을" class="about-section-title" lang="ko">Loading...</h1>
+                    <h2 id="about-title-en" data-break-before="you're" class="about-section-title" lang="en">Loading...</h2>
+                </div>
+            </div>
+            <div class="about-story section-inner">
+                <section class="text-block about-section" lang="ko" aria-labelledby="about-title-ko">
+                    <p>Loading...</p>
+                </section>
+
+                <section class="text-block about-section" lang="en" aria-labelledby="about-title-en">
+                    <p>Loading...</p>
+                </section>
+            </div>
+
+
+        </section>
+        <section id="team" class="home-section" aria-label="Team" tabindex="-1">
+
+            <section class="page-hero section-title-band">
+                <div class="page-hero-surface section-inner">
                     <div class="page-hero-text bilingual-stack">
-                        <p class="page-hero-kicker">Loading...</p>
-                        <p class="page-hero-sub">Loading...</p>
-                        <p class="page-hero-sub">Loading...</p>
+                        <h2 class="section-title">Team</h2>
+                        <p class="page-hero-sub">경험과 전문성이 결합된 투자 팀과 자문 네트워크</p>
+                        <p class="page-hero-sub">An investment team and advisory network built on operating judgment and domain expertise.</p>
                     </div>
                 </div>
             </section>
 
-            <section class="text-block about-section">
-                <h2 class="h2-title about-section-title">Loading...</h2>
-                <p>Loading...</p>
+            <div class="team-index-shell section-inner">
+                <div id="team-member-app">
+                    <div class="team-card team-loading-card">
+                        <div class="team-content">
+                            <h3 class="team-name">Loading...</h3>
+                            <p class="team-bio team-loading-copy">팀 정보를 불러오는 중입니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <section id="philosophy" class="home-section home-section--blue" aria-label="Philosophy" tabindex="-1">
+            <div class="section-inner">
+            <section class="page-hero">
+                <div class="page-hero-surface">
+                    <div class="page-hero-text bilingual-stack">
+                        <h2 class="page-hero-kicker section-title">Philosophy</h2>
+                        <p class="page-hero-sub">합리적 사고와 과학적 엄밀성을 바탕으로, 창업자·투자자·JSG가 함께 서는 진정한 파트너십을 통해 인류의 건강에 기여합니다.</p>
+                        <p class="page-hero-sub">We contribute to human health through true partnership among founders, investors, and JSG, grounded in disciplined reasoning and scientific rigor.</p>
+                    </div>
+                </div>
             </section>
 
-            <section class="text-block about-section">
-                <h2 class="h2-title about-section-title">Loading...</h2>
-                <p>Loading...</p>
+            <section class="philosophy-section">
+
+                <div class="philosophy-list">
+                    <!-- Respect -->
+                    <article class="philosophy-card">
+                        <div class="phil-strip"></div>
+                        <div class="phil-content">
+                            <h3 class="phil-title">Loading...</h3>
+                            <div class="phil-copy-stack">
+                                <p class="phil-desc-en">Loading...</p>
+                                <p class="phil-desc-ko">Loading...</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Health -->
+                    <article class="philosophy-card">
+                        <div class="phil-strip"></div>
+                        <div class="phil-content">
+                            <h3 class="phil-title">Loading...</h3>
+                            <div class="phil-copy-stack">
+                                <p class="phil-desc-en">Loading...</p>
+                                <p class="phil-desc-ko">Loading...</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Integrity -->
+                    <article class="philosophy-card">
+                        <div class="phil-strip"></div>
+                        <div class="phil-content">
+                            <h3 class="phil-title">Loading...</h3>
+                            <div class="phil-copy-stack">
+                                <p class="phil-desc-en">Loading...</p>
+                                <p class="phil-desc-ko">Loading...</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
             </section>
-        </div>
+            <section id="philosophy-writing" class="writing-section" aria-labelledby="writing-title" hidden>
+                <div class="writing-heading">
+                    <h3 id="writing-title" class="phil-title">Writing</h3>
+                    <a id="writing-publication" class="writing-all">All ↗</a>
+                </div>
+                <div id="writing-posts"></div>
+            </section>
+            </div>
+        </section>
+        <section id="portfolio" aria-labelledby="portfolio-band-title" tabindex="-1">
+            <section class="portfolio-band home-section" aria-labelledby="portfolio-band-title">
+                <div class="portfolio-band-heading section-title-band">
+                    <div class="section-inner"><h2 id="portfolio-band-title" class="section-title">Portfolio</h2></div>
+                </div>
+                <div class="portfolio-companies section-inner">
+                    <div class="portfolio-controls"><button id="company-motion-toggle" type="button" aria-pressed="false" hidden>일시정지</button></div>
+                <div id="portfolio-name-list" class="company-name-window">
+                    <p>불러오는 중...</p>
+                </div>
+                </div>
+            </section>
+
+        </section>
+        <section id="notice" class="home-section" aria-label="Notice" tabindex="-1">
+
+            <section class="page-hero section-title-band">
+                <div class="page-hero-surface section-inner">
+                    <div class="page-hero-text">
+                        <h2 class="section-title">Notice</h2>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dynamic Content Mount Point -->
+            <div id="notice-app" class="section-inner" aria-live="polite">
+                <!-- Fallback / Loading -->
+                <article class="notice-record-item">
+                    <span>불러오는 중...</span>
+                </article>
+            </div>
+
+        </section>
+        <section id="contact" class="home-section home-section--navy" aria-label="Contact" tabindex="-1">
+            <div class="section-inner">
+            <section class="page-hero">
+                <div class="page-hero-surface">
+                    <div class="page-hero-text">
+                        <h2 class="page-hero-kicker section-title" id="contact-hero-kicker">Loading...</h2>
+                    </div>
+                </div>
+            </section>
+
+            <div class="contact-section">
+                <div class="contact-card">
+                    <div class="contact-row">
+                        <span class="contact-label" id="contact-phone-label">Loading...</span>
+                        <span class="contact-value" id="contact-phone-value">Loading...</span>
+                    </div>
+                    <div class="contact-row">
+                        <span class="contact-label" id="contact-email-label">Loading...</span>
+                        <span class="contact-value" id="contact-email-value">Loading...</span>
+                    </div>
+                    <div class="contact-row">
+                        <span class="contact-label" id="contact-address-label">Loading...</span>
+                        <div class="contact-address">
+                            <p class="contact-value" id="contact-location-address" lang="ko">Loading...</p>
+                            <p class="contact-value" id="contact-location-address-en" lang="en">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+                <figure class="contact-map-frame">
+                    <img id="contact-map-image" src="assets/contact/contact-map.png" width="2400" height="1680" alt="현대백화점 건너편 JSG와 주변 주요 건물의 위치 약도" loading="lazy" decoding="async">
+                </figure>
+            </div>
+
+            </div>
+        </section>
     </main>
 
-    <nav class="bottom-nav section-pager">
-        <a href="contact.html" class="nav-arrow">◀</a>
-        <button id="sheet-toggle" class="nav-btn">About ▲</button>
-        <a href="team.html" class="nav-arrow">▶</a>
-    </nav>
-
-    <div class="section-sheet">
-        <ul class="sheet-list">
-            <li><a href="about.html" class="current">About JSG</a></li>
-            <li><a href="team.html">Team</a></li>
-            <li><a href="philosophy.html">Philosophy</a></li>
-            <li><a href="portfolio.html">Portfolio</a></li>
-            <li><a href="notice.html">Notice</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </div>
+    <footer class="site-footer section-inner">
+            <section id="about-jsg" class="page-hero company-footer" aria-label="About JSG Investment">
+                <div class="page-hero-surface" data-shared-hero="logo">
+                    <div class="page-hero-media about-hero-media">
+                        <img src="assets/shared/jsg-emblem.png" alt="" width="180" height="180"><span class="brand-wordmark">JSG INVESTMENT</span>
+                    </div>
+                    <div class="page-hero-text bilingual-stack">
+                        <p class="page-hero-kicker">Loading...</p>
+                        <p class="page-hero-sub" lang="ko">Loading...</p>
+                        <p class="page-hero-sub" lang="en">Loading...</p>
+                    </div>
+                </div>
+            </section>
+        <div class="footer-bottom"><a href="#top">Top ↑</a></div>
+    </footer>
 
     <script src="scripts/ui.js"></script>
     <script src="scripts/assets.js"></script>
     <script src="scripts/sharedAssets.js"></script>
     <script src="scripts/aboutCopy.js"></script>
+    <script src="scripts/portfolio.js"></script>
+    <script src="scripts/team.js"></script>
+    <script src="scripts/philosophyCopy.js"></script>
+    <script src="scripts/notice.js"></script>
+    <script src="scripts/contact.js"></script>
 </body>
 
 </html>

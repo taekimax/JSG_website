@@ -2,8 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { extractMemberIdsFromLinks, readRepoFile, renderTeamApp } from './team-render-harness.mjs';
 
-test('team.html delegates team list rendering to team.js', async () => {
-  const html = await readRepoFile('team.html');
+test('home Team section delegates team list rendering to team.js', async () => {
+  const html = await readRepoFile('about.html');
 
   assert.match(html, /id="team-member-app"/);
   assert.match(html, /<script src="scripts\/team\.js"><\/script>/);
@@ -18,7 +18,7 @@ test('team list renderer uses stacked horizontal bilingual cards with manifest o
       { id: 'adv-z', group: 'advisory', order: 20, nameKo: '자문Z', nameEn: 'Adv Z', roleKo: '자문', image: 'assets/team/adv-z.png', highlights: ['advisory'] },
       { id: 'core-b', group: 'core', order: 20, nameKo: '코어B', nameEn: 'Core B', roleKo: '심사역', image: 'assets/team/core-b.png', highlights: ['core'] },
       { id: 'core-a', group: 'core', order: 20, nameKo: '코어A', nameEn: 'Core A', roleKo: '심사역', image: 'assets/team/core-a.png', highlights: ['core'] },
-      { id: 'core-c', group: 'core', order: 10, nameKo: '코어C', nameEn: 'Core C', roleKo: '심사역', image: 'assets/team/core-c.png', highlights: ['core'] }
+      { id: 'core-c', group: 'core', order: 10, nameKo: '코어C', nameEn: 'Core C', summaryKo: '한국어 소개', summaryEn: 'English introduction', roleKo: '심사역', image: 'assets/team/core-c.png', highlights: ['core'] }
     ]
   };
 
@@ -29,14 +29,16 @@ test('team list renderer uses stacked horizontal bilingual cards with manifest o
     ['core-c', 'core-a', 'core-b', 'adv-z']
   );
   assert.deepEqual(
-    extractMemberIdsFromLinks(html),
+    extractMemberIdsFromLinks(html.replace(/<div class="partners-group" aria-hidden="true">[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<\/section>/, '</section>')),
     ['core-c', 'core-a', 'core-b', 'adv-z']
   );
   assert.match(html, /class="team-card team-card-link team-card--stacked"/);
   assert.match(html, /class="team-card-media team-card-media--portrait"/);
   assert.match(html, /class="team-card-copy"/);
   assert.match(html, /class="team-name-en"/);
-  assert.match(html, /class="team-card-summary"/);
-  assert.match(html, /Core Team/);
-  assert.match(html, /Advisory Board/);
+  assert.match(html, /class="team-card-summary" lang="ko">한국어 소개/);
+  assert.match(html, /class="team-card-summary" lang="en">English introduction/);
+  assert.doesNotMatch(html.split('data-group="advisory"')[1], /team-card-summary/);
+  assert.match(html, />Partners</);
+  assert.match(html, />Advisors</);
 });

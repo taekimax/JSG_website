@@ -1,38 +1,60 @@
-/* JSG Palette v1 */
+/* Bundled fonts: pinned versions and licenses in assets/fonts/README.md. */
+@font-face {
+  font-family: "Pretendard";
+  src: url("../assets/fonts/PretendardVariable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrainsMono NF";
+  src: url("../assets/fonts/JetBrainsMonoNerdFont-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+/* JSG shared palette. Only this file owns literal UI colors. */
 :root {
-  /* Backgrounds */
-  --bg-page: #ffffff;
-  --bg-soft: #f9fafb;
-  --shell-bg: #0b1320;
-  --shell-depth: #182233;
-  --surface-main: #f7f3ec;
-  --surface-muted: #e4ddd2;
-  --text-strong: #18202b;
-  --text-inverse: #f4f1eb;
-  --accent-cool: #8ecfff;
+  --palette-cyan: #04f8fd; /* dominant cyan sampled from jsg-emblem.png */
+  --palette-blue: #1d4ed8;
+  --palette-navy: #0f172a;
+  --palette-yellow: #e8b51b;
+  --palette-red: #dc2626;
+  --palette-gray-light: #f4f4f4;
+  --palette-gray-medium: #d4d4d4;
+  --palette-gray-dark: #656565;
+  --palette-black: #000000;
+  --palette-white: #ffffff;
 
-  /* Brand & Primary */
-  --brand-royal-blue: #1d4ed8;
-  --brand-deep-blue: #0f172a;
-  --base-white: #ffffff;
-
-  /* Text & Neutral */
-  --text-main: #111827;
-  --text-muted: #6b7280;
-  --border-light: #e5e7eb;
-
-  /* Accents */
-  --accent-royal-purple: #6d28d9;
-  --accent-crimson-red: #dc2626;
-
-  /* Functional */
-  --action-primary-bg: var(--brand-royal-blue);
-  --action-primary-text: var(--brand-royal-blue);
-  --action-disabled: #9ca3af;
+  /* Roles reference the same palette on the home and detail pages. */
+  --bg-page: var(--palette-white);
+  --bg-soft: var(--palette-gray-light);
+  --shell-bg: var(--palette-navy);
+  --shell-depth: var(--palette-navy);
+  --surface-main: var(--palette-white);
+  --surface-muted: var(--palette-gray-medium);
+  --text-strong: var(--palette-black);
+  --text-inverse: var(--palette-white);
+  --accent-cool: var(--palette-cyan);
+  --brand-royal-blue: var(--palette-blue);
+  --brand-deep-blue: var(--palette-navy);
+  --base-white: var(--palette-white);
+  --text-main: var(--palette-black);
+  --text-muted: var(--palette-gray-dark);
+  --border-light: var(--palette-gray-medium);
+  --accent-royal-purple: var(--palette-blue);
+  --accent-crimson-red: var(--palette-red);
+  --accent-cyan: var(--palette-cyan);
+  --accent-swedish-yellow: var(--palette-yellow);
+  --action-primary-bg: var(--palette-blue);
+  --action-primary-text: var(--palette-blue);
+  --action-disabled: var(--palette-gray-dark);
+  --portfolio-title-bg: var(--palette-cyan);
+  --notice-title-bg: var(--palette-blue);
 
   /* Typography */
-  --font-family-base: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Noto Sans KR", sans-serif;
+  --font-family-base: "Pretendard", sans-serif;
+  --font-family-title: "JetBrainsMono NF", "Pretendard", monospace;
 
   --h1-size: 28px;
   --h1-weight: 700;
@@ -43,13 +65,31 @@
   --h3-size: 18px;
   --h3-weight: 600;
 
-  --body-size: 16px;
+  --body-size: 18px;
   --body-weight: 400;
 
   --caption-size: 13px;
+  --section-title-size: clamp(40px, 5.8vw, 80px);
+  --section-title-leading: 1.08;
+  --section-title-tracking: -0.045em;
+  --subheading-size: 40px;
+  --subheading-leading: 1.4;
+  --subheading-tracking: -0.03em;
+  --section-band-space: 72px;
+  --section-lead-size: 18px;
+  --section-lead-leading: 1.85;
 
   /* Dimensions */
-  --header-height: 60px;
-  --nav-height: 56px;
+  --header-height: 116px;
+  --site-width: 1200px;
+  --site-gutter: clamp(24px, 5.5vw, 88px);
   --max-width-desktop: 800px;
+}
+
+@media (max-width: 699px) {
+  :root {
+    --section-title-size: clamp(40px, 10vw, 64px);
+    --section-band-space: 48px;
+    --section-lead-size: 17px;
+  }
 }

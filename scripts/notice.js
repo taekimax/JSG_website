@@ -30,19 +30,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             return `${raw}${separator}v=${encodeURIComponent(version)}`;
         };
 
-        if (manifest.heroImage) {
-            const heroSurface = document.querySelector('.page-hero .page-hero-surface');
-            const heroImg = document.querySelector('.page-hero .page-hero-media img');
-            const versionedHero = withVersion(manifest.heroImage);
-            const resolvedHero = toAbsoluteUrl(versionedHero);
-            if (heroImg) heroImg.src = versionedHero;
-            if (heroSurface) heroSurface.style.setProperty('--hero-image', `url('${resolvedHero}')`);
-        }
-
         const noticesResponse = await fetch(withVersion(manifest.noticesJson));
         const notices = await noticesResponse.json();
         
-        const currentId = getUrlParam('id');
+        const currentId = document.getElementById('notice') ? null : getUrlParam('id');
 
         const attachmentsBase = manifest.attachmentsBase || 'assets/notices/attachments/';
         if (currentId) {
@@ -54,17 +45,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (error) {
         console.error('Failed to fetch notices:', error);
         app.innerHTML = '<div class="notice-error">공지사항을 불러올 수 없습니다.</div>';
+    } finally {
+        const section = document.getElementById('notice');
+        if (section) {
+            section.setAttribute('data-content-ready', 'true');
+            section.dispatchEvent(new Event('jsg:section-ready', { bubbles: true }));
+        }
     }
 });
-
-function toAbsoluteUrl(url) {
-    try {
-        if (typeof URL === 'function') return new URL(url, window.location.href).href;
-    } catch {
-        return url;
-    }
-    return url;
-}
 
 function renderList(notices, container) {
     const sorted = sortNoticesByDateDesc(notices);
@@ -142,17 +130,19 @@ async function renderDetail(notices, id, container, attachmentsBase, postsBase, 
     container.innerHTML = `
         <article class="notice-record">
             <header class="notice-header">
-                <span class="notice-date-detail">${notice.date}</span>
-                <h1 class="h1-title" style="margin-top: 8px; margin-bottom: 24px;">${notice.title}</h1>
                 <div class="notice-meta-detail">
-                    <span>분류: ${notice.category}</span>
+                    ${notice.isImportant ? '<span class="badge-important">필수</span>' : ''}
+                    <time class="notice-date-detail" datetime="${notice.date}">${notice.date}</time>
+                    <span>${notice.category}</span>
                 </div>
+                <h1 class="h1-title">${notice.title}</h1>
             </header>
             <div class="notice-record-body" aria-live="polite"></div>
             ${renderAttachments(notice.attachments, attachmentsBase, assetVersion)}
         </article>
     `;
 
+    document.title = `${notice.title} | JSG INVESTMENT`;
     const body = container.querySelector('.notice-record-body');
     if (body) {
         body.textContent = '본문을 불러오는 중입니다...';
@@ -217,7 +207,7 @@ function buildNoticePager(notices, currentId) {
     back.className = 'notice-pager-list';
     back.href = 'notice.html';
     back.setAttribute('aria-label', 'Back to Notice');
-    back.textContent = `Back to Notice \u25B2`;
+    back.textContent = `Notice \u25B2`;
     pager.appendChild(back);
 
     if (nextNotice) {
@@ -272,7 +262,7 @@ function renderAttachments(attachments, attachmentsBase, assetVersion) {
 
     return `
         <div class="notice-attachments">
-            <h3 class="attachment-title">첨부파일</h3>
+            <h3 class="attachment-title">Files</h3>
             <ul class="attachment-list">
                 ${listHtml}
             </ul>

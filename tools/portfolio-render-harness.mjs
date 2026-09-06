@@ -80,6 +80,12 @@ class FakeContainer {
   constructor() {
     this._innerHTML = '';
     this.children = [];
+    this.attributes = new Map();
+    this.style = { setProperty() {} };
+  }
+
+  setAttribute(name, value) {
+    this.attributes.set(name, value);
   }
 
   set innerHTML(value) {
@@ -97,10 +103,12 @@ class FakeContainer {
   }
 }
 
-export async function renderPortfolioApp({ manifest, descriptions = {}, search = '' }) {
+export async function renderPortfolioApp({ manifest, descriptions = {}, search = '', namesOnly = false }) {
   const source = await readRepoFile('scripts/portfolio.js');
   const app = new FakeContainer();
   const listeners = new Map();
+  const jsonRequests = [];
+  const textRequests = [];
   const heroStyle = {};
   const heroSurface = {
     style: {
@@ -116,7 +124,7 @@ export async function renderPortfolioApp({ manifest, descriptions = {}, search =
       listeners.set(eventName, callback);
     },
     getElementById(id) {
-      return id === 'portfolio-app' ? app : null;
+      return id === (namesOnly ? 'portfolio-name-list' : 'portfolio-app') ? app : null;
     },
     querySelector(selector) {
       if (selector === '.portfolio-grid') return app;
@@ -139,10 +147,12 @@ export async function renderPortfolioApp({ manifest, descriptions = {}, search =
   const window = {
     location: { search },
     JsgAssets: {
-      async fetchJson() {
+      async fetchJson(url) {
+        jsonRequests.push(url);
         return manifest;
       },
       async fetchText(url) {
+        textRequests.push(url);
         const cleanUrl = String(url).split('?')[0];
         return descriptions[cleanUrl] ?? '';
       },
@@ -179,6 +189,8 @@ export async function renderPortfolioApp({ manifest, descriptions = {}, search =
   return {
     html: app.innerHTML,
     heroSrc: heroImg.src,
-    heroStyle
+    heroStyle,
+    jsonRequests,
+    textRequests
   };
 }

@@ -60,26 +60,26 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     const getRoleEn = (member) => String(member?.roleEn || fallbackRoleEn(member) || '').trim();
-    const getSummaryEn = (member) => String(member?.summaryEn || getRoleEn(member) || '').trim();
-    const toAbsoluteUrl = (url) => {
-        try {
-            if (typeof URL === 'function') return new URL(url, window.location.href).href;
-        } catch {
-            return url;
-        }
-        return url;
-    };
-
-    const renderMemberCard = (member) => {
+    const getSummaryEn = (member) => String(member?.summaryEn || '').trim();
+    const getSummaryKo = (member) => String(member?.summaryKo || '').trim();
+    const renderSummary = (member) => member.group === 'core' ? [
+        getSummaryKo(member) ? `<p class="team-card-summary" lang="ko">${escapeHtml(getSummaryKo(member))}</p>` : '',
+        getSummaryEn(member) ? `<p class="team-card-summary" lang="en">${escapeHtml(getSummaryEn(member))}</p>` : ''
+    ].join('') : '';
+    const renderMemberCard = (member, duplicate = false) => {
         const profileLabel = member.nameEn
             ? `${member.nameEn} profile`
             : `${member.nameKo} 프로필 보기`;
         const imageHtml = member.image
             ? `<img src="${escapeHtml(member.image)}" alt="${escapeHtml(member.nameEn || member.nameKo)}" class="team-img" loading="lazy" decoding="async">`
             : `<div class="member-photo-placeholder" aria-hidden="true"></div>`;
+        const roleEn = getRoleEn(member);
+        const roleEnHtml = member.group === 'core'
+            ? roleEn.split(/\s*\/\s*/).map(escapeHtml).join('<br>')
+            : escapeHtml(roleEn);
 
         return `
-            <a class="team-card team-card-link team-card--stacked" href="team-member.html?id=${encodeURIComponent(member.id)}" aria-label="${escapeHtml(profileLabel)}">
+            <a class="team-card team-card-link team-card--stacked" href="team-member.html?id=${encodeURIComponent(member.id)}" aria-label="${escapeHtml(profileLabel)}"${duplicate ? ' tabindex="-1"' : ''}>
                 <div class="team-card-media team-card-media--portrait">
                     ${imageHtml}
                 </div>
@@ -89,9 +89,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                         ${member.nameEn ? `<p class="team-name-en">${escapeHtml(member.nameEn)}</p>` : ''}
                     </div>
                     <p class="team-role">${escapeHtml(member.roleKo || '')}</p>
-                    ${getRoleEn(member) ? `<p class="team-role-en">${escapeHtml(getRoleEn(member))}</p>` : ''}
-                    ${getSummaryEn(member) ? `<p class="team-card-summary">${escapeHtml(getSummaryEn(member))}</p>` : ''}
+                    ${roleEn ? `<p class="team-role-en">${roleEnHtml}</p>` : ''}
                 </div>
+                ${member.group === 'core' ? `<div class="partners-summary">${renderSummary(member)}</div>` : ''}
             </a>
         `;
     };
@@ -100,10 +100,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         const renderGroup = (label, group) => {
             const groupMembers = members.filter(m => m.group === group);
             if (groupMembers.length === 0) return '';
-            const cardsHtml = groupMembers.map(renderMemberCard).join('');
+            const cardsHtml = groupMembers.map(member => renderMemberCard(member)).join('');
+            if (group === 'core') {
+                return `<section class="team-group" data-group="core">
+                    <h2 class="h2-title">${escapeHtml(label)}</h2>
+                    ${groupMembers.length > 1 ? '<div class="partners-controls"><button id="partners-motion-toggle" type="button" aria-pressed="false">일시정지</button></div>' : ''}
+                    <div id="partners-window" class="partners-window" aria-label="Partners">
+                        <div class="partners-track">
+                            <div class="partners-group">${cardsHtml}</div>${groupMembers.length > 1 ? `<div class="partners-group" aria-hidden="true">${groupMembers.map(member => renderMemberCard(member, true)).join('')}</div>` : ''}
+                        </div>
+                    </div>
+                </section>`;
+            }
 
             return `
-                <section class="team-group">
+                <section class="team-group" data-group="${escapeHtml(group)}">
                     <h2 class="h2-title">${escapeHtml(label)}</h2>
                     <div class="team-grid">
                         ${cardsHtml}
@@ -114,14 +125,61 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         app.innerHTML = `
             <div class="team-index-layout">
-                ${renderGroup('Core Team', 'core')}
-                ${renderGroup('Advisory Board', 'advisory')}
+                ${renderGroup('Partners', 'core')}
+                ${renderGroup('Advisors', 'advisory')}
             </div>
         `;
+        startPartnerScroll();
+    };
+
+    const startPartnerScroll = () => {
+        const viewport = document.getElementById('partners-window');
+        const button = document.getElementById('partners-motion-toggle');
+        if (!viewport || !button) return;
+        const group = viewport.querySelector('.partners-group');
+        const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        let paused = motion.matches;
+        let visible = false;
+        let frame = 0;
+        let previousTime = 0;
+        let scrollPosition = viewport.scrollLeft;
+        const updateButton = () => {
+            button.setAttribute('aria-pressed', String(paused));
+            button.textContent = paused ? '재생' : '일시정지';
+        };
+        const step = (time) => {
+            const elapsed = previousTime ? Math.min(time - previousTime, 64) : 0;
+            previousTime = time;
+            const width = group.getBoundingClientRect().width;
+            if (width > 0) {
+                scrollPosition = (scrollPosition + elapsed * 0.026) % width;
+                viewport.scrollLeft = scrollPosition;
+            }
+            frame = requestAnimationFrame(step);
+        };
+        const updateMotion = () => {
+            cancelAnimationFrame(frame);
+            previousTime = 0;
+            scrollPosition = viewport.scrollLeft;
+            if (!paused && visible) frame = requestAnimationFrame(step);
+            updateButton();
+        };
+        const pause = () => { paused = true; updateMotion(); };
+        button.addEventListener('click', () => { paused = !paused; updateMotion(); });
+        viewport.addEventListener('pointerdown', pause, { passive: true });
+        viewport.addEventListener('wheel', pause, { passive: true });
+        viewport.addEventListener('focusin', pause);
+        motion.addEventListener('change', () => { paused = motion.matches; updateMotion(); });
+        new IntersectionObserver(entries => {
+            visible = entries[0].isIntersecting;
+            updateMotion();
+        }).observe(viewport);
+        updateButton();
     };
 
     const renderMemberDetail = (member) => {
-        const groupLabel = member.group === 'core' ? 'Core Team' : 'Advisory Board';
+        document.title = `${member.nameKo} | JSG INVESTMENT`;
+        const groupLabel = member.group === 'core' ? 'Partners' : 'Advisors';
         const nameEnHtml = member.nameEn
             ? `<span class="member-name-en">${escapeHtml(member.nameEn)}</span>`
             : '';
@@ -165,14 +223,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <h1 class="h1-title member-name">${escapeHtml(member.nameKo)}${nameEnHtml}</h1>
                         <p class="team-role">${escapeHtml(member.roleKo || '')}</p>
                         ${getRoleEn(member) ? `<p class="team-role-en">${escapeHtml(getRoleEn(member))}</p>` : ''}
-                        ${getSummaryEn(member) ? `<p class="team-card-summary">${escapeHtml(getSummaryEn(member))}</p>` : ''}
+                        ${renderSummary(member)}
                     </div>
                 </div>
             </article>
             ${highlightsHtml}
             <div class="member-pager" aria-label="Member navigation">
                 ${prevHtml}
-                <a class="member-pager-team" href="team.html" aria-label="Back to Team">Back to Team ▲</a>
+                <a class="member-pager-team" href="team.html" aria-label="Back to Team">Team ↑</a>
                 ${nextHtml}
             </div>
         `;
@@ -219,16 +277,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         window.__teamMembers = members;
 
-        if (data.heroImage) {
-            const heroSurface = document.querySelector('.page-hero .page-hero-surface');
-            const heroImg = document.querySelector('.page-hero .page-hero-media img');
-            const versionedHero = withVersion(data.heroImage);
-            const resolvedHero = toAbsoluteUrl(versionedHero);
-            if (heroImg) heroImg.src = versionedHero;
-            if (heroSurface) heroSurface.style.setProperty('--hero-image', `url('${resolvedHero}')`);
-        }
-
-        const currentId = getUrlParam('id');
+        const currentId = document.getElementById('team') ? null : getUrlParam('id');
         if (!currentId) {
             renderMemberList(members);
             return;
@@ -252,5 +301,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <p style="margin: 0; color: var(--text-muted);">팀 정보를 불러올 수 없습니다. (file:// 환경에서는 동작하지 않습니다.)</p>
             </div>
         `;
+    } finally {
+        const section = document.getElementById('team');
+        if (section) {
+            section.setAttribute('data-content-ready', 'true');
+            section.dispatchEvent(new Event('jsg:section-ready', { bubbles: true }));
+        }
     }
 });

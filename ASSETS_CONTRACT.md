@@ -1,5 +1,7 @@
 # Assets Contract (Page-Based `assets/`)
 
+> Current worktree scope (2026-09-06): retained because the current user request preserves the content pipeline and manager editing boundary. This document does not fix the visual design or technology stack. See `AGENTS.md` for the collaborative design workflow.
+
 This document defines non-negotiable conventions for the `assets/` migration so:
 - managers can update content without touching scripts
 - developers can keep scripts stable with predictable inputs
@@ -9,7 +11,7 @@ This document defines non-negotiable conventions for the `assets/` migration so:
 
 - Canonical ownership is page-based: `assets/{page}/...`
 - Shared assets live in: `assets/shared/...`
-- Notices are separate: `assets/notices/...` (or kept in `data/` if we choose “Option A”)
+- Notices live in: `assets/notices/...` (the existing implemented path).
 
 Rule: if an asset is used by 2+ pages and is expected to be updated, it belongs in `assets/shared/`.
 
@@ -65,7 +67,7 @@ Required filename conventions:
 Required ID-based patterns:
 - Team member portrait filename base must match member `id`:
   - `assets/team/{member-id}.{ext}`
-- Portfolio company logo filename base must match company `id`:
+- Portfolio company logo filename base must match company `id` when a non-empty path is supplied:
   - `assets/portfolio/{company-id}.{ext}`
 
 Recommended patterns:
@@ -98,3 +100,16 @@ If a new content type is required, it must be added by a developer once, then be
 
 
 
+
+## Current Presentation Note (2026-09-06)
+
+Company logos are not displayed in this experiment. The existing `logo` key remains in the schema; the current validator already accepts an empty string for a company without a logo. Existing files and manifest references are retained. Company names, ordering and detail links all come from the same `companies` array; `descriptionText` remains required for the existing detail view. This is a presentation change, not a replacement content pipeline.
+
+## Authorized Additions (2026-09-07)
+
+- Team partners (`group: "core"`) may provide `summaryKo` alongside their existing English `summary`. The displayed Korean summary translates the approved English summary. Advisor summaries remain in the data but are not displayed. Group IDs are unchanged; the UI label is Partners.
+- Philosophy manifest may provide `postsJson: "assets/philosophy/posts.json"`. The index contains `schemaVersion: 1`, one HTTPS root `publicationUrl`, and `posts` entries with plain-text `title`, `YYYY-MM-DD` `date`, and a same-publication `/p/` article `url`. A blank publication and empty list are valid and hide Writing. The sync tool updates this file; managers do not edit rendering code.
+- The browser reads the post index through the existing no-cache JSON loader. After manual RSS sync, publish the changed JSON with the site. The tool preserves older entries absent from the latest RSS; intentional deletions require editing the index.
+- Moving the About company introduction to the home footer preserves its About manifest/text sources. Removing decorative hero images from rendered pages does not remove their legacy manifest fields or asset files.
+
+- Contact renders full-width phone, email, Korean/English address, then the map, without Location or a duplicate Contact subheading. `texts.addressLabel` and `texts.locationAddressEn` own the new label and user-supplied English address. Legacy text keys/files remain compatible but are not fetched for hidden content. `mapImage` points to `contact-map.png`; the editable `contact-map.svg` is retained alongside it. Address, telephone, and email remain managed by their existing TXT files.

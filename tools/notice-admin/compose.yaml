@@ -1,0 +1,49 @@
+name: jsg-notice-admin
+services:
+  db:
+    image: mariadb:11.4
+    environment:
+      MARIADB_DATABASE: jsg_notice
+      MARIADB_USER: jsg_notice
+      MARIADB_PASSWORD_FILE: /run/secrets/db_password
+      MARIADB_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+    secrets: [db_password, db_root_password]
+    volumes:
+      - database:/var/lib/mysql
+    networks: [local]
+    healthcheck:
+      test: [CMD, healthcheck.sh, --connect, --innodb_initialized]
+      interval: 3s
+      timeout: 5s
+      retries: 30
+    restart: "no"
+  app:
+    build: .
+    ports:
+      - "127.0.0.1:8787:8787"
+    secrets: [db_password]
+    volumes:
+      - authoring:/opt/gnuboard/data
+      - type: bind
+        source: ${JSG_NOTICE_SOURCE:?Set JSG_NOTICE_SOURCE via manage.py}
+        target: /input
+        read_only: true
+      - type: bind
+        source: ${JSG_NOTICE_STATE:?Set JSG_NOTICE_STATE via manage.py}/exports
+        target: /exports
+    networks: [local]
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+networks:
+  local:
+    internal: true
+volumes:
+  database:
+  authoring:
+secrets:
+  db_password:
+    file: ${JSG_NOTICE_STATE:?Set JSG_NOTICE_STATE via manage.py}/db-password
+  db_root_password:
+    file: ${JSG_NOTICE_STATE:?Set JSG_NOTICE_STATE via manage.py}/db-root-password

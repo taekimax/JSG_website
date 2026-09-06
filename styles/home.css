@@ -1,0 +1,247 @@
+/* Single-page composition. Content continues to use the existing page manifests. */
+.home-page .site-main { padding: 64px 0 0; }
+.home-page .section-inner {
+    width: calc(100% - 2 * var(--site-gutter));
+    max-width: var(--site-width);
+    margin-inline: auto;
+}
+.home-page .home-section { padding-block: 96px; }
+.home-page #about { padding-top: 0; padding-bottom: 40px; }
+.home-page .about-story { padding-bottom: 72px; }
+
+.home-page .section-title,
+.home-page .page-hero-kicker.section-title {
+    margin: 0;
+    color: inherit;
+    font-family: var(--font-family-title);
+    font-size: var(--section-title-size);
+    font-weight: 400;
+    letter-spacing: var(--section-title-tracking);
+    line-height: var(--section-title-leading);
+    text-transform: none;
+}
+.home-page .home-section:where(:not(#about)) .page-hero { padding: 0 0 60px; }
+.home-page .home-section:where(:not(#about)) .page-hero-surface { display: block; }
+.home-page .home-section:where(:not(#about)) .page-hero-text {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    align-items: start;
+    color: inherit;
+}
+.home-page .home-section:where(:not(#about)) .page-hero-text > :first-child { grid-row: auto; }
+.home-page .home-section:where(:not(#about)) .page-hero-sub {
+    width: 100%;
+    max-width: none;
+    font-size: var(--section-lead-size);
+    line-height: var(--section-lead-leading);
+    margin: 0;
+}
+.home-page .home-section:where(:not(#about)) .page-hero-surface::after { content: none; }
+.home-page .team-index-layout { gap: 64px; }
+.home-page .team-group + .team-group { margin-top: 64px; }
+.home-page .team-group > .h2-title {
+    padding-bottom: 18px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 15px;
+    font-weight: 450;
+    letter-spacing: 0.02em;
+}
+.home-page .team-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 28px; }
+.home-page .team-card {
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: none;
+    overflow: visible;
+}
+.home-page .team-card-link { grid-template-columns: 1fr; align-content: start; }
+.home-page .team-card-link:hover { transform: none; box-shadow: none; }
+.home-page .team-card-link:hover .team-name { color: var(--brand-royal-blue); }
+.home-page .team-card-media {
+    height: 320px;
+    min-height: 0;
+    border: 0;
+    background: var(--bg-soft);
+}
+.home-page .team-img { object-fit: contain; object-position: center bottom; }
+.home-page .team-card-copy { padding: 24px 0 0; gap: 10px; }
+.home-page .team-name { font-size: 26px; font-weight: 500; letter-spacing: -0.04em; }
+.home-page .team-role { font-size: 14px; letter-spacing: 0; font-weight: 450; }
+.home-page .team-role-en { font-weight: 400; }
+.home-page .team-card-summary { display: block; overflow: visible; }
+.home-page [data-group="advisory"] .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.home-page [data-group="advisory"] .team-card { grid-template-columns: 108px minmax(0, 1fr); gap: 24px; }
+.home-page [data-group="advisory"] .team-card-media { height: 140px; }
+.home-page [data-group="advisory"] .team-card-copy { padding-top: 0; }
+.home-page [data-group="advisory"] .team-name { font-size: 23px; }
+.home-page .home-section--blue { color: var(--base-white); background: var(--brand-royal-blue); }
+.home-page .home-section--navy { color: var(--base-white); background: var(--brand-deep-blue); }
+.home-page :is(.home-section--blue, .home-section--navy) .page-hero-sub { color: var(--base-white); }
+.home-page .philosophy-section { margin: 0; }
+.home-page .philosophy-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; }
+.home-page .philosophy-card {
+    display: block;
+    border: 0;
+    border-top: 1px solid currentColor;
+    border-radius: 0;
+    box-shadow: none;
+    background: none;
+    padding-top: 24px;
+    overflow: visible;
+}
+.home-page .philosophy-card:hover { transform: none; box-shadow: none; }
+.home-page .phil-strip { display: none; }
+.home-page .phil-content { padding: 0; }
+.home-page :is(.phil-title, .team-group > .h2-title) { color: inherit; font-family: var(--font-family-title); font-size: var(--subheading-size); font-weight: 400; letter-spacing: var(--subheading-tracking); line-height: var(--subheading-leading); }
+.home-page .phil-copy-stack { display: flex; flex-direction: column; gap: 24px; }
+.home-page :is(.phil-desc-ko, .phil-desc-en) { color: inherit; font-size: 18px; line-height: 1.85; margin: 0; }
+.home-page .phil-desc-ko { order: -1; }
+.home-page #portfolio { background: var(--bg-page); }
+.home-page .portfolio-band { border: 0; }
+.home-page .portfolio-band-heading { margin-bottom: 60px; }
+.home-page .company-name-group a { font-family: var(--font-family-title); font-size: clamp(42px, 6vw, 76px); }
+.home-page .notice-record-item {
+    border: 0;
+    border-top: 1px solid var(--border-light);
+    border-radius: 0;
+    padding: 28px 0;
+    box-shadow: none;
+    background: none;
+}
+.home-page .notice-record-item:hover { background: none; }
+.home-page .notice-link { color: var(--brand-deep-blue); font-size: clamp(20px, 2.2vw, 28px); font-weight: 450; }
+.home-page .contact-section { margin: 0; min-width: 0; }
+.home-page .contact-card { padding: 0; border: 0; border-radius: 0; box-shadow: none; background: none; }
+.home-page .contact-row { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 24px; align-items: baseline; margin: 0; padding: 20px 0; border-top: 1px solid var(--text-muted); }
+.home-page :is(.contact-value, .contact-label, .contact-subtext, .contact-map-caption) { color: inherit; }
+.home-page :is(.contact-value, .contact-label) { margin: 0; font-size: 20px; font-weight: 400; line-height: 1.6; word-break: keep-all; overflow-wrap: anywhere; }
+.home-page .contact-address { display: grid; gap: 4px; min-width: 0; }
+.home-page .contact-map-frame { margin: 32px 0 0; border: 0; border-radius: 12px; background: var(--bg-soft); }
+.home-page .home-section--navy :is(a, button, summary):focus-visible { outline: 2px solid var(--base-white); outline-offset: 6px; }
+.home-page .site-footer { display: block; padding-block: 56px 32px; font-size: 14px; }
+@media (max-width: 1023px) {
+    .home-page .site-main { padding-top: 40px; }
+    .home-page .home-section { padding-block: var(--section-band-space); }
+    .home-page .team-card-media { height: 240px; }
+    .home-page .philosophy-list { gap: 24px; }
+    .home-page [data-group="advisory"] .team-card { grid-template-columns: 80px minmax(0, 1fr); gap: 18px; }
+    .home-page [data-group="advisory"] .team-card-media { height: 110px; }
+}
+@media (max-width: 699px) {
+    .home-page .home-section { padding-block: 56px; }
+    .home-page .home-section:where(:not(#about)) .page-hero { padding-bottom: 40px; }
+    .home-page .team-grid, .home-page [data-group="advisory"] .team-grid { grid-template-columns: 1fr; gap: 36px; }
+    .home-page .team-card-link { grid-template-columns: 110px minmax(0, 1fr); gap: 20px; }
+    .home-page .team-card-media { height: 150px; }
+    .home-page .team-card-copy { padding: 0; }
+    .home-page .team-name { font-size: 23px; }
+    .home-page .philosophy-list { grid-template-columns: 1fr; gap: 40px; }
+    .home-page .portfolio-band-heading { margin-bottom: 32px; }
+    .home-page .contact-row { grid-template-columns: 48px minmax(0, 1fr); gap: 16px; }
+    .home-page :is(.contact-value, .contact-label) { font-size: 17px; }
+}
+
+.home-page .home-section:where(:not(#about)) .page-hero-text { color: inherit; }
+.home-page .about-hero-media { display: flex; flex-direction: column; align-items: center; }
+.home-page .about-hero-media .brand-wordmark { font-size: 20px; margin-top: 0; }
+.home-page .site-footer .brand-wordmark { font-size: 20px; }
+
+.home-page main > section:focus { outline: none; }
+.home-page .phil-desc-ko { word-break: keep-all; overflow-wrap: anywhere; }
+
+.home-page .notice-list { border: 0; border-radius: 0; box-shadow: none; background: none; }
+
+/* Approved color bands: only the About, Team and Portfolio headings are colored. */
+.home-page .site-main { padding-top: 0; }
+.home-page .about-title-band {
+    --about-title-size: clamp(26px, 3.4vw, 48px);
+    --about-title-leading: calc(var(--about-title-size) * 1.5);
+    padding-block: clamp(48px, 6vw, 88px);
+    background: var(--accent-cyan);
+    color: var(--brand-deep-blue);
+}
+.home-page .about-title-grid {
+    display: grid;
+    grid-template-columns: 1.08fr 1fr;
+    gap: clamp(56px, 8vw, 120px);
+}
+.home-page .about-story { padding-top: 64px; }
+.home-page #team { padding-top: 0; background: var(--bg-page); }
+.home-page #team .section-title-band {
+    padding-block: var(--section-band-space);
+    margin-bottom: 64px;
+    color: var(--base-white);
+    background: var(--brand-royal-blue);
+}
+.home-page #team .section-title-band .page-hero-sub { color: inherit; }
+.home-page #notice { padding-block: 56px; color: var(--base-white); background: var(--notice-title-bg); }
+.home-page #notice .section-title-band { padding: 0 0 32px; margin: 0; color: inherit; background: none; }
+.home-page #notice :is(.notice-link, .notice-meta, .notice-loading, .notice-error) { color: inherit; }
+.home-page #notice .notice-record-item { padding-block: 20px; border-color: color-mix(in srgb, var(--base-white) 40%, transparent); }
+.home-page #notice .notice-category::before { color: inherit; }
+.home-page #notice .badge-important { background: var(--base-white); }
+.home-page .portfolio-band { padding-top: 0; }
+.home-page .portfolio-band-heading {
+    padding-block: var(--section-band-space);
+    margin: 0 0 32px;
+    color: var(--brand-deep-blue);
+    background: var(--portfolio-title-bg);
+}
+.home-page .portfolio-controls { display: flex; justify-content: flex-end; }
+.home-page :is(.team-role, .team-role-en, .team-name-en) { font-size: 16px; }
+.home-page .team-card-summary { font-size: 17px; }
+.home-page .footer-bottom { display: flex; justify-content: flex-end; border-top: 1px solid var(--border-light); padding-top: 24px; }
+.home-page .footer-bottom a { font-family: var(--font-family-title); font-size: 17px; }
+.home-page .company-footer { padding-top: 0; }
+@media (max-width: 699px) {
+    .home-page .about-title-band { --about-title-size: clamp(26px, 7vw, 40px); }
+    .home-page .about-title-grid { grid-template-columns: 1fr; gap: 32px; }
+    .home-page .about-story { padding-top: 40px; gap: 32px; }
+    .home-page #team .section-title-band { padding-block: var(--section-band-space); margin-bottom: 40px; }
+    .home-page #notice { padding-block: 40px; }
+    .home-page #notice .section-title-band { padding-bottom: 24px; }
+    .home-page .portfolio-band-heading { padding-block: var(--section-band-space); }
+    .home-page :is(.phil-desc-ko, .phil-desc-en) { font-size: 17px; }
+}
+
+/* Partners and Advisors use the exact same heading treatment as the values. */
+.home-page .team-group > .h2-title { line-height: 1.4; }
+.home-page .writing-section { margin-top: 72px; padding-top: 40px; border-top: 1px solid currentColor; }
+.home-page .writing-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
+.home-page .writing-heading .phil-title { margin: 0; }
+.home-page .writing-all { color: inherit; font-family: var(--font-family-title); font-size: 17px; }
+.home-page .writing-item { border-top: 1px solid color-mix(in srgb, var(--base-white) 40%, transparent); }
+.home-page .writing-link { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 24px; padding: 24px 0; color: inherit; }
+.home-page .writing-date { padding-top: 4px; font-size: 16px; }
+.home-page .writing-title { font-family: var(--font-family-base); font-size: clamp(22px, 2.5vw, 32px); line-height: 1.55; font-weight: 450; word-break: keep-all; overflow-wrap: anywhere; }
+.home-page .writing-link:hover .writing-title { text-decoration: underline; text-underline-offset: 6px; }
+.home-page #philosophy :is(a, button):focus-visible { outline-color: var(--base-white); }
+@media (max-width: 699px) {
+    .home-page .writing-section { margin-top: 48px; }
+    .home-page .writing-link { grid-template-columns: 1fr; gap: 8px; }
+}
+
+/* Partners: a continuous strip with native swipe/scroll and a single pause control. */
+.home-page .partners-controls { display: flex; justify-content: flex-end; margin-bottom: 24px; }
+.home-page #partners-motion-toggle { min-height: 44px; padding: 8px 0 8px 16px; color: var(--text-muted); font-size: 16px; }
+.home-page .partners-window { container-type: inline-size; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; }
+.home-page .partners-window::-webkit-scrollbar { display: none; }
+.home-page .partners-track { display: flex; width: max-content; }
+.home-page .partners-group { display: flex; align-items: stretch; gap: 40px; min-width: 100cqw; padding: 0 40px 16px 0; }
+.home-page .partners-group .team-card-link { flex: 0 0 420px; width: 420px; display: grid; grid-template-columns: 144px minmax(0, 1fr); align-content: start; align-items: start; gap: 24px 20px; padding: 24px; border-radius: 12px; overflow: hidden; background: var(--bg-soft); }
+.home-page .partners-group .team-card-media { width: 100%; height: auto; aspect-ratio: auto; overflow: visible; }
+.home-page .partners-group .team-card-copy { padding: 0; min-width: 0; }
+.home-page .partners-group .team-img { display: block; width: 100%; height: auto; max-height: none; aspect-ratio: auto; object-fit: contain; }
+.home-page .partners-summary { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 12px; border-top: 1px solid var(--border-light); padding-top: 20px; }
+.home-page .partners-group .team-card-summary { color: var(--text-muted); word-break: keep-all; overflow-wrap: anywhere; }
+.home-page .partners-group .team-card-summary[lang="en"] { word-break: normal; }
+.home-page .partners-window:has(a:focus-visible) .partners-group[aria-hidden="true"] { visibility: hidden; }
+@media (max-width: 699px) {
+    .home-page .partners-group { gap: 24px; padding-right: 24px; }
+    .home-page .partners-group .team-card-link { flex-basis: min(320px, 100cqw); width: min(320px, 100cqw); grid-template-columns: clamp(84px, 30cqw, 104px) minmax(0, 1fr); gap: 20px 16px; padding: 20px; }
+    .home-page .partners-group .team-name { font-size: 22px; }
+    .home-page .partners-group :is(.team-name-en, .team-role, .team-role-en) { font-size: 15px; }
+    .home-page .partners-group .team-card-summary { font-size: 16px; line-height: 1.65; }
+}

@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
     if (!window.JsgAssets) return;
 
-    const hero = document.querySelector('.page-hero');
+    const hero = document.getElementById('about-jsg');
     const kickerEl = hero?.querySelector('.page-hero-kicker');
     if (!kickerEl) return;
 
@@ -38,8 +38,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const hydrateSection = (sectionEl, title, body) => {
             if (!sectionEl) return;
-            const titleEl = sectionEl.querySelector('.about-section-title');
-            window.JsgAssets.setText(titleEl, title.trim());
+            const titleEl = document.getElementById(sectionEl.getAttribute('aria-labelledby'));
+            const value = title.trim();
+            const breakBefore = titleEl?.getAttribute('data-break-before');
+            const split = breakBefore ? value.indexOf(` ${breakBefore}`) : -1;
+            window.JsgAssets.setText(titleEl, value);
+            if (titleEl && split > 0) {
+                titleEl.replaceChildren();
+                for (const line of [value.slice(0, split + 1), value.slice(split + 1)]) {
+                    const span = document.createElement('span');
+                    span.className = 'about-title-line';
+                    span.textContent = line;
+                    titleEl.appendChild(span);
+                }
+            }
 
             sectionEl.querySelectorAll('p').forEach(p => p.remove());
 
@@ -54,5 +66,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         hydrateSection(sectionEls[1], section2Title, section2Body);
     } catch (error) {
         console.error('Failed to load about copy:', error);
+    } finally {
+        const section = document.getElementById('about');
+        if (section) {
+            section.setAttribute('data-content-ready', 'true');
+            section.dispatchEvent(new Event('jsg:section-ready', { bubbles: true }));
+        }
     }
 });

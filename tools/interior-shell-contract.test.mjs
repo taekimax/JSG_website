@@ -1,46 +1,23 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { readRepoFile } from './portfolio-render-harness.mjs';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const repoRoot = path.resolve(__dirname, '..');
+const pages = ['about.html', 'team-member.html', 'portfolio.html', 'notice.html'];
+const destinations = ['about', 'team', 'philosophy', 'portfolio', 'notice', 'contact'].map(section => `about.html#${section}`);
 
-async function readRepoFile(relativePath) {
-  return fs.readFile(path.join(repoRoot, relativePath), 'utf8');
-}
-
-test('interior pages opt into the shared cinematic shell', async () => {
-  for (const page of [
-    'about.html',
-    'team.html',
-    'team-member.html',
-    'philosophy.html',
-    'portfolio.html',
-    'notice.html',
-    'contact.html',
-  ]) {
+test('every interior page has the same reachable top navigation without an island or bottom sheet', async () => {
+  for (const page of pages) {
     const html = await readRepoFile(page);
-    assert.match(html, /class="site-main site-main--interior"/);
-    assert.match(html, /class="container content-shell"/);
-    assert.match(html, /class="bottom-nav section-pager"/);
+    const header = html.match(/<header class="site-header">[\s\S]*?<\/header>/)?.[0];
+    assert.ok(header, page);
+    assert.match(header, /aria-controls="primary-navigation" aria-expanded="false"/);
+    assert.match(header, /<nav id="primary-navigation"/);
+    const links = [...header.matchAll(/<a href="([^"]+)"[^>]*>(About|Team|Philosophy|Portfolio|Notice|Contact)<\/a>/g)];
+    assert.deepEqual(links.map(link => link[1]), destinations, page);
+    const active = `about.html#${page === 'team-member.html' ? 'team' : page.replace('.html', '')}`;
+    assert.match(header, new RegExp(`href="${active.replace('.', '\\.')}" aria-current="page"`));
+    assert.doesNotMatch(html, /bottom-nav|section-pager|section-sheet|sheet-toggle/);
+    assert.match(html, /id="main-content"/);
+    assert.match(html, /scripts\/ui\.js/);
   }
-});
-
-test('page-level CSS does not override shared interior shell backgrounds', async () => {
-  const css = await readRepoFile('styles/main.css');
-
-  assert.doesNotMatch(
-    css,
-    /\.[a-z0-9-]+-page\s+\.site-main(?:--interior)?\s*\{[^}]*background(?:-image|-color)?\s*:/is
-  );
-});
-
-test('desktop layout does not keep the floating pager over interior content', async () => {
-  const css = await readRepoFile('styles/layout.css');
-  assert.match(
-    css,
-    /@media\s*\(min-width:\s*1024px\)[\s\S]*?\.bottom-nav\s*\{[\s\S]*?display:\s*none/is
-  );
 });

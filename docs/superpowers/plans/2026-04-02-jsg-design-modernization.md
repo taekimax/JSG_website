@@ -1,6 +1,8 @@
 # JSG Design Modernization Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> 역사 자료 — 2026-09-06부터 이 실험 worktree의 실행 지침으로 사용하지 않습니다. 아래의 승인, 요구사항, 작업 절차, 검증 결과는 당시 기록입니다. 현재 작업은 루트 `AGENTS.md`와 이번 사용자 결정에 따릅니다.
+
+> Historical execution note: the earlier plan referenced superpowers skills and checkbox tracking. That workflow is inactive in this experiment.
 
 **Goal:** Redesign the JSG site around a cinematic founder-facing landing page and a calmer premium-editorial interior system without changing the current content pipeline or approved phrases.
 
