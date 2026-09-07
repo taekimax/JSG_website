@@ -112,6 +112,10 @@
     max-width: 62ch;
 }
 
+.bilingual-stack .page-hero-sub + .page-hero-sub {
+    margin-top: -6px;
+}
+
 .page-hero-kicker {
     margin: 0;
     letter-spacing: 0.16em;
@@ -711,7 +715,7 @@
 .phil-copy-stack {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 6px;
     padding-top: 2px;
 }
 
@@ -1081,6 +1085,10 @@
 
     .bilingual-stack {
         gap: 14px;
+    }
+
+    .bilingual-stack .page-hero-sub + .page-hero-sub {
+        margin-top: -8px;
     }
 
     /* Portfolio Desktop Layout */

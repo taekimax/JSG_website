@@ -132,15 +132,14 @@
 }
 
 .about-editorial .page-hero-text {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 22px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     max-width: none;
 }
 
 .about-editorial .page-hero-kicker {
-    grid-column: 1 / -1;
-    color: var(--editorial-accent);
+    color: var(--brand-deep-blue);
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.1em;
@@ -157,6 +156,10 @@
 
 .about-editorial .page-hero-sub[lang="en"] {
     word-break: normal;
+}
+
+.about-editorial .page-hero-sub + .page-hero-sub {
+    margin-top: 8px;
 }
 
 .about-footer {
@@ -225,8 +228,7 @@
     }
 
     .about-editorial .page-hero-text {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 18px;
+        gap: 16px;
     }
 
     .about-editorial .about-hero-media {

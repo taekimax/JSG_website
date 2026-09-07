@@ -23,8 +23,8 @@
 .home-page .home-section:where(:not(#about)) .page-hero { padding: 0 0 60px; }
 .home-page .home-section:where(:not(#about)) .page-hero-surface { display: block; }
 .home-page .home-section:where(:not(#about)) .page-hero-text {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    display: flex;
+    flex-direction: column;
     gap: 24px;
     align-items: start;
     color: inherit;
@@ -36,6 +36,9 @@
     font-size: var(--section-lead-size);
     line-height: var(--section-lead-leading);
     margin: 0;
+}
+.home-page .home-section:where(:not(#about)) .page-hero-text .page-hero-sub + .page-hero-sub {
+    margin-top: -18px;
 }
 .home-page .home-section:where(:not(#about)) .page-hero-surface::after { content: none; }
 .home-page .team-index-layout { gap: 64px; }
@@ -95,7 +98,7 @@
 .home-page .phil-strip { display: none; }
 .home-page .phil-content { padding: 0; }
 .home-page :is(.phil-title, .team-group > .h2-title) { color: inherit; font-family: var(--font-family-title); font-size: var(--subheading-size); font-weight: 400; letter-spacing: var(--subheading-tracking); line-height: var(--subheading-leading); }
-.home-page .phil-copy-stack { display: flex; flex-direction: column; gap: 24px; }
+.home-page .phil-copy-stack { display: flex; flex-direction: column; gap: 6px; }
 .home-page :is(.phil-desc-ko, .phil-desc-en) { color: inherit; font-size: 18px; line-height: 1.85; margin: 0; }
 .home-page .phil-desc-ko { order: -1; }
 .home-page #portfolio { background: var(--bg-page); }

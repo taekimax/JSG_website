@@ -51,6 +51,9 @@
     word-break: keep-all;
     overflow-wrap: anywhere;
 }
+.detail-page .detail-hero .page-hero-sub + .page-hero-sub {
+    margin-top: -18px;
+}
 .detail-page :is(#portfolio-app, #notice-app) { padding-block: 64px 80px; }
 .detail-page .portfolio-grid { display: block; }
 .detail-page :is(.portfolio-detail, .notice-record, .about-card) {
