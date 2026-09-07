@@ -312,7 +312,6 @@
 .home-page .partners-summary { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 12px; border-top: 1px solid var(--border-light); padding-top: 20px; }
 .home-page .partners-group .team-card-summary { color: var(--text-muted); word-break: keep-all; overflow-wrap: anywhere; }
 .home-page .partners-group .team-card-summary[lang="en"] { word-break: normal; }
-.home-page .partners-window:has(a:focus-visible) .partners-group[aria-hidden="true"] { visibility: hidden; }
 @media (max-width: 699px) {
     .home-page .partners-group { gap: 24px; padding-right: 24px; }
     .home-page .partners-group .team-card-link { flex-basis: min(320px, 100cqw); width: min(320px, 100cqw); grid-template-columns: clamp(84px, 30cqw, 104px) minmax(0, 1fr); gap: 20px 16px; padding: 20px; }

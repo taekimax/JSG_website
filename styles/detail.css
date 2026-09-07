@@ -134,7 +134,7 @@
     .detail-footer { align-items: flex-start; flex-direction: column; gap: 16px; }
 }
 
-/* Member pages keep only the actual portrait; no hero photography or empty portrait box. */
+/* Member pages retain a blank portrait space when no photo is available. */
 .detail-page--team .detail-hero { background: var(--brand-royal-blue); color: var(--base-white); }
 .detail-page--team .detail-hero .page-hero-text > :first-child { grid-row: auto; }
 .detail-page--team .team-detail-shell { margin-block: 64px 80px; }
@@ -156,8 +156,6 @@
     background: var(--bg-soft);
 }
 .detail-page--team .member-hero-img { object-fit: contain; object-position: center bottom; }
-.detail-page--team .member-hero-card:has(.member-photo-placeholder) { grid-template-columns: 1fr; }
-.detail-page--team .member-hero-card .team-card-media:has(.member-photo-placeholder) { display: none; }
 .detail-page--team .member-hero-content { padding: 0; gap: 24px; }
 .detail-page--team .member-kicker { color: var(--text-muted); font-family: var(--font-family-title); font-size: 20px; line-height: 1.4; font-weight: 400; letter-spacing: -0.03em; text-transform: none; }
 .detail-page--team .member-name { font-size: clamp(36px, 4.5vw, 56px); font-weight: 550; line-height: 1.3; letter-spacing: -0.04em; }

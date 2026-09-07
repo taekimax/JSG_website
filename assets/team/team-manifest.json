@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "page": "team",
-  "assetVersion": "2026-09-07",
+  "assetVersion": "2026-09-07-team-ppt-2",
   "heroImage": "assets/team/team-hero.jpg",
   "members": [
     {
@@ -9,57 +9,101 @@
       "group": "core",
       "order": 10,
       "nameKo": "박상진",
-      "nameEn": "Park Sang-jin",
+      "nameEn": "",
       "roleKo": "대표이사 / 회장",
-      "roleEn": "Chief Executive Officer / Chairman",
-      "summaryEn": "Biotech operator and serial company builder with cross-border board experience.",
+      "roleEn": "",
+      "summaryEn": "",
       "image": "assets/team/park-sang-jin.png",
       "highlights": [
         "(미국) Invent Medical 등기 이사",
         "진성과학 대표이사",
-        "엘리어헬스케어 대표이사",
+        "엘리어헬스케어 한국법인 대표",
         "진성메디텍 대표이사",
-        "(미국) Backman Instrument (미) 부장",
+        "(미국) Backman Instrument 부장",
         "고려대 경영학 석사"
       ],
       "sourceUrl": "http://www.jsginvest.com/bbs/board.php?bo_table=0201&wr_id=1",
       "wrId": "1",
-      "summaryKo": "바이오 기업 운영과 여러 기업의 설립·성장, 해외 이사회 활동 경험을 갖추고 있습니다."
+      "summaryKo": "(미국) Invent Medical 등기 이사 · 진성과학 대표이사",
+      "sourceSlide": 6
     },
     {
       "id": "choi-seung-man",
       "group": "core",
       "order": 20,
       "nameKo": "최승만",
-      "nameEn": "Choi Seung-man",
-      "roleKo": "부사장 / 심사역",
-      "roleEn": "Vice President / Investment Director",
-      "summaryEn": "Investment executive with valuation, energy, and venture strategy experience.",
+      "nameEn": "",
+      "roleKo": "부사장 / 수석심사역",
+      "roleEn": "",
+      "summaryEn": "",
       "image": "assets/team/choi-seung-man.png",
       "highlights": [
         "기업기술가치평가사",
         "한화도시개발 본부장(상무)",
-        "한화 벤처경영센터 팀장",
+        "한화 벤처경영센터 팀장 (펀드 운영, 업체발굴)",
         "한화에너지 해외자원개발 투자담당",
-        "핀란드 헬싱키 경제대 MBA",
+        "핀란드 헬싱키경제대 eMBA",
         "서울대 지구환경과학부 석사"
       ],
       "sourceUrl": "http://www.jsginvest.com/bbs/board.php?bo_table=0201&wr_id=2",
       "wrId": "2",
-      "summaryKo": "기업가치 평가, 에너지 분야, 벤처 전략 경험을 갖춘 투자 전문가입니다."
+      "summaryKo": "기업기술가치평가사 · 한화도시개발 본부장(상무)",
+      "sourceSlide": 6
+    },
+    {
+      "id": "yoon-young-jin",
+      "group": "core",
+      "order": 30,
+      "nameKo": "윤영진",
+      "nameEn": "",
+      "roleKo": "전무 / 심사역",
+      "roleEn": "",
+      "summaryEn": "",
+      "summaryKo": "알펜루트 PE 부대표 · 오비트파트너스 투자본부장",
+      "image": "",
+      "highlights": [
+        "알펜루트 PE 부대표",
+        "오비트파트너스 투자본부장",
+        "맥커리투자신탁운용 주식운용본부",
+        "유진투자증권 고유자산운용본부 AI팀",
+        "대우증권 리서치센터 투자분석부",
+        "고려대 통계학과 학사"
+      ],
+      "sourceSlide": 6
+    },
+    {
+      "id": "kim-tae-hyung",
+      "group": "core",
+      "order": 40,
+      "nameKo": "김태형",
+      "nameEn": "",
+      "roleKo": "전무 / 심사역",
+      "roleEn": "",
+      "summaryEn": "",
+      "summaryKo": "케이기술투자 운용본부 상무 · 오비트파트너스 투자본부 이사",
+      "image": "",
+      "highlights": [
+        "케이기술투자 운용본부 상무",
+        "오비트파트너스 투자본부 이사",
+        "아샘자산운용 주식운용본부 이사",
+        "브이파트너스자산운용 주식운용본부",
+        "쿼드자산운용 주식운용본부",
+        "고려대 법대 학사"
+      ],
+      "sourceSlide": 6
     },
     {
       "id": "park-jun-hyuk",
       "group": "core",
-      "order": 30,
+      "order": 50,
       "nameKo": "박준혁",
-      "nameEn": "Park Jun-hyuk",
+      "nameEn": "",
       "roleKo": "팀장 / 심사역",
-      "roleEn": "Team Lead / Investment Manager",
-      "summaryEn": "Healthcare-focused investment professional with biomedical engineering training.",
+      "roleEn": "",
+      "summaryEn": "",
       "image": "assets/team/park-jun-hyuk.png",
       "highlights": [
-        "JSG Investment 팀장",
+        "고려대 경영대학원",
         "건국대 의학공학부",
         "대학 학업 공모전 최우수상",
         "캡스톤 경진대회 대학 총장상",
@@ -67,96 +111,85 @@
       ],
       "sourceUrl": "http://www.jsginvest.com/bbs/board.php?bo_table=0201&wr_id=6",
       "wrId": "6",
-      "summaryKo": "의공학 전공을 바탕으로 헬스케어 분야에 집중하는 투자 전문가입니다."
-    },
-    {
-      "id": "kim-myung-chun",
-      "group": "advisory",
-      "order": 110,
-      "nameKo": "김명천",
-      "nameEn": "Kim Myung-chun",
-      "roleKo": "자문위원 / 강동경희대병원 응급의학과 교수",
-      "roleEn": "Advisor / Professor of Emergency Medicine, Kyung Hee University Hospital at Gangdong",
-      "summaryEn": "Emergency medicine professor bringing clinical diligence and hospital leadership insight.",
-      "image": "assets/team/kim-myung-chun.png",
-      "highlights": [
-        "강동경의대병원 응급의학과 교수",
-        "강동경의대병원 응급의학과 센터장",
-        "대한응급의학회 동남지회장",
-        "강동경의대병원 진료과장",
-        "경희대 의과대학 교학과장",
-        "경희대 의대 생화학 박사"
-      ],
-      "sourceUrl": "http://www.jsginvest.com/bbs/board.php?bo_table=0201&wr_id=3",
-      "wrId": "3"
-    },
-    {
-      "id": "kim-jae-hong",
-      "group": "advisory",
-      "order": 120,
-      "nameKo": "김재홍",
-      "nameEn": "Kim Jae-hong",
-      "roleKo": "가천대 의예과 교수",
-      "roleEn": "Professor, Gachon University College of Medicine",
-      "summaryEn": "Medical school professor with biochemical and genetic medicine expertise.",
-      "image": "assets/team/kim-jae-hong.png",
-      "highlights": [
-        "가천대 의예과 교수",
-        "서울대의대 졸업/바이오업체 평가 자문",
-        "생화학, 유전의학 전문",
-        "학계 네트워크를 통한 기술성 검증"
-      ],
-      "sourceUrl": "http://www.jsginvest.com/bbs/board.php?bo_table=0201&wr_id=9",
-      "wrId": "9"
+      "summaryKo": "고려대 경영대학원 · 건국대 의학공학부",
+      "sourceSlide": 6
     },
     {
       "id": "kim-seok-beom",
-      "group": "advisory",
-      "order": 130,
+      "group": "core",
+      "order": 60,
       "nameKo": "김석범",
-      "nameEn": "Kim Seok-beom",
-      "roleKo": "HSBC은행 CEO",
-      "roleEn": "Chief Executive Officer, HSBC Bank Korea",
-      "summaryEn": "Banking executive advising from a finance, credit, and private wealth perspective.",
+      "nameEn": "",
+      "roleKo": "부사장 / 준법감시인",
+      "roleEn": "",
+      "summaryEn": "",
       "image": "assets/team/kim-seok-beom.png",
       "highlights": [
-        "시티은행 프라이빗뱅크 이사",
-        "KB국민은행 여신팀장",
-        "금융관점 투자 자문",
-        "재무분석 전문"
+        "준법감시인",
+        "기업 성장 지원"
       ],
       "sourceUrl": "http://www.jsginvest.com/bbs/board.php?bo_table=0201&wr_id=11",
-      "wrId": "11"
+      "wrId": "11",
+      "summaryKo": "준법감시인 · 기업 성장 지원",
+      "sourceSlide": 5
     },
     {
       "id": "lee-jong-ki",
-      "group": "advisory",
-      "order": 140,
+      "group": "core",
+      "order": 70,
       "nameKo": "이종기",
-      "nameEn": "Lee Jong-ki",
-      "roleKo": "플루스바이오팜 사외이사",
-      "roleEn": "Outside Director, Plus Biopharm",
-      "summaryEn": "Manufacturing and biotech advisor focused on company operations and portfolio stewardship.",
+      "nameEn": "",
+      "roleKo": "감사",
+      "roleEn": "",
+      "summaryEn": "",
       "image": "assets/team/lee-jong-ki.png",
-      "highlights": [
-        "㈜플루스바이오팜 이사",
-        "삼영화학공업㈜ 대표",
-        "제조업 기업경영, 기업분석 자문",
-        "분자생물학 전공",
-        "투자업체 관리"
-      ],
+      "highlights": [],
       "sourceUrl": "http://www.jsginvest.com/bbs/board.php?bo_table=0201&wr_id=12",
-      "wrId": "12"
+      "wrId": "12",
+      "summaryKo": "",
+      "sourceSlide": 5
+    },
+    {
+      "id": "park-geun-ryeong",
+      "group": "core",
+      "order": 80,
+      "nameKo": "박근령",
+      "nameEn": "",
+      "roleKo": "실장",
+      "roleEn": "",
+      "summaryEn": "",
+      "summaryKo": "경영관리실 · 경영 관리",
+      "image": "",
+      "highlights": [
+        "경영관리실",
+        "경영 관리",
+        "펀드 관리"
+      ],
+      "sourceSlide": 5
+    },
+    {
+      "id": "ha-ji-hye",
+      "group": "core",
+      "order": 90,
+      "nameKo": "하지혜",
+      "nameEn": "",
+      "roleKo": "대리",
+      "roleEn": "",
+      "summaryEn": "",
+      "summaryKo": "",
+      "image": "",
+      "highlights": [],
+      "sourceSlide": 5
     },
     {
       "id": "song-sang-hoon",
       "group": "advisory",
-      "order": 150,
+      "order": 100,
       "nameKo": "송상훈",
-      "nameEn": "Song Sang-hoon",
+      "nameEn": "",
       "roleKo": "서울의대 진단검사의학과 교수",
-      "roleEn": "Professor of Laboratory Medicine, Seoul National University College of Medicine",
-      "summaryEn": "Laboratory medicine professor advising on diagnostics and translational healthcare.",
+      "roleEn": "",
+      "summaryEn": "",
       "image": "assets/team/song-sang-hoon.png",
       "highlights": [
         "서울대병원 임상교수",
@@ -166,27 +199,195 @@
         "서울의대 의학박사"
       ],
       "sourceUrl": "http://www.jsginvest.com/bbs/board.php?bo_table=0201&wr_id=13",
-      "wrId": "13"
+      "wrId": "13",
+      "summaryKo": "",
+      "sourceSlide": 7
+    },
+    {
+      "id": "kim-myung-chun",
+      "group": "advisory",
+      "order": 110,
+      "nameKo": "김명천",
+      "nameEn": "",
+      "roleKo": "강동경희대병원 응급의학과 센터장",
+      "roleEn": "",
+      "summaryEn": "",
+      "image": "assets/team/kim-myung-chun.png",
+      "highlights": [
+        "강동경희대 응급의학과 교수",
+        "대한응급의학회 동남지회장",
+        "강동경희대병원 진료과장",
+        "경희대 의과대학 교학과장",
+        "경희대 의대 생화학 박사"
+      ],
+      "sourceUrl": "http://www.jsginvest.com/bbs/board.php?bo_table=0201&wr_id=3",
+      "wrId": "3",
+      "summaryKo": "",
+      "sourceSlide": 7
+    },
+    {
+      "id": "hwang-jung-wook",
+      "group": "advisory",
+      "order": 120,
+      "nameKo": "황정욱",
+      "nameEn": "",
+      "roleKo": "휴젤(주) 재무부문장",
+      "roleEn": "",
+      "summaryEn": "",
+      "summaryKo": "",
+      "image": "",
+      "highlights": [
+        "AstraZenaca CFO",
+        "Accenture 시니어 컨설턴트",
+        "Gongcha Global (UK) CFO",
+        "London Business School MBA",
+        "서울대 국제경제학과"
+      ],
+      "sourceSlide": 7
+    },
+    {
+      "id": "choi-eun-sun",
+      "group": "advisory",
+      "order": 130,
+      "nameKo": "최은선",
+      "nameEn": "",
+      "roleKo": "최은선 국제특허 법률사무소 대표",
+      "roleEn": "",
+      "summaryEn": "",
+      "summaryKo": "",
+      "image": "",
+      "highlights": [
+        "김앤장법률사무소 변리사",
+        "범부처신약개발사업단 투심위원",
+        "기업기술가치평가사",
+        "University of London 지식재산권법 석사",
+        "서울대 약학대학 학사"
+      ],
+      "sourceSlide": 7
+    },
+    {
+      "id": "kim-jae-hong",
+      "group": "advisory",
+      "order": 140,
+      "nameKo": "김재홍",
+      "nameEn": "",
+      "roleKo": "가천대 의과대학 생화학교실 교수",
+      "roleEn": "",
+      "summaryEn": "",
+      "image": "assets/team/kim-jae-hong.png",
+      "highlights": [
+        "국립중앙의료원 연구부장",
+        "Cells지의 편집위원 등",
+        "UC San Diego 박사후 연구원",
+        "워싱턴 대학 분자세포생물학 박사",
+        "서울대 의대"
+      ],
+      "sourceUrl": "http://www.jsginvest.com/bbs/board.php?bo_table=0201&wr_id=9",
+      "wrId": "9",
+      "summaryKo": "",
+      "sourceSlide": 7
     },
     {
       "id": "lee-do-hoon",
       "group": "advisory",
-      "order": 160,
+      "order": 150,
       "nameKo": "이도훈",
-      "nameEn": "Lee Do-hoon",
+      "nameEn": "",
       "roleKo": "국립암센터 진단검사의학과장",
-      "roleEn": "Head of Laboratory Medicine, National Cancer Center",
-      "summaryEn": "Diagnostic medicine leader with oncology and national-center clinical expertise.",
+      "roleEn": "",
+      "summaryEn": "",
       "image": "assets/team/lee-do-hoon.png",
       "highlights": [
-        "국립암센터 전문의",
+        "서울의대 전문의",
         "국립암센터 진단검사센터장",
         "국립암센터 진단검사의학과 전문의",
         "분당제생병원 진단검사의학과장",
         "서울의대 임상병리학과 의학박사"
       ],
       "sourceUrl": "http://www.jsginvest.com/bbs/board.php?bo_table=0201&wr_id=14",
-      "wrId": "14"
+      "wrId": "14",
+      "summaryKo": "",
+      "sourceSlide": 8
+    },
+    {
+      "id": "jung-ki-won",
+      "group": "advisory",
+      "order": 160,
+      "nameKo": "정기원",
+      "nameEn": "",
+      "roleKo": "제이투에이치 바이오텍 부사장",
+      "roleEn": "",
+      "summaryEn": "",
+      "summaryKo": "",
+      "image": "",
+      "highlights": [
+        "차의과대학 부교수",
+        "서울대 약학대학 겸임교수",
+        "온코빅스 부사장",
+        "SK케미칼 연구개발 기획팀장",
+        "서울대 약학박사"
+      ],
+      "sourceSlide": 8
+    },
+    {
+      "id": "baek-dae-woo",
+      "group": "advisory",
+      "order": 170,
+      "nameKo": "백대우",
+      "nameEn": "",
+      "roleKo": "알엔에이진 전무",
+      "roleEn": "",
+      "summaryEn": "",
+      "summaryKo": "",
+      "image": "",
+      "highlights": [
+        "한양대 디지털의료융합과 겸임교수",
+        "한국산업진흥원",
+        "한국기술거래소",
+        "LG화학 기술연구원 연임연구원",
+        "한양대 생화학 박사"
+      ],
+      "sourceSlide": 8
+    },
+    {
+      "id": "jeon-yi-hyun",
+      "group": "advisory",
+      "order": 180,
+      "nameKo": "전이현",
+      "nameEn": "",
+      "roleKo": "정진세림회계법인 CEO",
+      "roleEn": "",
+      "summaryEn": "",
+      "summaryKo": "",
+      "image": "",
+      "highlights": [
+        "한영회계법인 회계사",
+        "정진회계법인 대표이사",
+        "정통 회계 전문가",
+        "업체 딜 소싱 및 투자 자문",
+        "투자단계 재무건전성 검증"
+      ],
+      "sourceSlide": 8
+    },
+    {
+      "id": "lee-do-yong",
+      "group": "advisory",
+      "order": 190,
+      "nameKo": "이도용",
+      "nameEn": "",
+      "roleKo": "앤유티파트너스 (액셀러레이터) 대표",
+      "roleEn": "",
+      "summaryEn": "",
+      "summaryKo": "",
+      "image": "",
+      "highlights": [
+        "베스텔라랩 CSO",
+        "티플러스 컨설턴트",
+        "대기업/중견기업 기업가치 제고 / 전략 수립",
+        "주요 사모펀드 투자 검토(CDD) / 기업성장 지원",
+        "Northwestern University 화학생명공학 박사수료"
+      ],
+      "sourceSlide": 8
     }
   ]
 }

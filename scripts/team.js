@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return role;
     };
 
-    const getRoleEn = (member) => String(member?.roleEn || fallbackRoleEn(member) || '').trim();
+    const getRoleEn = (member) => String((member?.roleEn ?? fallbackRoleEn(member)) || '').trim();
     const getSummaryEn = (member) => String(member?.summaryEn || '').trim();
     const getSummaryKo = (member) => String(member?.summaryKo || '').trim();
     const renderSummary = (member) => member.group === 'core' ? [
@@ -137,12 +137,33 @@ document.addEventListener('DOMContentLoaded', async () => {
         const button = document.getElementById('partners-motion-toggle');
         if (!viewport || !button) return;
         const group = viewport.querySelector('.partners-group');
+        // Keep the accessible group between identical buffers for bidirectional wrapping.
+        const buffer = group.nextElementSibling.cloneNode(true);
+        group.before(buffer);
         const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
         let paused = motion.matches;
         let visible = false;
         let frame = 0;
         let previousTime = 0;
-        let scrollPosition = viewport.scrollLeft;
+        let width = group.getBoundingClientRect().width;
+        const cards = Array.from(group.children);
+        const startCard = cards[Math.floor(Math.random() * cards.length)];
+        let scrollPosition = width + startCard.getBoundingClientRect().left - group.getBoundingClientRect().left;
+        viewport.scrollLeft = scrollPosition;
+        const wrap = (position) => width > 0
+            ? width + ((position - width) % width + width) % width
+            : position;
+        viewport.addEventListener('scroll', () => {
+            const position = viewport.scrollLeft;
+            scrollPosition = wrap(position);
+            if (Math.abs(position - scrollPosition) > 1) viewport.scrollLeft = scrollPosition;
+        }, { passive: true });
+        new ResizeObserver(() => {
+            const nextWidth = group.getBoundingClientRect().width;
+            if (nextWidth > 0 && width > 0) scrollPosition = scrollPosition / width * nextWidth;
+            width = nextWidth;
+            viewport.scrollLeft = scrollPosition = wrap(scrollPosition);
+        }).observe(group);
         const updateButton = () => {
             button.setAttribute('aria-pressed', String(paused));
             button.textContent = paused ? '재생' : '일시정지';
@@ -150,9 +171,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const step = (time) => {
             const elapsed = previousTime ? Math.min(time - previousTime, 64) : 0;
             previousTime = time;
-            const width = group.getBoundingClientRect().width;
             if (width > 0) {
-                scrollPosition = (scrollPosition + elapsed * 0.026) % width;
+                scrollPosition = wrap(scrollPosition + elapsed * 0.026);
                 viewport.scrollLeft = scrollPosition;
             }
             frame = requestAnimationFrame(step);
