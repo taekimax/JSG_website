@@ -23,11 +23,10 @@ test('team detail renderer keeps the horizontal portrait layout and bilingual id
   assert.match(html, /class="member-name-en">Core A</);
   assert.match(html, /class="team-card-media team-card-media--portrait"/);
   assert.match(html, /class="member-identity"/);
-  assert.match(html, /class="member-pager"/);
+  assert.match(html, /class="detail-pager"/);
   assert.match(html, /class="team-img member-hero-img" loading="eager" decoding="async"/);
-  assert.match(html, /class="member-pager-link prev" href="team-member\.html\?id=core-c"/);
-  assert.match(html, /class="member-pager-link next" href="team-member\.html\?id=core-b"/);
-  assert.match(html, /class="member-pager-team" href="team\.html"/);
+  assert.match(html, /class="detail-pager-link prev" href="team-member\.html\?id=core-c"/);
+  assert.match(html, /class="detail-pager-link next" href="team-member\.html\?id=core-b"/);
 });
 
 test('team detail renderer shows missing-member message when id is unknown', async () => {

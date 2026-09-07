@@ -45,7 +45,7 @@ test('portfolio list preserves ordered names, descriptions and detail links with
   assert.doesNotMatch(html, /<img|portfolio-card-media/);
 });
 
-test('portfolio detail renderer shows the selected company profile and back navigation', async () => {
+test('portfolio detail renderer shows the selected company profile and shared navigation', async () => {
   const manifest = {
     assetVersion: 'contract-1',
     heroImage: 'assets/portfolio/portfolio-hero.jpg',
@@ -73,7 +73,8 @@ test('portfolio detail renderer shows the selected company profile and back navi
   assert.match(html, /class="portfolio-detail"/);
   assert.match(html, /class="portfolio-detail-name">Company A</);
   assert.match(html, /class="portfolio-detail-body">[\s\S]*First paragraph\.[\s\S]*Second paragraph\./);
-  assert.match(html, /href="portfolio\.html" class="portfolio-detail-back"/);
+  assert.match(html, /class="detail-pager"/);
+  assert.doesNotMatch(html, /portfolio-detail-back/);
 });
 
 test('portfolio retains detail routing after retiring company logo presentation', async () => {
@@ -119,5 +120,23 @@ test('an empty company list has a clear state and an unknown detail ID keeps its
   assert.match(names, /등록된 투자회사가 없습니다/);
   const { html: detail } = await renderPortfolioApp({ manifest: { companies: [] }, search: '?id=missing' });
   assert.match(detail, /선택한 포트폴리오를 찾을 수 없습니다/);
-  assert.match(detail, /href="portfolio\.html"/);
+  assert.match(detail, /href="about\.html#portfolio"/);
+});
+
+
+test('company detail navigation follows manifest order and stops at each end', async () => {
+  const companies = [
+    { id: 'last', order: 30, name: 'Last', descriptionText: 'last.txt' },
+    { id: 'first', order: 10, name: 'First', descriptionText: 'first.txt' },
+    { id: 'middle', order: 20, name: 'R&D <Company>', descriptionText: 'middle.txt' },
+  ];
+  const descriptions = { 'first.txt': 'First business', 'middle.txt': 'Middle business', 'last.txt': 'Last business' };
+  for (const [id, neighbors] of [['first', ['middle']], ['middle', ['first', 'last']], ['last', ['middle']]]) {
+    const { html } = await renderPortfolioApp({ manifest: { companies }, descriptions, search: `?id=${id}` });
+    const links = [...html.matchAll(/href="portfolio\.html\?id=([^"&]+)"/g)].map(match => match[1]);
+    assert.deepEqual(links, neighbors);
+    assert.match(html, /<nav class="detail-pager" aria-label="Portfolio navigation">/);
+    assert.doesNotMatch(html, /portfolio-detail-back|<button/);
+    if (id !== 'middle') assert.match(html, /R&amp;D &lt;Company&gt;/);
+  }
 });

@@ -69,10 +69,9 @@ test('notice detail renderer includes record hooks and preserves pager and attac
   assert.match(container.innerHTML, /class="notice-record"/);
   assert.match(container.innerHTML, /class="notice-record-body"/);
   assert.match(container.innerHTML, /본문 계약 테스트/);
-  assert.match(container.innerHTML, /<article class="notice-record">[\s\S]*class="notice-pager"[\s\S]*<\/article>/);
-  assert.match(container.innerHTML, /<article class="notice-record">[\s\S]*class="notice-pager-link prev" href="notice\.html\?id=notice-next"/);
-  assert.match(container.innerHTML, /<article class="notice-record">[\s\S]*class="notice-pager-link next" href="notice\.html\?id=notice-prev"/);
-  assert.match(container.innerHTML, /<article class="notice-record">[\s\S]*class="notice-pager-list" href="notice\.html"/);
+  assert.match(container.innerHTML, /<article class="notice-record">[\s\S]*class="detail-pager"[\s\S]*<\/article>/);
+  assert.match(container.innerHTML, /<article class="notice-record">[\s\S]*class="detail-pager-link prev" href="notice\.html\?id=notice-next"/);
+  assert.match(container.innerHTML, /<article class="notice-record">[\s\S]*class="detail-pager-link next" href="notice\.html\?id=notice-prev"/);
   assert.match(container.innerHTML, /href="\/board-content\/attachments\/policy%20guide\.pdf\?v=contract-1"/);
   assert.match(container.innerHTML, /href="\/board-content\/attachments\/folder\/attachment\.txt\?v=contract-1"/);
   assert.ok(

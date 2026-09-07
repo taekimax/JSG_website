@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 app.innerHTML = `
                     <div class="about-card">
                         <p style="margin: 0; color: var(--text-muted);">선택한 포트폴리오를 찾을 수 없습니다.</p>
-                        <p style="margin: 12px 0 0;"><a href="portfolio.html" class="portfolio-detail-back">Portfolio</a></p>
+                        <p style="margin: 12px 0 0;"><a href="about.html#portfolio" class="detail-return">Portfolio ↑</a></p>
                     </div>
                 `;
                 return;
@@ -87,10 +87,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <span class="company-sector">${escapeHtml(company.sector || '')}</span>
                     <h1 class="portfolio-detail-name">${escapeHtml(company.name || '')}</h1>
                     <div class="portfolio-detail-body">${buildParagraphs(descriptions[company.id] || '')}</div>
-                    <a href="portfolio.html" class="portfolio-detail-back">Portfolio</a>
                 </div>
             `;
             app.appendChild(detail);
+            const index = companies.indexOf(company);
+            const previous = companies[index - 1];
+            const next = companies[index + 1];
+            const pager = document.createElement('nav');
+            pager.className = 'detail-pager';
+            pager.setAttribute('aria-label', 'Portfolio navigation');
+            const link = (entry, direction) => entry
+                ? `<a class="detail-pager-link ${direction}" href="portfolio.html?id=${encodeURIComponent(entry.id)}" aria-label="${direction === 'prev' ? 'Previous company' : 'Next company'}: ${escapeHtml(entry.name)}">${direction === 'prev' ? '← ' : ''}${escapeHtml(entry.name)}${direction === 'next' ? ' →' : ''}</a>`
+                : '<span class="detail-pager-spacer" aria-hidden="true"></span>';
+            pager.innerHTML = link(previous, 'prev') + link(next, 'next');
+            app.appendChild(pager);
             return;
         }
 

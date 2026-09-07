@@ -6,7 +6,7 @@ test('home Team section delegates team list rendering to team.js', async () => {
   const html = await readRepoFile('about.html');
 
   assert.match(html, /id="team-member-app"/);
-  assert.match(html, /<script src="scripts\/team\.js"><\/script>/);
+  assert.match(html, /<script src="scripts\/team\.js(?:\?[^"]*)?"><\/script>/);
   assert.doesNotMatch(html, /team-member\.html\?id=/);
 });
 

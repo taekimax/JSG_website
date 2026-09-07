@@ -122,18 +122,30 @@
 .detail-page .attachment-link { max-width: 100%; padding: 12px 0; border-radius: 0; background: none; font-size: 17px; overflow-wrap: anywhere; }
 .detail-page .attachment-link:hover { color: var(--brand-royal-blue); background: none; text-decoration: underline; text-underline-offset: 5px; }
 .detail-page .attachment-icon { display: none; }
-.detail-page :is(.notice-pager, .member-pager) {
+/* One navigation pattern across Team, Portfolio and Notice details. */
+.detail-pager {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 32px;
     margin: 64px 0 0;
-    padding: 24px 0;
-    border: 0;
+    padding: 24px 0 0;
     border-top: 1px solid var(--border-light);
-    border-radius: 0;
-    background: none;
-    gap: 24px;
 }
-.detail-page :is(.notice-pager-link, .notice-pager-list, .member-pager-link, .member-pager-team, .portfolio-detail-back) { font-size: 17px; line-height: 1.6; font-weight: 400; }
-.detail-page :is(.notice-pager-list, .member-pager-team, .portfolio-detail-back) { font-family: var(--font-family-title); color: var(--brand-royal-blue); }
-.detail-page .portfolio-detail-back { display: inline-block; margin-top: 40px; padding: 12px 0; border-bottom: 1px solid currentColor; }
+.detail-pager-link {
+    display: block;
+    min-width: 0;
+    min-height: 44px;
+    padding: 8px 0;
+    color: var(--text-main);
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+.detail-pager-link.next { text-align: right; }
+.detail-pager-link:hover { color: var(--brand-royal-blue); }
+.detail-pager-link:focus-visible { outline: 2px solid var(--brand-royal-blue); outline-offset: 4px; }
 .detail-footer { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-block: 32px; border-top: 1px solid var(--border-light); }
 .detail-return { font-family: var(--font-family-title); font-size: 16px; }
 @media (max-width: 699px) {
@@ -142,9 +154,7 @@
     .detail-page .detail-hero .page-hero-sub { font-size: 17px; }
     .detail-page :is(#portfolio-app, #notice-app) { padding-block: 40px 56px; }
     .detail-page :is(.portfolio-detail-body, .notice-record-body) { font-size: 17px; }
-    .detail-page :is(.notice-pager, .member-pager) { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .detail-page :is(.notice-pager-list, .member-pager-team) { grid-column: 1 / -1; grid-row: 2; justify-self: center; }
-    .detail-page :is(.notice-pager-link, .member-pager-link).next { grid-column: 2; }
+    .detail-pager { gap: 24px; margin-top: 40px; }
     .detail-footer { align-items: flex-start; flex-direction: column; gap: 16px; }
 }
 
@@ -179,7 +189,6 @@
 .detail-page--team .member-profile-title { padding-top: 32px; margin: 0 0 24px; border-top: 1px solid var(--border-light); font-size: 32px; font-weight: 400; }
 .detail-page--team .member-highlights { max-width: 850px; padding: 0; color: var(--text-main); font-size: 18px; }
 .detail-page--team .member-highlights li { margin: 0; padding: 10px 0; line-height: 1.85; word-break: keep-all; overflow-wrap: anywhere; }
-.detail-page :is(.notice-pager-list, .member-pager-team) { padding: 8px 0; border: 0; border-radius: 0; background: none; }
 @media (max-width: 699px) {
     .detail-page--team .detail-hero .page-hero-text > :first-child { grid-row: auto; }
     .detail-page--team .team-detail-shell { margin-block: 40px 56px; }

@@ -189,20 +189,20 @@ function buildNoticePager(notices, currentId) {
     const prevNotice = index > 0 ? ordered[index - 1] : null;
     const nextNotice = index >= 0 && index < ordered.length - 1 ? ordered[index + 1] : null;
 
-    const pager = document.createElement('div');
-    pager.className = 'notice-pager';
+    const pager = document.createElement('nav');
+    pager.className = 'detail-pager';
     pager.setAttribute('aria-label', 'Notice navigation');
 
     const makeSpacer = () => {
         const spacer = document.createElement('span');
-        spacer.className = 'notice-pager-spacer';
+        spacer.className = 'detail-pager-spacer';
         spacer.setAttribute('aria-hidden', 'true');
         return spacer;
     };
 
     if (prevNotice) {
         const prev = document.createElement('a');
-        prev.className = 'notice-pager-link prev';
+        prev.className = 'detail-pager-link prev';
         prev.href = `notice.html?id=${encodeURIComponent(prevNotice.id)}`;
         prev.setAttribute('aria-label', `Previous notice: ${truncateNavLabel(prevNotice.title, 48)}`);
         prev.textContent = `\u2190 ${truncateNavLabel(prevNotice.title)}`;
@@ -211,16 +211,9 @@ function buildNoticePager(notices, currentId) {
         pager.appendChild(makeSpacer());
     }
 
-    const back = document.createElement('a');
-    back.className = 'notice-pager-list';
-    back.href = 'notice.html';
-    back.setAttribute('aria-label', 'Back to Notice');
-    back.textContent = `Notice \u25B2`;
-    pager.appendChild(back);
-
     if (nextNotice) {
         const next = document.createElement('a');
-        next.className = 'notice-pager-link next';
+        next.className = 'detail-pager-link next';
         next.href = `notice.html?id=${encodeURIComponent(nextNotice.id)}`;
         next.setAttribute('aria-label', `Next notice: ${truncateNavLabel(nextNotice.title, 48)}`);
         next.textContent = `${truncateNavLabel(nextNotice.title)} \u2192`;

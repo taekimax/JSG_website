@@ -225,12 +225,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         const nextMember = index >= 0 && index < orderedMembers.length - 1 ? orderedMembers[index + 1] : null;
 
         const prevHtml = prevMember
-            ? `<a class="member-pager-link prev" href="team-member.html?id=${encodeURIComponent(prevMember.id)}" aria-label="Previous member: ${escapeHtml(formatNavLabel(prevMember))}">◀ ${escapeHtml(formatNavLabel(prevMember))}</a>`
-            : `<span class="member-pager-spacer" aria-hidden="true"></span>`;
+            ? `<a class="detail-pager-link prev" href="team-member.html?id=${encodeURIComponent(prevMember.id)}" aria-label="Previous member: ${escapeHtml(formatNavLabel(prevMember))}">← ${escapeHtml(formatNavLabel(prevMember))}</a>`
+            : `<span class="detail-pager-spacer" aria-hidden="true"></span>`;
 
         const nextHtml = nextMember
-            ? `<a class="member-pager-link next" href="team-member.html?id=${encodeURIComponent(nextMember.id)}" aria-label="Next member: ${escapeHtml(formatNavLabel(nextMember))}">${escapeHtml(formatNavLabel(nextMember))} ▶</a>`
-            : `<span class="member-pager-spacer" aria-hidden="true"></span>`;
+            ? `<a class="detail-pager-link next" href="team-member.html?id=${encodeURIComponent(nextMember.id)}" aria-label="Next member: ${escapeHtml(formatNavLabel(nextMember))}">${escapeHtml(formatNavLabel(nextMember))} →</a>`
+            : `<span class="detail-pager-spacer" aria-hidden="true"></span>`;
 
         app.innerHTML = `
             <article class="team-card member-hero-card member-hero-card--stacked">
@@ -248,11 +248,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
             </article>
             ${highlightsHtml}
-            <div class="member-pager" aria-label="Member navigation">
+            <nav class="detail-pager" aria-label="Member navigation">
                 ${prevHtml}
-                <a class="member-pager-team" href="team.html" aria-label="Back to Team">Team ↑</a>
                 ${nextHtml}
-            </div>
+            </nav>
         `;
     };
 
