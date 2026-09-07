@@ -51,6 +51,7 @@
   --action-disabled: var(--palette-gray-dark);
   --portfolio-title-bg: var(--palette-cyan);
   --notice-title-bg: var(--palette-blue);
+  --board-control-hover: color-mix(in srgb, currentColor 10%, transparent);
 
   /* Typography */
   --font-family-base: "Pretendard", sans-serif;

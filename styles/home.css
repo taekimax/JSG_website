@@ -249,6 +249,55 @@
     .home-page .perspective-section .section-title-band { padding-bottom: 24px; }
 }
 
+/* Text boards: full-width pages, side controls in desktop gutters. */
+.home-page .board-paged { position: relative; }
+.home-page .board-paged :is(.page-hero-surface, .page-hero-text) { position: static; }
+.home-page .board-paged .page-hero-text {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+}
+.home-page .board-controls { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+.home-page .board-count { min-width: 56px; text-align: center; font-family: var(--font-family-title); font-size: 14px; white-space: nowrap; }
+.home-page .board-arrow {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+}
+.home-page .board-arrow svg { display: block; width: 20px; height: 20px; overflow: visible; fill: none; stroke: var(--base-white); stroke-width: 2; stroke-linecap: butt; stroke-linejoin: miter; }
+.home-page .perspective-section .board-arrow svg { stroke: var(--brand-deep-blue); }
+.home-page .board-arrow:hover:not([aria-disabled="true"]) { background: var(--board-control-hover); }
+.home-page .board-arrow[aria-disabled="true"] { cursor: default; }
+.home-page .board-paged :is(.board-arrow, .board-window):focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.home-page .board-window {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+}
+.home-page .board-window::-webkit-scrollbar { display: none; }
+.home-page .board-page { min-width: 0; scroll-snap-align: start; scroll-snap-stop: always; }
+.home-page .board-page .notice-link { overflow-wrap: anywhere; }
+.home-page .board-page .notice-link:focus-visible { outline-offset: -2px; }
+@media (min-width: 1024px) {
+    .home-page .board-arrow { position: absolute; top: var(--board-controls-y); transform: translateY(-50%); height: calc(var(--board-arrow-height) + 24px); border-radius: 12px; }
+    .home-page .board-arrow svg { width: 40px; height: var(--board-arrow-height); stroke-width: 4; }
+    .home-page .board-arrow--prev { left: max(calc(var(--site-gutter) - 52px), calc((100% - var(--site-width)) / 2 - 52px)); }
+    .home-page .board-arrow--next { right: max(calc(var(--site-gutter) - 52px), calc((100% - var(--site-width)) / 2 - 52px)); }
+}
+
 /* Partners: a continuous strip with native swipe/scroll and a single pause control. */
 .home-page .partners-controls { display: flex; justify-content: flex-end; margin-bottom: 24px; }
 .home-page #partners-motion-toggle { min-height: 44px; padding: 8px 0 8px 16px; color: var(--text-muted); font-size: 16px; }

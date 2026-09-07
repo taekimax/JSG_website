@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             await renderDetail(notices, currentId, app, attachmentsBase, manifest.postsBase, assetVersion);
         } else {
             renderList(notices, app);
+            window.JsgBoardPager?.enhance(document.getElementById('notice'), app.querySelector('.notice-list'));
         }
 
     } catch (error) {
