@@ -66,18 +66,12 @@ function renderList(notices, container) {
     sorted.forEach(notice => {
         const item = document.createElement('article');
         item.className = 'notice-record-item';
-        
-        let badgeHtml = '';
-        if (notice.isImportant) {
-            badgeHtml = '<span class="badge-important">필수</span>';
-        }
 
         item.innerHTML = `
             <header class="notice-record-item-header">
                 <a href="notice.html?id=${encodeURIComponent(notice.id)}" class="notice-link">${notice.title}</a>
             </header>
             <div class="notice-meta">
-                ${badgeHtml}
                 <span class="notice-date">${notice.date}</span>
                 <span class="notice-category">${notice.category}</span>
             </div>
@@ -131,7 +125,6 @@ async function renderDetail(notices, id, container, attachmentsBase, postsBase, 
         <article class="notice-record">
             <header class="notice-header">
                 <div class="notice-meta-detail">
-                    ${notice.isImportant ? '<span class="badge-important">필수</span>' : ''}
                     <time class="notice-date-detail" datetime="${notice.date}">${notice.date}</time>
                     <span>${notice.category}</span>
                 </div>
