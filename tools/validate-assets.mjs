@@ -299,69 +299,36 @@ const main = async () => {
     for (const ref of collectPathRefsFromManifest(manifest)) referenced.add(ref);
   }
 
-  // Notices validation (required)
-  const noticesDir = path.join(assetsRoot, 'notices');
-  const noticesManifest = path.join(noticesDir, 'notices-manifest.json');
-  const noticesJson = path.join(noticesDir, 'notices.json');
-
-  if (!(await fileExists(noticesDir))) {
-    errors.push('Missing required directory: assets/notices');
+  // Board content is owned by the separate private repository and served from one fixed path.
+  const boardEndpointsPath = path.join(assetsRoot, 'shared/board-endpoints.json');
+  if (!(await fileExists(boardEndpointsPath))) {
+    errors.push('Missing required file: assets/shared/board-endpoints.json');
   } else {
-    if (!(await fileExists(noticesManifest))) {
-      errors.push('Missing required file: assets/notices/notices-manifest.json');
-    }
-
-    if (!(await fileExists(noticesJson))) {
-      errors.push('Missing required file: assets/notices/notices.json');
+    try {
+      const endpoints = await readJson(boardEndpointsPath);
+      if (endpoints.schemaVersion !== 1) errors.push('assets/shared/board-endpoints.json: schemaVersion must be 1');
+      if (endpoints.noticesManifest !== '/board-content/notices-manifest.json') {
+        errors.push('assets/shared/board-endpoints.json: unexpected Notice manifest endpoint');
+      }
+      if (endpoints.perspectiveManifest !== '/board-content/perspective-manifest.json') {
+        errors.push('assets/shared/board-endpoints.json: unexpected Perspective manifest endpoint');
+      }
+    } catch (e) {
+      errors.push(`assets/shared/board-endpoints.json: invalid JSON (${e.message})`);
     }
   }
 
-  let attachmentsBase = 'assets/notices/attachments/';
-  if (await fileExists(noticesManifest)) {
-    try {
-      const manifest = await readJson(noticesManifest);
-      const noticesJsonRef = String(manifest?.noticesJson || '').trim();
-      const attachmentsBaseRef = String(manifest?.attachmentsBase || '').trim();
-
-      if (!noticesJsonRef) {
-        errors.push('assets/notices/notices-manifest.json: missing required key "noticesJson"');
-      } else if (noticesJsonRef !== 'assets/notices/notices.json') {
-        errors.push(`assets/notices/notices-manifest.json: noticesJson must be assets/notices/notices.json (got: ${noticesJsonRef})`);
-      }
-
-      if (!attachmentsBaseRef) {
-        errors.push('assets/notices/notices-manifest.json: missing required key "attachmentsBase"');
-      } else if (attachmentsBaseRef.replaceAll('\\', '/').trim() !== 'assets/notices/attachments/') {
-        errors.push(`assets/notices/notices-manifest.json: attachmentsBase must be assets/notices/attachments/ (got: ${attachmentsBaseRef})`);
-      } else {
-        attachmentsBase = attachmentsBaseRef.replaceAll('\\', '/');
-      }
-    } catch (e) {
-      errors.push(`assets/notices/notices-manifest.json: invalid JSON (${e.message})`);
-    }
-  }
-
-  if (await fileExists(noticesJson)) {
-    try {
-      const notices = await readJson(noticesJson);
-      if (!Array.isArray(notices)) {
-        errors.push('assets/notices/notices.json must be an array');
-      } else {
-        for (const [i, notice] of notices.entries()) {
-          if (!notice || typeof notice !== 'object') {
-            errors.push(`assets/notices/notices.json: item[${i}] must be an object`);
-            continue;
-          }
-          if (Array.isArray(notice.attachments)) {
-            for (const filename of notice.attachments) {
-              const rel = `${attachmentsBase}${filename}`;
-              referenced.add(rel);
-            }
-          }
-        }
-      }
-    } catch (e) {
-      errors.push(`assets/notices/notices.json: invalid JSON (${e.message})`);
+  for (const relative of [
+    'assets/notices/notices-manifest.json',
+    'assets/notices/notices.json',
+    'assets/notices/source',
+    'assets/notices/posts',
+    'assets/notices/attachments',
+    'assets/philosophy/posts.json',
+    'assets/philosophy/mock-posts.json'
+  ]) {
+    if (await fileExists(path.join(repoRoot, relative))) {
+      errors.push(`Board content must stay in jsg-board-content: ${relative}`);
     }
   }
 
@@ -402,4 +369,3 @@ main().catch(() => {
   }
   process.exit(1);
 });
-

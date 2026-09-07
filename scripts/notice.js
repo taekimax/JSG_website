@@ -1,3 +1,7 @@
+function escapeNoticeText(value) {
+    return String(value ?? '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
     const app = document.getElementById('notice-app');
     if (!app) return;
@@ -18,7 +22,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     `;
 
     try {
-        const manifestResponse = await fetch('assets/notices/notices-manifest.json');
+        const endpointsResponse = await fetch('assets/shared/board-endpoints.json', { cache: 'no-cache' });
+        if (endpointsResponse.ok === false) throw new Error('Failed to load board endpoints');
+        const endpoints = await endpointsResponse.json();
+        if (!endpoints.noticesManifest) throw new Error('Missing Notice manifest endpoint');
+        const manifestResponse = await fetch(endpoints.noticesManifest, { cache: 'no-cache' });
+        if (manifestResponse.ok === false) throw new Error('Failed to load Notice manifest');
         const manifest = await manifestResponse.json();
         const assetVersion = manifest.assetVersion || '';
 
@@ -35,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         const currentId = document.getElementById('notice') ? null : getUrlParam('id');
 
-        const attachmentsBase = manifest.attachmentsBase || 'assets/notices/attachments/';
+        const attachmentsBase = manifest.attachmentsBase || '/board-content/attachments/';
         if (currentId) {
             await renderDetail(notices, currentId, app, attachmentsBase, manifest.postsBase, assetVersion);
         } else {
@@ -70,11 +79,11 @@ function renderList(notices, container) {
 
         item.innerHTML = `
             <header class="notice-record-item-header">
-                <a href="notice.html?id=${encodeURIComponent(notice.id)}" class="notice-link">${notice.title}</a>
+                <a href="notice.html?id=${encodeURIComponent(notice.id)}" class="notice-link">${escapeNoticeText(notice.title)}</a>
             </header>
             <div class="notice-meta">
-                <span class="notice-date">${notice.date}</span>
-                <span class="notice-category">${notice.category}</span>
+                <span class="notice-date">${escapeNoticeText(notice.date)}</span>
+                <span class="notice-category">${escapeNoticeText(notice.category)}</span>
             </div>
         `;
         listContainer.appendChild(item);
@@ -90,8 +99,8 @@ function normalizeBasePath(base, fallback) {
     return normalized.endsWith('/') ? normalized : `${normalized}/`;
 }
 
-async function fetchNoticeBodyText(id, postsBase, assetVersion) {
-    const normalizedBase = normalizeBasePath(postsBase, 'assets/notices/posts/');
+async function fetchNoticeBodyText(id, postsBase, assetVersion, bodyFormat) {
+    const normalizedBase = normalizeBasePath(postsBase, '/board-content/posts/');
     const safeId = String(id || '').trim();
     if (!normalizedBase || !safeId) {
         throw new Error('Missing posts base or notice id');
@@ -105,7 +114,7 @@ async function fetchNoticeBodyText(id, postsBase, assetVersion) {
         return `${raw}${separator}v=${encodeURIComponent(version)}`;
     };
 
-    const url = withVersion(`${normalizedBase}${encodeURIComponent(safeId)}.txt`);
+    const url = withVersion(`${normalizedBase}${encodeURIComponent(safeId)}.${bodyFormat === 'html' ? 'html' : 'txt'}`);
     const response = await fetch(url);
     if (!response.ok) {
         throw new Error(`Failed to fetch notice body: ${response.status} ${response.statusText}`);
@@ -126,10 +135,10 @@ async function renderDetail(notices, id, container, attachmentsBase, postsBase, 
         <article class="notice-record">
             <header class="notice-header">
                 <div class="notice-meta-detail">
-                    <time class="notice-date-detail" datetime="${notice.date}">${notice.date}</time>
-                    <span>${notice.category}</span>
+                    <time class="notice-date-detail" datetime="${escapeNoticeText(notice.date)}">${escapeNoticeText(notice.date)}</time>
+                    <span>${escapeNoticeText(notice.category)}</span>
                 </div>
-                <h1 class="h1-title">${notice.title}</h1>
+                <h1 class="h1-title">${escapeNoticeText(notice.title)}</h1>
             </header>
             <div class="notice-record-body" aria-live="polite"></div>
             ${renderAttachments(notice.attachments, attachmentsBase, assetVersion)}
@@ -141,8 +150,13 @@ async function renderDetail(notices, id, container, attachmentsBase, postsBase, 
     if (body) {
         body.textContent = '본문을 불러오는 중입니다...';
         try {
-            const text = await fetchNoticeBodyText(id, postsBase, assetVersion);
-            body.textContent = text;
+            const text = await fetchNoticeBodyText(id, postsBase, assetVersion, notice.bodyFormat);
+            if (notice.bodyFormat === 'html') {
+                // HTML is generated by the board-content publisher with raw Markdown HTML disabled.
+                body.innerHTML = `<div class="notice-markdown">${text}</div>`;
+            } else {
+                body.textContent = text;
+            }
         } catch (error) {
             console.error('Failed to fetch notice body:', error);
             body.textContent = '본문을 불러올 수 없습니다.';
@@ -221,7 +235,7 @@ function buildNoticePager(notices, currentId) {
 function renderAttachments(attachments, attachmentsBase, assetVersion) {
     if (!attachments || attachments.length === 0) return '';
 
-    const normalizedBase = normalizeBasePath(attachmentsBase, 'assets/notices/attachments/');
+    const normalizedBase = normalizeBasePath(attachmentsBase, '/board-content/attachments/');
 
     const withVersion = (url) => {
         const raw = String(url || '').trim();

@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         setCard(cards[0], respectTitle, respectDescEn, respectDescKo);
         setCard(cards[1], healthTitle, healthDescEn, healthDescKo);
         setCard(cards[2], integrityTitle, integrityDescEn, integrityDescKo);
-        await renderPhilosophyWriting(manifest);
+        await renderPhilosophyWriting();
     } catch (error) {
         console.error('Failed to load philosophy copy:', error);
     } finally {
@@ -67,58 +67,68 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// One publication, with a locally generated title index. No external feed requests in the browser.
-async function renderPhilosophyWriting(manifest) {
-    const section = document.getElementById('philosophy-writing');
-    const app = document.getElementById('writing-posts');
-    const publicationLink = document.getElementById('writing-publication');
-    if (!section || !app || !publicationLink || !manifest.postsJson) return;
-    const publicUrl = (value) => {
-        try {
-            const url = new URL(value);
-            return url.protocol === 'https:' && !url.username && !url.password ? url : null;
-        } catch { return null; }
-    };
+// Substack owns published titles. The separate content repository publishes the saved RSS index.
+async function renderPhilosophyWriting() {
+    const section = document.getElementById('perspective');
+    const app = document.getElementById('perspective-posts');
+    if (!section || !app) return;
     try {
+        const endpoints = await window.JsgAssets.fetchJson('assets/shared/board-endpoints.json');
+        if (!endpoints.perspectiveManifest) throw new Error('Missing Perspective manifest endpoint');
+        const manifest = await window.JsgAssets.fetchJson(endpoints.perspectiveManifest);
         const data = await window.JsgAssets.fetchJson(window.JsgAssets.versionedUrl(manifest.postsJson, manifest.assetVersion));
-        const publication = publicUrl(data.publicationUrl);
-        if (data.schemaVersion !== 1 || !publication || !Array.isArray(data.posts)) return;
+        if (data.schemaVersion !== 1 || !Array.isArray(data.posts)) throw new Error('Invalid Perspective index');
+        let posts = data.posts;
+        const preview = data.preview === true;
         const seen = new Set();
-        const posts = data.posts.filter(post => {
-            const url = publicUrl(post.url);
-            if (!url || url.origin !== publication.origin || typeof post.title !== 'string' || !post.title.trim() || !/^\d{4}-\d{2}-\d{2}$/.test(post.date) || seen.has(url.href)) return false;
-            seen.add(url.href);
+        posts = posts.filter(post => {
+            if (typeof post.title !== 'string' || !post.title.trim() || !/^\d{4}-\d{2}-\d{2}$/.test(post.date)) return false;
+            if (!preview) {
+                try {
+                    const url = new URL(post.url);
+                    if (url.protocol !== 'https:' || url.username || url.password || url.origin !== new URL(data.publicationUrl).origin || !/^\/p\/[A-Za-z0-9_-]+\/?$/.test(url.pathname) || seen.has(url.href)) return false;
+                    seen.add(url.href);
+                } catch { return false; }
+            }
             return true;
         }).sort((a, b) => b.date.localeCompare(a.date));
-        publicationLink.href = publication.href;
         app.replaceChildren();
         if (!posts.length) {
-            const empty = document.createElement('p');
-            empty.textContent = '아직 등록된 글이 없습니다.';
-            app.appendChild(empty);
-        } else {
-            const list = document.createElement('ul');
-            for (const post of posts) {
-                const item = document.createElement('li');
-                item.className = 'writing-item';
-                const link = document.createElement('a');
-                link.className = 'writing-link';
-                link.href = publicUrl(post.url).href;
-                const date = document.createElement('time');
-                date.className = 'writing-date';
-                date.dateTime = post.date;
-                date.textContent = post.date;
-                const title = document.createElement('span');
-                title.className = 'writing-title';
-                title.textContent = post.title;
-                link.append(date, title);
-                item.appendChild(link);
-                list.appendChild(item);
-            }
-            app.appendChild(list);
+            app.textContent = '아직 등록된 글이 없습니다.';
+            return;
         }
-        section.hidden = false;
+        const list = document.createElement('div');
+        list.className = 'notice-list';
+        for (const post of posts) {
+            const item = document.createElement('article');
+            item.className = 'notice-record-item';
+            const header = document.createElement('header');
+            header.className = 'notice-record-item-header';
+            const link = document.createElement('a');
+            link.className = 'notice-link';
+            link.href = preview ? post.url : new URL(post.url).href;
+            link.textContent = post.title;
+            header.append(link);
+            const meta = document.createElement('div');
+            meta.className = 'notice-meta';
+            const date = document.createElement('time');
+            date.className = 'notice-date';
+            date.dateTime = post.date;
+            date.textContent = post.date;
+            meta.append(date);
+            if (typeof post.author === 'string' && post.author.trim()) {
+                const author = document.createElement('span');
+                author.className = 'notice-category';
+                author.textContent = post.author.trim();
+                meta.append(author);
+            }
+            item.append(header, meta);
+            list.append(item);
+        }
+        app.append(list);
+        window.JsgBoardPager?.enhance(section, list);
     } catch (error) {
-        console.error('Failed to load writing index:', error);
+        app.textContent = '글 목록을 불러올 수 없습니다.';
+        console.error('Failed to load Perspective index:', error);
     }
 }

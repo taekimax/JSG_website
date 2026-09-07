@@ -114,7 +114,7 @@
     background: none;
 }
 .home-page .notice-record-item:hover { background: none; }
-.home-page .notice-link { color: var(--brand-deep-blue); font-size: clamp(20px, 2.2vw, 28px); font-weight: 450; }
+.home-page .notice-link { color: var(--brand-deep-blue); font-size: clamp(15px, calc(10px + 1.56vw), 24px); font-weight: 450; }
 .home-page .contact-section { margin: 0; min-width: 0; }
 .home-page .contact-card { padding: 0; border: 0; border-radius: 0; box-shadow: none; background: none; }
 .home-page .contact-row { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 24px; align-items: baseline; margin: 0; padding: 20px 0; border-top: 1px solid var(--text-muted); }
@@ -249,34 +249,43 @@
     .home-page .perspective-section .section-title-band { padding-bottom: 24px; }
 }
 
-/* Text boards: full-width pages, side controls in desktop gutters. */
+/* Text boards: full-width pages with one shared heading control layout. */
 .home-page .board-paged { position: relative; }
 .home-page .board-paged :is(.page-hero-surface, .page-hero-text) { position: static; }
 .home-page .board-paged .page-hero-text {
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-wrap: wrap;
     gap: 12px 24px;
 }
-.home-page .board-controls { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+@media (min-width: 700px) {
+    .home-page .board-paged .page-hero-text { flex-wrap: nowrap; }
+}
+.home-page .board-controls { display: flex; align-items: center; gap: 4px; }
 .home-page .board-count { min-width: 56px; text-align: center; font-family: var(--font-family-title); font-size: 14px; white-space: nowrap; }
 .home-page .board-arrow {
-    display: grid;
-    place-items: center;
-    width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
     height: 44px;
-    padding: 0;
+    padding: 0 8px;
     border: 0;
-    border-radius: 50%;
+    border-radius: 0;
     background: none;
-    color: inherit;
+    color: var(--base-white);
+    font-family: var(--font-family-title);
+    font-size: 12px;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
     cursor: pointer;
 }
-.home-page .board-arrow svg { display: block; width: 20px; height: 20px; overflow: visible; fill: none; stroke: var(--base-white); stroke-width: 2; stroke-linecap: butt; stroke-linejoin: miter; }
-.home-page .perspective-section .board-arrow svg { stroke: var(--brand-deep-blue); }
+.home-page .perspective-section .board-arrow { color: var(--brand-deep-blue); }
+.home-page .board-arrow-chevron { font-size: 18px; line-height: 0.8; }
 .home-page .board-arrow:hover:not([aria-disabled="true"]) { background: var(--board-control-hover); }
-.home-page .board-arrow[aria-disabled="true"] { cursor: default; }
+.home-page .board-arrow[aria-disabled="true"] { opacity: 1; cursor: default; }
 .home-page .board-paged :is(.board-arrow, .board-window):focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
 .home-page .board-window {
     display: grid;
@@ -291,12 +300,6 @@
 .home-page .board-page { min-width: 0; scroll-snap-align: start; scroll-snap-stop: always; }
 .home-page .board-page .notice-link { overflow-wrap: anywhere; }
 .home-page .board-page .notice-link:focus-visible { outline-offset: -2px; }
-@media (min-width: 1024px) {
-    .home-page .board-arrow { position: absolute; top: var(--board-controls-y); transform: translateY(-50%); height: calc(var(--board-arrow-height) + 24px); border-radius: 12px; }
-    .home-page .board-arrow svg { width: 40px; height: var(--board-arrow-height); stroke-width: 4; }
-    .home-page .board-arrow--prev { left: max(calc(var(--site-gutter) - 52px), calc((100% - var(--site-width)) / 2 - 52px)); }
-    .home-page .board-arrow--next { right: max(calc(var(--site-gutter) - 52px), calc((100% - var(--site-width)) / 2 - 52px)); }
-}
 
 /* Partners: a continuous strip with native swipe/scroll and a single pause control. */
 .home-page .partners-controls { display: flex; justify-content: flex-end; margin-bottom: 24px; }

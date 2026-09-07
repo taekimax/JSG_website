@@ -2,8 +2,8 @@
 
 기존 콘텐츠 시스템을 유지하면서 시각적 구조와 사용 경험을 발전시키는 작업 공간입니다.
 
-- 작업 경로: `/Users/tk/dev/JSG-website-design-20260906`
-- 브랜치: `design/modernization-20260906`
+- 현재 작업 경로: `/Volumes/dev/JSG_website`
+- 현재 브랜치: `main` (이전 실험 브랜치: `design/modernization-20260906`)
 - 기준 커밋: `2261da0b70dad287a1c37f746618014debcaba99`
 - 원본 `/Users/tk/dev/JSG-website`의 파일과 작업 상태는 변경하지 않습니다.
 
@@ -23,10 +23,10 @@
 
 - 루트 HTML: `about.html` 통합 홈과 멤버·회사·공지 상세 화면. 이전 섹션 주소는 홈의 해당 앵커로 연결됩니다.
 - `styles/`, `scripts/`: 표현, 공통 내비게이션, manifest 기반 콘텐츠 렌더링.
-- `assets/`: 관리자가 편집하는 콘텐츠와 페이지별 manifest.
+- `assets/`: 웹사이트 카피·이미지와 페이지별 manifest. 게시판 데이터는 별도 저장소가 소유합니다.
 - `tools/`: 자산 검사와 Node 기반 구조·렌더러 검사.
 
-랜딩 전용 React·Three·Vite 코드와 생성 번들을 제거했습니다. 현재 사이트에는 의존성 설치나 빌드가 필요하지 않습니다.
+랜딩 전용 React·Three·Vite 코드와 생성 번들을 제거했습니다. 방문자용 사이트는 빌드가 필요 없는 정적 파일입니다.
 
 이 worktree에서 다음 명령으로 HTTP 미리보기를 실행합니다.
 
@@ -44,7 +44,7 @@ npm run verify
 
 ## 콘텐츠 관리자 안내
 
-관리자는 `assets/**`만 편집합니다. HTML·스타일·스크립트는 개발자 영역입니다. 내용을 교체하면 해당 페이지 manifest의 `assetVersion`을 올리고 검사와 HTTP 미리보기를 확인합니다.
+웹사이트 카피 관리자는 `assets/**`를 편집합니다. Notice 관리자는 `/admin/`에서 별도 비공개 콘텐츠 저장소를 편집합니다. HTML·스타일·스크립트는 개발자 영역입니다.
 
 | 콘텐츠 | 편집 위치 |
 | --- | --- |
@@ -52,7 +52,7 @@ npm run verify
 | About·Philosophy 카피 | 각 페이지 폴더의 `.txt`와 manifest |
 | 팀 | `assets/team/team-manifest.json`, 기존 ID와 `order`, 멤버 사진 |
 | 회사명 스크롤·포트폴리오 | `assets/portfolio/portfolio-manifest.json`의 동일한 `companies` 배열 |
-| 공지 | `assets/notices/notices.json`, `posts/{id}.txt`, `attachments/` |
+| 공지·Perspective | `/admin/` → Pages CMS → `taekimax/jsg-board-content` |
 | 연락처·지도 | `assets/contact/contact-manifest.json`과 연결된 텍스트·이미지 |
 
 ### 회사 추가·수정
@@ -68,7 +68,7 @@ npm run verify
 
 ## 검증 상태 — 2026-09-07
 
-- PASS: 구조·렌더러 검사 20개, 자산 검증. 회사 40개 증가, 빈 목록, 미등록 상세 ID, 이름·정렬·설명·상세 연결을 확인했습니다.
+- PASS: 웹사이트 구조·렌더러 검사 23개와 자산 검증. 회사 40개 증가, 빈 목록, 미등록 상세 ID, 이름·정렬·설명·상세 연결을 확인했습니다.
 - PASS: 브라우저 홈 진입, 회사명 이동·정지·키보드 탐색, 모바일 상단 메뉴, Escape와 포커스 복귀, 작은 높이의 메뉴 스크롤, 동작 줄이기 설정.
 - PASS: 통합 홈의 1470px·390px 화면, 모든 섹션 로딩, 상세 연결과 복귀. 별도 헤드리스 Chrome에서 섹션 이동 후 뒤로 가기 위치 복원을 확인했습니다.
 - 별도 빌드 없음: 정적 사이트입니다.
@@ -89,7 +89,7 @@ npm run verify
 - 본문은 18px/모바일 17px 중심입니다. `ABOUT JSG INVESTMENT` 소개 블록은 기존 12px label·14px 본문·20px 로고 크기를 유지합니다.
 - About·Portfolio 제목: 로고의 공통 시안색 `#04f8fd` + 남색 글자. Team 제목: Philosophy와 동일한 파란색 + 흰 글자. Notice 제목·목록: 파란색 + 흰 글자. 상세 본문은 흰색입니다. Team 본문·Portfolio 회사명 영역은 흰색입니다.
 - PASS: 320·390·768·1440px 가로 넘침 검사와 실제 웹 폰트 사용 확인, 제목 색면 분리, 로고 폭 비율 약 1.93, 모바일 메뉴·상세 이동·뒤로 가기. 구조 검사 20개와 자산 검증도 통과했습니다.
-- Notice 관리 도구 구성은 사용자 요청으로 중단했습니다. 그누보드5의 로컬 작성·정적 내보내기는 추후 별도 개발 대상이며 현재 공지 JSON/TXT/첨부 방식은 유지합니다. `tools/notice-admin/`의 미완성 초안은 사이트에 연결하거나 실행하지 않았습니다.
+- Notice의 기본 편집기는 Pages CMS입니다. 별도 비공개 저장소가 Markdown과 첨부를 소유하며, 이 사이트는 `/board-content/`의 생성 파일만 읽습니다. 사용법은 [게시판 작성 안내](docs/board-authoring.md)를 참고하세요.
 
 ### 공통 팔레트
 
@@ -116,25 +116,25 @@ Team·Portfolio·Notice 상세는 같은 제목·여백·본문·이전/다음 �
 
 Partners·Advisors 제목은 Philosophy의 가치 제목과 같은 스타일입니다. About 한영 제목은 두 줄로 맞추고 설명문은 섹션 폭을 활용합니다. `ABOUT JSG INVESTMENT` 회사 소개는 기존 글자 크기를 유지하며 홈 맨 아래에 합쳤습니다.
 
-PASS: Chrome 320·390·768·1440px의 최신 색면·카드·반복 이동·정지·상세 화면·가로 넘침, 동작 줄이기·키보드 이동. 공지 첨부 2건은 실제 다운로드 후 원본과 일치했습니다. 자동 검사는 Node 20개 + RSS fixture 9개와 자산 검증을 통과했습니다. 물리적 기기 전체와 사용자 최종 시각 승인은 NOT RUN입니다.
+PASS: Chrome 320·390·768·1440px의 최신 색면·카드·반복 이동·정지·상세 화면·가로 넘침, 동작 줄이기·키보드 이동. 공지 첨부 2건은 실제 다운로드 후 원본과 일치했습니다. 현재 자동 검사는 웹사이트 Node 23개·자산 검사와 콘텐츠 저장소 Node 7개·RSS fixture 9개를 통과했습니다. 물리적 기기 전체와 사용자 최종 시각 승인은 NOT RUN입니다.
 
 ## Philosophy 외부 글 — Substack
 
 하나의 Substack 채널에서 글을 쓰고 JSG에는 제목·날짜·원문 링크만 표시합니다. 이미지가 있는 글을 지원하며 표는 [무료 Datawrapper](https://www.datawrapper.de/pricing)를 [Substack에 삽입](https://support.substack.com/hc/en-us/articles/15722290158100-How-do-I-embed-Datawrapper-charts-in-a-Substack-post)하는 방식입니다. 무료 플랜에는 Datawrapper 표기가 유지됩니다. [Substack은 무료 발행을 지원](https://support.substack.com/hc/en-us/articles/360037607131-How-much-does-Substack-cost)합니다.
 
-현재 채널 URL이 없어 Philosophy의 Writing 목록은 숨겨져 있습니다. 계정·채널을 만들고 첫 공개 글을 발행한 뒤, 이 worktree에서 최초 한 번 실제 주소를 넣어 실행합니다.
+현재 채널 URL이 없어 공개 Perspective 목록은 비어 있습니다. Mock과 RSS 도구는 별도 `jsg-board-content` 저장소에 있습니다. 첫 공개 글을 발행한 뒤 콘텐츠 저장소에서 실제 주소를 한 번 설정합니다.
 
 ```sh
-npm run blog:sync -- --publication-url https://YOUR-PUBLICATION.substack.com
+npm run perspective:sync -- --publication-url https://YOUR-PUBLICATION.substack.com
 ```
 
-이후 새 글을 반영할 때는 다음 명령을 실행하고 변경된 `assets/philosophy/posts.json`을 사이트의 기존 배포 절차에 포함합니다.
+이후 GitHub Actions 예약 실행이 새 제목과 날짜를 동기화하고 `/board-content/` 출력에 포함합니다.
 
 ```sh
-npm run blog:sync
+npm run perspective:sync
 ```
 
-이는 수동 동기화 도구이며 자동 배포나 예약 작업은 구성하지 않았습니다. RSS에서 사라진 과거 글은 보존하므로 삭제한 글의 링크는 JSON에서도 직접 제거합니다. 실패 시 기존 JSON은 유지합니다. 채널 변경 시에는 기존 목록을 먼저 정리해야 합니다. 자격 증명이나 글 본문을 저장하지 않습니다.
+RSS에서 사라진 과거 글은 보존하며 실패 시 기존 JSON을 유지합니다. 채널 변경 시에는 기존 목록을 먼저 정리합니다. 자격 증명이나 글 본문은 저장하지 않습니다.
 
 PASS: RSS fixture 기반 동기화·중복 병합·실패 시 기존 파일 보존과 브라우저 목록 표시. NOT RUN: 실제 Substack 채널의 RSS와 공개 글 연결.
 
@@ -155,3 +155,9 @@ Notice는 파란 배경에 흰 제목·목록을 사용하며 설명을 제거�
 지도 최종 배치: 삼성역 교차점은 오른쪽 끝에서 가로 1/3입니다. [글라스타워](https://www.shinhanvc.com/kr/aboutus/contactus)는 교차점 왼쪽 아래, [파크 하얏트 서울](https://www.seoul.park.hyattrestaurants.kr/ko/web/contact/location.php)은 오른쪽 아래에 표시했습니다. 가장 먼 포스코센터는 제외했습니다.
 
 상단 로고·메뉴 바는 문서와 함께 스크롤되어 화면 밖으로 사라집니다. 섹션 이동은 24px 여백을 사용하며 하단 Top은 로고·메뉴가 있는 문서 맨 위로 돌아갑니다. 지도에서 JSG를 제외한 글자는 도로 각도에 맞춰 기울였고 섬유센터·글라스타워는 테헤란로 가장자리와 여백을 두고 배치했습니다.
+
+## 게시판 작성 — Pages CMS
+
+[게시판 작성 안내](docs/board-authoring.md)에 브라우저 편집과 분리된 배포 흐름이 있습니다. `/admin/`은 `taekimax/jsg-board-content`의 Pages CMS 화면으로 이동합니다. 공지 저장은 웹사이트 저장소를 변경하지 않습니다.
+
+콘텐츠 저장소의 GitHub Actions가 검증과 정적 생성을 수행합니다. Cafe24 SFTP 단계는 준비되어 있지만 변수와 비밀값을 넣기 전까지 실행되지 않습니다.

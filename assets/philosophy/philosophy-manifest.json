@@ -16,6 +16,5 @@
     "integrityTitle": "assets/philosophy/integrity-title.txt",
     "integrityDescEn": "assets/philosophy/integrity-desc-en.txt",
     "integrityDescKo": "assets/philosophy/integrity-desc-ko.txt"
-  },
-  "postsJson": "assets/philosophy/posts.json"
+  }
 }

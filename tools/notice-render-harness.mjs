@@ -64,6 +64,7 @@ class FakeContainer {
     this._innerHTML = '';
     this.children = [];
     this.bodyText = null;
+    this.bodyHtml = null;
     this.hasNoticeBody = false;
     this.hasNoticeRecord = false;
     this.recordChildren = [];
@@ -73,6 +74,7 @@ class FakeContainer {
     this._innerHTML = String(value);
     this.children = [];
     this.bodyText = null;
+    this.bodyHtml = null;
     this.recordChildren = [];
     this.hasNoticeBody = this._innerHTML.includes('class="notice-record-body"');
     this.hasNoticeRecord = this._innerHTML.includes('class="notice-record"');
@@ -82,7 +84,7 @@ class FakeContainer {
     let html = this._innerHTML;
 
     if (this.hasNoticeBody) {
-      const content = this.bodyText === null ? '' : escapeHtml(this.bodyText);
+      const content = this.bodyHtml ?? (this.bodyText === null ? '' : escapeHtml(this.bodyText));
       html = html.replace(
         /(<div class="notice-record-body" aria-live="polite">)([\s\S]*?)(<\/div>)/,
         `$1${content}$3`
@@ -113,6 +115,10 @@ class FakeContainer {
       return {
         set textContent(value) {
           this.__container.bodyText = String(value);
+          this.__container.bodyHtml = null;
+        },
+        set innerHTML(value) {
+          this.__container.bodyHtml = String(value);
         },
         __container: this
       };

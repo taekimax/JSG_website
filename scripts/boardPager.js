@@ -38,16 +38,11 @@ window.JsgBoardPager = {
             const button = document.createElement('button');
             button.type = 'button';
             button.className = `board-arrow board-arrow--${direction}`;
-            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            svg.setAttribute('viewBox', '0 0 24 24');
-            svg.setAttribute('preserveAspectRatio', 'none');
-            svg.setAttribute('aria-hidden', 'true');
-            svg.setAttribute('focusable', 'false');
-            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            path.setAttribute('d', direction === 'prev' ? 'M17 0 7 12 17 24' : 'M7 0 17 12 7 24');
-            path.setAttribute('vector-effect', 'non-scaling-stroke');
-            svg.append(path);
-            button.append(svg);
+            const chevron = document.createElement('span');
+            chevron.className = 'board-arrow-chevron';
+            chevron.setAttribute('aria-hidden', 'true');
+            chevron.textContent = direction === 'prev' ? '‹' : '›';
+            button.append(chevron);
             button.setAttribute('aria-label', `${direction === 'prev' ? 'Previous' : 'Next'} ${label} page`);
             button.setAttribute('aria-controls', viewport.id);
             return button;
@@ -105,10 +100,6 @@ window.JsgBoardPager = {
 
         let width = 0;
         const resize = () => {
-            const bounds = viewport.getBoundingClientRect();
-            section.style.setProperty('--board-controls-y', `${bounds.top - section.getBoundingClientRect().top + bounds.height / 2}px`);
-            const twoEntryHeight = records.slice(0, 2).reduce((height, record) => height + record.getBoundingClientRect().height, 0);
-            section.style.setProperty('--board-arrow-height', `${twoEntryHeight}px`);
             if (viewport.clientWidth !== width) {
                 width = viewport.clientWidth;
                 viewport.scrollTo({ left: current * width, behavior: 'instant' });
@@ -121,8 +112,3 @@ window.JsgBoardPager = {
         resize();
     }
 };
-
-document.addEventListener('DOMContentLoaded', () => {
-    const section = document.getElementById('perspective');
-    window.JsgBoardPager.enhance(section, section?.querySelector('.notice-list'));
-});

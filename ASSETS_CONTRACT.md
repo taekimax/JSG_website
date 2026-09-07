@@ -11,7 +11,8 @@ This document defines non-negotiable conventions for the `assets/` migration so:
 
 - Canonical ownership is page-based: `assets/{page}/...`
 - Shared assets live in: `assets/shared/...`
-- Notices live in: `assets/notices/...` (the existing implemented path).
+- Notice page artwork remains in `assets/notices/`; Notice records and media live in the separate private `jsg-board-content` repository.
+- `assets/shared/board-endpoints.json` is the fixed bridge to generated Notice and Perspective manifests at `/board-content/`.
 
 Rule: if an asset is used by 2+ pages and is expected to be updated, it belongs in `assets/shared/`.
 
@@ -37,10 +38,6 @@ Required keys in every page manifest:
 Optional keys:
 - `$schema` (editor support only; should not be treated as an asset reference)
 - `updatedAt` (string ISO datetime; informational)
-
-Notices manifest (`assets/notices/notices-manifest.json`) required keys:
-- `noticesJson` (must be `assets/notices/notices.json`)
-- `attachmentsBase` (must be `assets/notices/attachments/`)
 
 Ordering/grouping rules:
 - Any list that must render predictably uses `order` (number, ascending).
@@ -92,6 +89,7 @@ Recommended patterns:
 
 Managers are allowed to edit only:
 - `assets/**` (manifests, images, text files, uploads)
+- Notice managers use Pages CMS over `jsg-board-content`; they do not edit this website repository.
 
 Managers are not expected to edit:
 - `scripts/**`, `styles/**`, page HTML structure
@@ -108,8 +106,16 @@ Company logos are not displayed in this experiment. The existing `logo` key rema
 ## Authorized Additions (2026-09-07)
 
 - Team partners (`group: "core"`) may provide `summaryKo` alongside their existing English `summary`. The displayed Korean summary translates the approved English summary. Advisor summaries remain in the data but are not displayed. Group IDs are unchanged; the UI label is Partners.
-- Philosophy manifest may provide `postsJson: "assets/philosophy/posts.json"`. The index contains `schemaVersion: 1`, one HTTPS root `publicationUrl`, and `posts` entries with plain-text `title`, `YYYY-MM-DD` `date`, and a same-publication `/p/` article `url`. A blank publication and empty list are valid and hide Writing. The sync tool updates this file; managers do not edit rendering code.
-- The browser reads the post index through the existing no-cache JSON loader. After manual RSS sync, publish the changed JSON with the site. The tool preserves older entries absent from the latest RSS; intentional deletions require editing the index.
+- Perspective reads the generated `/board-content/perspective-manifest.json`. Its index contains `schemaVersion: 1`, one HTTPS root `publicationUrl`, and `posts` entries with plain-text `title`, `YYYY-MM-DD` `date`, and a same-publication `/p/` article `url`.
+- The private content repository synchronizes the Substack RSS index and preserves older entries absent from the latest feed. The website reads the published index through the existing no-cache JSON loader.
 - Moving the About company introduction to the home footer preserves its About manifest/text sources. Removing decorative hero images from rendered pages does not remove their legacy manifest fields or asset files.
 
 - Contact renders full-width phone, email, Korean/English address, then the map, without Location or a duplicate Contact subheading. `texts.addressLabel` and `texts.locationAddressEn` own the new label and user-supplied English address. Legacy text keys/files remain compatible but are not fetched for hidden content. `mapImage` points to `contact-map.png`; the editable `contact-map.svg` is retained alongside it. Address, telephone, and email remain managed by their existing TXT files.
+
+## Separate board content contract (approved 2026-09-07)
+
+- The private `taekimax/jsg-board-content` repository owns Notice Markdown, Notice media, Perspective RSS data, preview fixtures and generated output. The website repository owns only display code and `assets/shared/board-endpoints.json`.
+- Notice front matter uses `id`, `title`, `date`, `category`, `isImportant`, `attachments` and `draft`. `date` is the explicit `YYYY-MM-DD` publication date and is not replaced during migration or editing. Existing IDs remain stable; new IDs come from the generated filename.
+- The content publisher generates `/board-content/notices.json`, `/board-content/posts/{id}.html`, referenced attachments, and Notice/Perspective asset manifests. Raw Markdown HTML is disabled. Drafts and preview fixtures are excluded from published output.
+- Pages CMS deletion and rename are disabled. Withdrawing a notice uses `draft: true`. Administrators edit only the private content repository through the browser editor.
+- Posting changes the content repository and generated `/board-content/` files. It does not change the website source repository.

@@ -1,7 +1,0 @@
-{
-  "project": "gnuboard/gnuboard5",
-  "version": "5.6.36",
-  "release": "https://github.com/gnuboard/gnuboard5/releases/tag/v5.6.36",
-  "archive": "https://codeload.github.com/gnuboard/gnuboard5/tar.gz/refs/tags/v5.6.36",
-  "sha256": "e6ed4de2c2d21c6e64023e3ef8d9cb5ff5d8d6b7e5586cd87b597592d2e8e563"
-}

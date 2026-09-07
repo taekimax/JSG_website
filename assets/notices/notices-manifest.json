@@ -1,9 +1,0 @@
-{
-  "schemaVersion": 1,
-  "page": "notices",
-  "assetVersion": "2025-12-18",
-  "heroImage": "assets/notices/notices-hero.jpg",
-  "noticesJson": "assets/notices/notices.json",
-  "attachmentsBase": "assets/notices/attachments/",
-  "postsBase": "assets/notices/posts/"
-}

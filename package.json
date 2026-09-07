@@ -5,8 +5,6 @@
   "scripts": {
     "test": "node --test tools/*.test.mjs",
     "test:assets": "node tools/validate-assets.mjs",
-    "verify": "npm test && npm run test:assets && npm run test:blog",
-    "test:blog": "python3 -m unittest discover -s tools -p test_sync_philosophy_posts.py",
-    "blog:sync": "python3 tools/sync-philosophy-posts.py"
+    "verify": "npm test && npm run test:assets"
   }
 }

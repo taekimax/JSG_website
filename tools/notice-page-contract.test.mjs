@@ -61,8 +61,8 @@ test('notice detail renderer includes record hooks and preserves pager and attac
     notices,
     'notice-current',
     container,
-    'assets/notices/attachments/',
-    'assets/notices/posts/',
+    '/board-content/attachments/',
+    '/board-content/posts/',
     'contract-1'
   );
 
@@ -73,10 +73,10 @@ test('notice detail renderer includes record hooks and preserves pager and attac
   assert.match(container.innerHTML, /<article class="notice-record">[\s\S]*class="notice-pager-link prev" href="notice\.html\?id=notice-next"/);
   assert.match(container.innerHTML, /<article class="notice-record">[\s\S]*class="notice-pager-link next" href="notice\.html\?id=notice-prev"/);
   assert.match(container.innerHTML, /<article class="notice-record">[\s\S]*class="notice-pager-list" href="notice\.html"/);
-  assert.match(container.innerHTML, /href="assets\/notices\/attachments\/policy%20guide\.pdf\?v=contract-1"/);
-  assert.match(container.innerHTML, /href="assets\/notices\/attachments\/folder\/attachment\.txt\?v=contract-1"/);
+  assert.match(container.innerHTML, /href="\/board-content\/attachments\/policy%20guide\.pdf\?v=contract-1"/);
+  assert.match(container.innerHTML, /href="\/board-content\/attachments\/folder\/attachment\.txt\?v=contract-1"/);
   assert.ok(
-    requests.includes('assets/notices/posts/notice-current.txt?v=contract-1'),
+    requests.includes('/board-content/posts/notice-current.txt?v=contract-1'),
     'detail renderer should fetch notice post text with versioned URL'
   );
 });
@@ -93,6 +93,13 @@ test('notice loading state is applied through the DOMContentLoaded path before f
 
   const runtime = await createNoticeRuntime({
     fetchImpl: async (url) => {
+      if (String(url).includes('board-endpoints.json')) {
+        return {
+          async json() {
+            return { noticesManifest: '/board-content/notices-manifest.json' };
+          }
+        };
+      }
       if (String(url).includes('notices-manifest.json')) {
         return manifestResponse;
       }
@@ -108,9 +115,9 @@ test('notice loading state is applied through the DOMContentLoaded path before f
   resolveManifest({
     async json() {
       return {
-        noticesJson: 'assets/notices/notices.json',
-        attachmentsBase: 'assets/notices/attachments/',
-        postsBase: 'assets/notices/posts/',
+        noticesJson: '/board-content/notices.json',
+        attachmentsBase: '/board-content/attachments/',
+        postsBase: '/board-content/posts/',
         assetVersion: 'contract-1'
       };
     }
@@ -123,4 +130,22 @@ test('notice loading state is applied through the DOMContentLoaded path before f
   });
 
   await readyPromise;
+});
+
+test('Markdown notice detail reads generated HTML while metadata remains escaped', async () => {
+  const requests = [];
+  const { renderDetail } = await createNoticeRuntime({
+    fetchImpl: async url => {
+      requests.push(url);
+      return { ok: true, text: async () => '<h2>안내</h2>\n<p><strong>중요</strong> 본문</p>\n' };
+    }
+  });
+  const container = createContainer();
+  await renderDetail([{ id: 'markdown', title: 'A < B', date: '2001-03-04', category: '안내', attachments: [], bodyFormat: 'html' }],
+    'markdown', container, '/board-content/attachments/', '/board-content/posts/', 'md-1');
+  assert.deepEqual(requests, ['/board-content/posts/markdown.html?v=md-1']);
+  assert.match(container.innerHTML, /A &lt; B/);
+  assert.match(container.innerHTML, /<div class="notice-markdown"><h2>안내<\/h2>/);
+  assert.match(container.innerHTML, /<strong>중요<\/strong>/);
+  assert.match(container.innerHTML, /2001-03-04/);
 });
