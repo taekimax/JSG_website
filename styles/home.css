@@ -212,19 +212,41 @@
 
 /* Partners and Advisors use the exact same heading treatment as the values. */
 .home-page .team-group > .h2-title { line-height: 1.4; }
-.home-page .writing-section { margin-top: 72px; padding-top: 40px; border-top: 1px solid currentColor; }
-.home-page .writing-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
-.home-page .writing-heading .phil-title { margin: 0; }
-.home-page .writing-all { color: inherit; font-family: var(--font-family-title); font-size: 17px; }
-.home-page .writing-item { border-top: 1px solid color-mix(in srgb, var(--base-white) 40%, transparent); }
-.home-page .writing-link { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 24px; padding: 24px 0; color: inherit; }
-.home-page .writing-date { padding-top: 4px; font-size: 16px; }
-.home-page .writing-title { font-family: var(--font-family-base); font-size: clamp(22px, 2.5vw, 32px); line-height: 1.55; font-weight: 450; word-break: keep-all; overflow-wrap: anywhere; }
-.home-page .writing-link:hover .writing-title { text-decoration: underline; text-underline-offset: 6px; }
-.home-page #philosophy :is(a, button):focus-visible { outline-color: var(--base-white); }
+
+/* Perspective: matches Notice board layout with a white background at the bottom of Philosophy */
+.home-page .perspective-section {
+    padding-block: 56px;
+    background: var(--base-white);
+    color: var(--text-main);
+}
+.home-page .perspective-section .section-title-band {
+    padding: 0 0 32px;
+    margin: 0;
+    color: var(--brand-deep-blue);
+    background: none;
+}
+.home-page .perspective-section .section-title {
+    color: var(--brand-deep-blue);
+}
+.home-page .perspective-section .notice-record-item {
+    padding-block: 20px;
+    border-color: var(--border-light);
+}
+.home-page .perspective-section .notice-link {
+    color: var(--brand-deep-blue);
+}
+.home-page .perspective-section .notice-link:hover {
+    color: var(--brand-royal-blue);
+}
+.home-page .perspective-section :is(a, button):focus-visible {
+    outline-color: var(--brand-deep-blue);
+}
+.home-page #philosophy .home-section--blue :is(a, button):focus-visible {
+    outline-color: var(--base-white);
+}
 @media (max-width: 699px) {
-    .home-page .writing-section { margin-top: 48px; }
-    .home-page .writing-link { grid-template-columns: 1fr; gap: 8px; }
+    .home-page .perspective-section { padding-block: 40px; }
+    .home-page .perspective-section .section-title-band { padding-bottom: 24px; }
 }
 
 /* Partners: a continuous strip with native swipe/scroll and a single pause control. */
