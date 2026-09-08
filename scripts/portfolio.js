@@ -36,18 +36,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         `).join('')}</ul>`;
 
         app.innerHTML = `<div class="company-name-track">${renderGroup()}${companies.length > 1 ? renderGroup(true) : ''}</div>`;
-        app.style.setProperty('--company-scroll-duration', `${Math.max(28, companies.length * 7)}s`);
         app.setAttribute('data-animated', String(companies.length > 1));
 
         const motionToggle = document.getElementById('company-motion-toggle');
         if (motionToggle && companies.length > 1) {
             motionToggle.hidden = false;
-            motionToggle.addEventListener('click', () => {
-                const paused = motionToggle.getAttribute('aria-pressed') !== 'true';
-                motionToggle.setAttribute('aria-pressed', String(paused));
-                motionToggle.textContent = paused ? '재생' : '일시정지';
-                app.style.setProperty('--company-play-state', paused ? 'paused' : 'running');
-            });
+            window.JsgCarousel({ viewport: app, button: motionToggle, group: app.querySelector('.company-name-group') });
         }
     };
 

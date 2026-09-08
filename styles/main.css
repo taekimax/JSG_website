@@ -1111,17 +1111,15 @@
 
 .company-name-window {
     container-type: inline-size;
-    overflow: hidden;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
 }
+.company-name-window::-webkit-scrollbar { display: none; }
 
 .company-name-track {
     display: flex;
     width: max-content;
-}
-
-.company-name-window[data-animated="true"] .company-name-track {
-    animation: company-names-scroll var(--company-scroll-duration, 28s) linear infinite;
-    animation-play-state: var(--company-play-state, running);
 }
 
 .company-name-group {
@@ -1149,42 +1147,6 @@
 
 .company-name-group a:hover {
     color: var(--brand-royal-blue);
-}
-
-.company-name-window:hover .company-name-track {
-    animation-play-state: paused;
-}
-
-/* Keyboard navigation gets a stationary, natively scrollable list. */
-.company-name-window:has(a:focus-visible) {
-    overflow-x: auto;
-}
-
-.company-name-window:has(a:focus-visible) .company-name-track {
-    animation: none;
-}
-
-.company-name-window:has(a:focus-visible) .company-name-group[aria-hidden="true"] {
-    display: none;
-}
-
-@keyframes company-names-scroll {
-    to { transform: translateX(-50%); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .company-name-window {
-        overflow-x: auto;
-    }
-
-    .company-name-window[data-animated="true"] .company-name-track {
-        animation: none;
-    }
-
-    .company-name-group[aria-hidden="true"],
-    #company-motion-toggle {
-        display: none;
-    }
 }
 
 /* Shared readable typography; content titles retain Korean-capable Pretendard. */

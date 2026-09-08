@@ -69,6 +69,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const portraitLayout = (member) => member.image
         ? (member.imageLayout === 'torso' ? 'torso' : 'compact')
         : 'text';
+    const renderLegacyProfile = (member) => {
+        const summary = renderSummary(member);
+        const highlights = (member.highlights || []).filter(item => !getSummaryKo(member).includes(String(item)));
+        return `${summary}${highlights.length ? `<ul class="partners-highlights">${highlights.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>` : ''}`;
+    };
     const renderMemberCard = (member, duplicate = false) => {
         const profileLabel = member.nameEn
             ? `${member.nameEn} profile`
@@ -94,7 +99,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <p class="team-role">${escapeHtml(member.roleKo || '')}</p>
                     ${roleEn ? `<p class="team-role-en">${roleEnHtml}</p>` : ''}
                 </div>
-                ${member.group === 'core' ? `<div class="partners-summary">${renderSummary(member)}</div>` : ''}
+                ${member.group === 'core' ? `<div class="partners-summary">${portraitLayout(member) === 'torso' ? renderSummary(member) : renderLegacyProfile(member)}</div>` : ''}
+                ${member.group === 'core' && portraitLayout(member) !== 'torso' ? '<span class="partners-profile-link" aria-hidden="true">프로필 보기 <span>↗</span></span>' : ''}
             </a>
         `;
     };
@@ -140,64 +146,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const button = document.getElementById('partners-motion-toggle');
         if (!viewport || !button) return;
         const group = viewport.querySelector('.partners-group');
-        // Keep the accessible group between identical buffers for bidirectional wrapping.
-        const buffer = group.nextElementSibling.cloneNode(true);
-        group.before(buffer);
-        const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-        let paused = motion.matches;
-        let visible = false;
-        let frame = 0;
-        let previousTime = 0;
-        let width = group.getBoundingClientRect().width;
-        const cards = Array.from(group.children);
-        const startCard = cards[Math.floor(Math.random() * cards.length)];
-        let scrollPosition = width + startCard.getBoundingClientRect().left - group.getBoundingClientRect().left;
-        viewport.scrollLeft = scrollPosition;
-        const wrap = (position) => width > 0
-            ? width + ((position - width) % width + width) % width
-            : position;
-        viewport.addEventListener('scroll', () => {
-            const position = viewport.scrollLeft;
-            scrollPosition = wrap(position);
-            if (Math.abs(position - scrollPosition) > 1) viewport.scrollLeft = scrollPosition;
-        }, { passive: true });
-        new ResizeObserver(() => {
-            const nextWidth = group.getBoundingClientRect().width;
-            if (nextWidth > 0 && width > 0) scrollPosition = scrollPosition / width * nextWidth;
-            width = nextWidth;
-            viewport.scrollLeft = scrollPosition = wrap(scrollPosition);
-        }).observe(group);
-        const updateButton = () => {
-            button.setAttribute('aria-pressed', String(paused));
-            button.textContent = paused ? '재생' : '일시정지';
-        };
-        const step = (time) => {
-            const elapsed = previousTime ? Math.min(time - previousTime, 64) : 0;
-            previousTime = time;
-            if (width > 0) {
-                scrollPosition = wrap(scrollPosition + elapsed * 0.026);
-                viewport.scrollLeft = scrollPosition;
-            }
-            frame = requestAnimationFrame(step);
-        };
-        const updateMotion = () => {
-            cancelAnimationFrame(frame);
-            previousTime = 0;
-            scrollPosition = viewport.scrollLeft;
-            if (!paused && visible) frame = requestAnimationFrame(step);
-            updateButton();
-        };
-        const pause = () => { paused = true; updateMotion(); };
-        button.addEventListener('click', () => { paused = !paused; updateMotion(); });
-        viewport.addEventListener('pointerdown', pause, { passive: true });
-        viewport.addEventListener('wheel', pause, { passive: true });
-        viewport.addEventListener('focusin', pause);
-        motion.addEventListener('change', () => { paused = motion.matches; updateMotion(); });
-        new IntersectionObserver(entries => {
-            visible = entries[0].isIntersecting;
-            updateMotion();
-        }).observe(viewport);
-        updateButton();
+        window.JsgCarousel({ viewport, button, group, randomStart: true });
     };
 
     const renderMemberDetail = (member) => {

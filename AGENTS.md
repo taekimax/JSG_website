@@ -154,3 +154,9 @@
 - Notice는 같은 CMS, Perspective는 기존 Substack RSS 동기화를 유지한다. 콘텐츠 저장은 웹사이트 소스 저장소를 변경하지 않는다.
 - GitHub Pages artifact는 `tools/stage-site.mjs`로 방문자용 파일만 준비한다. 로컬 `board-content` 심볼릭 링크는 Git과 artifact에서 제외한다.
 - 공개 출력 전용 `jsg-public-content` 저장소와 그 저장소로 제한된 배포 키를 이용한 자동 배포를 준비했다. 사용자 승인 후 출력 저장소·제한된 배포 키·Actions 비밀값 연결을 완료했다. Cafe24는 비활성 상태를 유지한다.
+
+### Team·Portfolio 캐러셀 보완 — 2026-09-08
+
+- 사용자 요청으로 Team의 자동 이동을 1.5배인 39px/초로 높였다. Portfolio도 같은 속도를 사용하며 두 목록은 `scripts/carousel.js`의 같은 네이티브 가로 스크롤 동작을 공유한다. 터치·휠·키보드 포커스는 자동 이동을 멈추며 재생·일시정지와 동작 줄이기를 유지한다.
+- Partners의 모든 카드는 같은 높이를 사용한다. 새 상반신 사진이 없는 멤버도 기존 큰 인물 사진·이름·직함·보유한 경력과 상세 링크를 갖춘 완전한 카드로 표시한다. 사진·경력이 없는 경우에는 기존 이름·직함을 균형 있게 배치하며 내용을 새로 만들지 않는다. Advisors의 기존 표시 계약은 유지한다.
+- Portfolio의 KOSDAQ·KOSPI 표시는 회사명 아래 오른쪽 끝에 둔다. 상자는 제거하고 JetBrains Mono를 기존 배지보다 1pt 크게 사용한다. 회사명 행의 기존 높이는 유지한다.
