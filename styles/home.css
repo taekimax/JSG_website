@@ -284,7 +284,7 @@
     cursor: pointer;
 }
 .home-page .perspective-section .board-arrow { color: var(--brand-deep-blue); }
-.home-page .board-arrow-chevron { font-size: 18px; line-height: 0.8; }
+.home-page .board-arrow .nav-chevron { font-size: var(--nav-chevron-control-size); }
 .home-page .board-arrow:hover:not([aria-disabled="true"]) { background: var(--board-control-hover); }
 .home-page .board-arrow[aria-disabled="true"] { opacity: 1; cursor: default; }
 .home-page .board-paged :is(.board-arrow, .board-window):focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
@@ -333,8 +333,8 @@
 .home-page .partners-group .team-card-link[data-portrait="compact"]:has(> .partners-summary:empty) { grid-template-rows: 1fr auto auto; }
 .home-page .partners-group [data-portrait="compact"]:has(> .partners-summary:empty) :is(.team-card-media, .team-card-copy) { align-self: center; }
 .home-page .partners-profile-link { grid-column: 1 / -1; grid-row: 3; display: flex; justify-content: space-between; align-self: end; padding-top: 20px; border-top: 1px solid var(--border-light); color: var(--brand-royal-blue); font-size: 16px; }
-.home-page [data-portrait="text"] .team-card-media { display: none; }
-.home-page [data-group="advisory"] .team-card[data-portrait="text"] { grid-template-columns: minmax(0, 1fr); }
+.home-page .partners-group [data-portrait="text"] .team-card-media { display: none; }
+.home-page [data-group="advisory"] .member-photo-placeholder { min-height: 0; }
 @media (max-width: 699px) {
     .home-page .partners-group { gap: 24px; padding-right: 24px; }
     .home-page .partners-group .team-card-link { flex-basis: min(320px, 100cqw); width: min(320px, 100cqw); }

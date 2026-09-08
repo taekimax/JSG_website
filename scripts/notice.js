@@ -205,7 +205,7 @@ function buildNoticePager(notices, currentId) {
         prev.className = 'detail-pager-link prev';
         prev.href = `notice.html?id=${encodeURIComponent(prevNotice.id)}`;
         prev.setAttribute('aria-label', `Previous notice: ${truncateNavLabel(prevNotice.title, 48)}`);
-        prev.textContent = `\u2190 ${truncateNavLabel(prevNotice.title)}`;
+        prev.innerHTML = `<span class="nav-chevron" data-direction="left" aria-hidden="true"></span> ${escapeNoticeText(truncateNavLabel(prevNotice.title))}`;
         pager.appendChild(prev);
     } else {
         pager.appendChild(makeSpacer());
@@ -216,7 +216,7 @@ function buildNoticePager(notices, currentId) {
         next.className = 'detail-pager-link next';
         next.href = `notice.html?id=${encodeURIComponent(nextNotice.id)}`;
         next.setAttribute('aria-label', `Next notice: ${truncateNavLabel(nextNotice.title, 48)}`);
-        next.textContent = `${truncateNavLabel(nextNotice.title)} \u2192`;
+        next.innerHTML = `${escapeNoticeText(truncateNavLabel(nextNotice.title))} <span class="nav-chevron" data-direction="right" aria-hidden="true"></span>`;
         pager.appendChild(next);
     } else {
         pager.appendChild(makeSpacer());

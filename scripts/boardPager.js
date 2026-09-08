@@ -39,9 +39,9 @@ window.JsgBoardPager = {
             button.type = 'button';
             button.className = `board-arrow board-arrow--${direction}`;
             const chevron = document.createElement('span');
-            chevron.className = 'board-arrow-chevron';
+            chevron.className = 'nav-chevron';
             chevron.setAttribute('aria-hidden', 'true');
-            chevron.textContent = direction === 'prev' ? '‹' : '›';
+            chevron.setAttribute('data-direction', direction === 'prev' ? 'left' : 'right');
             button.append(chevron);
             button.setAttribute('aria-label', `${direction === 'prev' ? 'Previous' : 'Next'} ${label} page`);
             button.setAttribute('aria-controls', viewport.id);

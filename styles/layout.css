@@ -131,38 +131,8 @@
         font-size: 18px;
     }
 
-    .menu-toggle-icon {
-        position: relative;
-        width: 22px;
-        height: 16px;
-    }
-
-    .menu-toggle-icon::before,
-    .menu-toggle-icon::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        width: 100%;
-        height: 1px;
-        background: currentColor;
-        transition: transform 160ms ease;
-    }
-
-    .menu-toggle-icon::before {
-        top: 4px;
-    }
-
-    .menu-toggle-icon::after {
-        top: 12px;
-    }
-
-    .menu-toggle[aria-expanded="true"] .menu-toggle-icon::before {
-        transform: translateY(4px) rotate(45deg);
-    }
-
-    .menu-toggle[aria-expanded="true"] .menu-toggle-icon::after {
-        transform: translateY(-4px) rotate(-45deg);
-    }
+    .menu-toggle .nav-chevron { font-size: var(--nav-chevron-control-size); }
+    .menu-toggle[aria-expanded="true"] .nav-chevron::before { content: var(--chevron-up); }
 
     .js-navigation .desktop-nav {
         display: none;
@@ -199,12 +169,13 @@
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .menu-toggle-icon::before,
-    .menu-toggle-icon::after {
-        transition: none;
-    }
-}
-
 /* Section links need only a small margin now that the header scrolls with the page. */
 .home-page :is(.home-section, #portfolio) { scroll-margin-top: 24px; }
+
+/* One glyph treatment for every directional navigation control. */
+.nav-chevron { display: inline-flex; flex: none; width: 1em; align-items: center; justify-content: center; font-family: var(--font-family-title); font-size: var(--nav-chevron-size); font-style: normal; font-weight: 400; line-height: 1; letter-spacing: 0; vertical-align: -0.06em; }
+.nav-chevron[data-direction="left"]::before { content: var(--chevron-left); }
+.nav-chevron[data-direction="right"]::before { content: var(--chevron-right); }
+.nav-chevron[data-direction="up"]::before { content: var(--chevron-up); }
+.nav-chevron[data-direction="down"]::before { content: var(--chevron-down); }
+.footer-bottom a, .detail-return { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }

@@ -8,11 +8,11 @@
     <title>JSG INVESTMENT</title>
     <link rel="preload" href="assets/fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="assets/fonts/JetBrainsMonoNerdFont-Regular.ttf" as="font" type="font/ttf" crossorigin>
-    <link rel="stylesheet" href="styles/tokens.css">
+    <link rel="stylesheet" href="styles/tokens.css?v=20260908-chevrons">
     <link rel="stylesheet" href="styles/reset.css">
-    <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/layout.css?v=20260908-chevrons">
     <link rel="stylesheet" href="styles/main.css?v=20260907-detail-nav">
-    <link rel="stylesheet" href="styles/detail.css?v=20260908-team-layout">
+    <link rel="stylesheet" href="styles/detail.css?v=20260908-chevrons">
 </head>
 
 <body class="detail-page detail-page--notice">
@@ -21,7 +21,7 @@
         <div class="header-inner">
             <a href="about.html" class="logo" aria-label="JSG INVESTMENT"><img class="brand-mark" src="assets/shared/jsg-emblem.png" alt="" width="80" height="80"><span class="brand-wordmark">JSG INVESTMENT</span></a>
             <button class="menu-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false">
-                <span class="menu-toggle-label">Menu</span><span class="menu-toggle-icon" aria-hidden="true"></span>
+                <span class="menu-toggle-label">Menu</span><span class="nav-chevron" data-direction="down" aria-hidden="true"></span>
             </button>
             <nav id="primary-navigation" class="desktop-nav" aria-label="주요 메뉴">
                 <a href="about.html#about">About</a>
@@ -57,13 +57,13 @@
 
     <footer class="detail-footer detail-inner">
         <a href="about.html" class="brand-wordmark">JSG INVESTMENT</a>
-        <a href="about.html#notice" class="detail-return">Notice ↑</a>
+        <a href="about.html#notice" class="detail-return">Notice <span class="nav-chevron" data-direction="up" aria-hidden="true"></span></a>
     </footer>
 
     <script src="scripts/ui.js"></script>
     <script src="scripts/assets.js"></script>
     <script src="scripts/sharedAssets.js"></script>
-    <script src="scripts/notice.js?v=20260907-portfolio"></script>
+    <script src="scripts/notice.js?v=20260908-chevrons"></script>
 </body>
 
 </html>

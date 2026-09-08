@@ -53,6 +53,14 @@
   --notice-title-bg: var(--palette-blue);
   --board-control-hover: color-mix(in srgb, currentColor 10%, transparent);
 
+  /* Directional navigation: JetBrains Mono Nerd Font angle glyphs. */
+  --chevron-left: "\f104";
+  --chevron-right: "\f105";
+  --chevron-up: "\f106";
+  --chevron-down: "\f107";
+  --nav-chevron-size: 18px;
+  --nav-chevron-control-size: 20px;
+
   /* Typography */
   --font-family-base: "Pretendard", sans-serif;
   --font-family-title: "JetBrainsMono NF", "Pretendard", monospace;

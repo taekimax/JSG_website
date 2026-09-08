@@ -167,3 +167,7 @@ Notice는 파란 배경에 흰 제목·목록을 사용하며 설명을 제거�
 `/admin/`의 Pages CMS에서 **Portfolio 투자기업**을 선택합니다. 회사명·분야·정렬·소개를 수정하고 상장사는 시장·종목코드·상장일을 입력합니다. 초안을 끄면 공개 대상이며 켜면 목록에서 내립니다. 회사 ID와 상세 주소는 유지됩니다. 작성 방법과 배포 경로는 [콘텐츠 관리 안내](docs/board-authoring.md)에 있습니다.
 
 GitHub Pages는 `tools/stage-site.mjs --github-pages`로 방문자용 파일만 `_site/`에 준비합니다. 로컬 `board-content` 연결은 배포 artifact에 포함하지 않습니다. 게시판과 Portfolio는 별도 공개 출력 사이트에서 읽으므로 콘텐츠 변경으로 웹사이트 소스가 변경되지 않습니다.
+
+## 디자인 일관성
+
+현재 디자인 결정은 [AGENTS.md](AGENTS.md)에 기록합니다. 방향성 내비게이션은 모두 `.nav-chevron[data-direction]`을 사용하며 문자·크기는 `styles/tokens.css`, 공통 표시는 `styles/layout.css`가 소유합니다. 이전·다음·Top·섹션 복귀·프로필·모바일 메뉴에 별도 화살표를 추가하지 않습니다. Advisors의 빈 사진도 기존 사진과 같은 크기의 회색 영역으로 유지합니다.

@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 app.innerHTML = `
                     <div class="about-card">
                         <p style="margin: 0; color: var(--text-muted);">선택한 포트폴리오를 찾을 수 없습니다.</p>
-                        <p style="margin: 12px 0 0;"><a href="about.html#portfolio" class="detail-return">Portfolio ↑</a></p>
+                        <p style="margin: 12px 0 0;"><a href="about.html#portfolio" class="detail-return">Portfolio <span class="nav-chevron" data-direction="up" aria-hidden="true"></span></a></p>
                     </div>
                 `;
                 return;
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             pager.className = 'detail-pager';
             pager.setAttribute('aria-label', 'Portfolio navigation');
             const link = (entry, direction) => entry
-                ? `<a class="detail-pager-link ${direction}" href="portfolio.html?id=${encodeURIComponent(entry.id)}" aria-label="${direction === 'prev' ? 'Previous company' : 'Next company'}: ${escapeHtml(entry.name)}">${direction === 'prev' ? '← ' : ''}${escapeHtml(entry.name)}${direction === 'next' ? ' →' : ''}</a>`
+                ? `<a class="detail-pager-link ${direction}" href="portfolio.html?id=${encodeURIComponent(entry.id)}" aria-label="${direction === 'prev' ? 'Previous company' : 'Next company'}: ${escapeHtml(entry.name)}">${direction === 'prev' ? '<span class="nav-chevron" data-direction="left" aria-hidden="true"></span> ' : ''}${escapeHtml(entry.name)}${direction === 'next' ? ' <span class="nav-chevron" data-direction="right" aria-hidden="true"></span>' : ''}</a>`
                 : '<span class="detail-pager-spacer" aria-hidden="true"></span>';
             pager.innerHTML = link(previous, 'prev') + link(next, 'next');
             app.appendChild(pager);

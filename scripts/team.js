@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     ${roleEn ? `<p class="team-role-en">${roleEnHtml}</p>` : ''}
                 </div>
                 ${member.group === 'core' ? `<div class="partners-summary">${portraitLayout(member) === 'torso' ? renderSummary(member) : renderLegacyProfile(member)}</div>` : ''}
-                ${member.group === 'core' && portraitLayout(member) !== 'torso' ? '<span class="partners-profile-link" aria-hidden="true">프로필 보기 <span>↗</span></span>' : ''}
+                ${member.group === 'core' && portraitLayout(member) !== 'torso' ? '<span class="partners-profile-link" aria-hidden="true">프로필 보기 <span class="nav-chevron" data-direction="right"></span></span>' : ''}
             </a>
         `;
     };
@@ -177,11 +177,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         const nextMember = index >= 0 && index < orderedMembers.length - 1 ? orderedMembers[index + 1] : null;
 
         const prevHtml = prevMember
-            ? `<a class="detail-pager-link prev" href="team-member.html?id=${encodeURIComponent(prevMember.id)}" aria-label="Previous member: ${escapeHtml(formatNavLabel(prevMember))}">← ${escapeHtml(formatNavLabel(prevMember))}</a>`
+            ? `<a class="detail-pager-link prev" href="team-member.html?id=${encodeURIComponent(prevMember.id)}" aria-label="Previous member: ${escapeHtml(formatNavLabel(prevMember))}"><span class="nav-chevron" data-direction="left" aria-hidden="true"></span> ${escapeHtml(formatNavLabel(prevMember))}</a>`
             : `<span class="detail-pager-spacer" aria-hidden="true"></span>`;
 
         const nextHtml = nextMember
-            ? `<a class="detail-pager-link next" href="team-member.html?id=${encodeURIComponent(nextMember.id)}" aria-label="Next member: ${escapeHtml(formatNavLabel(nextMember))}">${escapeHtml(formatNavLabel(nextMember))} →</a>`
+            ? `<a class="detail-pager-link next" href="team-member.html?id=${encodeURIComponent(nextMember.id)}" aria-label="Next member: ${escapeHtml(formatNavLabel(nextMember))}">${escapeHtml(formatNavLabel(nextMember))} <span class="nav-chevron" data-direction="right" aria-hidden="true"></span></a>`
             : `<span class="detail-pager-spacer" aria-hidden="true"></span>`;
 
         app.innerHTML = `
