@@ -153,4 +153,4 @@
 - Portfolio의 18개 회사 원문·ID·정렬을 `/Volumes/dev/jsg-board-content/content/portfolio/`로 이관하고 Pages CMS에 회사 편집 화면을 추가했다. 기존 사이트의 Portfolio manifest·TXT 소유 규칙을 이 결정으로 대체한다. 웹사이트는 `assets/shared/board-endpoints.json`의 `portfolioManifest`와 생성된 TXT만 읽는다.
 - Notice는 같은 CMS, Perspective는 기존 Substack RSS 동기화를 유지한다. 콘텐츠 저장은 웹사이트 소스 저장소를 변경하지 않는다.
 - GitHub Pages artifact는 `tools/stage-site.mjs`로 방문자용 파일만 준비한다. 로컬 `board-content` 심볼릭 링크는 Git과 artifact에서 제외한다.
-- 공개 출력 전용 `jsg-public-content` 저장소와 그 저장소로 제한된 배포 키를 이용한 자동 배포를 준비했다. 저장소 생성·키 등록은 별도 승인 후 연결하며 Cafe24는 비활성 상태를 유지한다.
+- 공개 출력 전용 `jsg-public-content` 저장소와 그 저장소로 제한된 배포 키를 이용한 자동 배포를 준비했다. 사용자 승인 후 출력 저장소·제한된 배포 키·Actions 비밀값 연결을 완료했다. Cafe24는 비활성 상태를 유지한다.

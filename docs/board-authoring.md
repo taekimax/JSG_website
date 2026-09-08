@@ -27,7 +27,7 @@ Portfolio·Notice와 Perspective 목록은 비공개 [jsg-board-content](https:/
 
 CMS 저장 → 비공개 콘텐츠 저장소 → 검사와 정적 파일 생성 → 공개 출력 배포 순서입니다. 콘텐츠를 저장해도 웹사이트 소스 저장소는 변경하지 않습니다.
 
-GitHub Pages용 공개 출력 저장소는 `taekimax/jsg-public-content`로 구성하며, `/jsg-public-content/board-content/` 아래의 생성 파일만 제공합니다. 원본 Markdown, 초안, 설정과 편집 도구는 공개 출력에서 제외됩니다. 연결에는 출력 저장소에만 쓰기 권한을 가진 배포 키와 콘텐츠 저장소의 Actions 비밀값이 필요합니다. 설정 전에는 자동 공개 배포가 비활성화되어 있습니다.
+GitHub Pages용 공개 출력 저장소는 `taekimax/jsg-public-content`로 구성하며, `/jsg-public-content/board-content/` 아래의 생성 파일만 제공합니다. 원본 Markdown, 초안, 설정과 편집 도구는 공개 출력에서 제외됩니다. 연결에는 출력 저장소에만 쓰기 권한을 가진 배포 키와 콘텐츠 저장소의 Actions 비밀값이 필요합니다. 2026-09-08 사용자 승인 후 이 연결을 활성화했습니다. CMS 저장 시 자동 검사와 공개 출력 배포가 실행됩니다.
 
 Cafe24는 `/board-content/` 경로를 그대로 사용합니다. 호스팅 준비 후 별도 변수와 SFTP 비밀값을 설정할 때 활성화합니다.
 
