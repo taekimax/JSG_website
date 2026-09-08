@@ -178,6 +178,7 @@ export async function renderPortfolioApp({ manifest, descriptions = {}, search =
     window,
     document,
     console: { error() {} },
+    URL,
     URLSearchParams,
     encodeURIComponent
   });

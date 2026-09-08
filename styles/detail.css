@@ -54,7 +54,7 @@
 .detail-page .detail-hero .page-hero-sub + .page-hero-sub {
     margin-top: -18px;
 }
-.detail-page :is(#portfolio-app, #notice-app) { padding-block: 64px 80px; }
+.detail-page :is(#portfolio-app, #notice-app) { padding-block: 64px 0; }
 .detail-page .portfolio-grid { display: block; }
 .detail-page :is(.portfolio-detail, .notice-record, .about-card) {
     display: block;
@@ -128,8 +128,10 @@
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: start;
     gap: 32px;
-    margin: 64px 0 0;
-    padding: 24px 0 0;
+    width: 100%;
+    max-width: 720px;
+    margin: 48px auto 0;
+    padding: 16px 0;
     border-top: 1px solid var(--border-light);
 }
 .detail-pager-link {
@@ -148,22 +150,38 @@
 .detail-pager-link.next { text-align: right; justify-content: flex-end; }
 .detail-pager-link:hover { color: var(--brand-royal-blue); }
 .detail-pager-link:focus-visible { outline: 2px solid var(--brand-royal-blue); outline-offset: 4px; }
-.detail-footer { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-block: 32px; border-top: 1px solid var(--border-light); }
+.detail-footer { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-block: 32px calc(32px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--border-light); }
 .detail-return { font-family: var(--font-family-title); font-size: 16px; }
 @media (max-width: 699px) {
     .detail-page .detail-hero { padding-block: 48px; }
     .detail-page .detail-hero .page-hero-text { grid-template-columns: 1fr; gap: 24px; }
     .detail-page .detail-hero .page-hero-sub { font-size: 17px; }
-    .detail-page :is(#portfolio-app, #notice-app) { padding-block: 40px 56px; }
+    .detail-page :is(#portfolio-app, #notice-app) { padding-block: 40px 0; }
     .detail-page :is(.portfolio-detail-body, .notice-record-body) { font-size: 17px; }
     .detail-pager { gap: 24px; margin-top: 40px; }
     .detail-footer { align-items: flex-start; flex-direction: column; gap: 16px; }
 }
 
+/* Company CI keeps its original proportions beside the title. */
+.detail-page .portfolio-profile-header { margin-bottom: 40px; }
+.detail-page .portfolio-profile-header { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); align-items: center; gap: 48px; }
+.detail-page .portfolio-profile-header .portfolio-detail-name { margin-bottom: 0; }
+.portfolio-ci { height: 144px; min-width: 0; }
+.portfolio-ci img { display: block; width: 100%; height: 100%; object-fit: contain; border: 0; box-shadow: none; background: none; }
+.portfolio-ci .ci-monochrome { filter: brightness(0); }
+.portfolio-website { display: inline-flex; align-items: center; gap: 8px; margin-top: 8px; color: var(--brand-deep-blue); font-size: 17px; text-decoration: none; white-space: nowrap; min-height: 44px; }
+.portfolio-website-label { border-bottom: 1px solid currentColor; padding-bottom: 3px; }
+@media (max-width: 699px) {
+    .detail-page .portfolio-profile-header { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 20px; }
+    .detail-page .portfolio-profile-header .company-sector { font-size: 14px; margin-bottom: 16px; }
+    .detail-page .portfolio-profile-header .portfolio-detail-name { font-size: clamp(28px, 6vw, 36px); word-break: keep-all; }
+    .portfolio-ci { height: 88px; }
+}
+
 /* Member pages adapt the portrait space to the available source image. */
 .detail-page--team .detail-hero { background: var(--brand-royal-blue); color: var(--base-white); }
 .detail-page--team .detail-hero .page-hero-text > :first-child { grid-row: auto; }
-.detail-page--team .team-detail-shell { margin-block: 64px 80px; }
+.detail-page--team .team-detail-shell { margin-block: 64px 0; }
 .detail-page--team .member-hero-card {
     display: grid;
     grid-template-columns: minmax(180px, 280px) minmax(0, 1fr);
@@ -193,7 +211,7 @@
 .detail-page--team .member-highlights li { margin: 0; padding: 10px 0; line-height: 1.85; word-break: keep-all; overflow-wrap: anywhere; }
 @media (max-width: 699px) {
     .detail-page--team .detail-hero .page-hero-text > :first-child { grid-row: auto; }
-    .detail-page--team .team-detail-shell { margin-block: 40px 56px; }
+    .detail-page--team .team-detail-shell { margin-block: 40px 0; }
     .detail-page--team .member-hero-card { grid-template-columns: minmax(0, 1fr); gap: 24px; align-items: start; }
     .detail-page--team .member-hero-card .team-card-media { width: 150px; }
     .detail-page--team .member-hero-content { gap: 16px; }

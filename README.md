@@ -51,7 +51,7 @@ npm run verify
 | 공통 로고 | `assets/shared/`와 `shared-manifest.json` |
 | About·Philosophy 카피 | 각 페이지 폴더의 `.txt`와 manifest |
 | 팀 | `assets/team/team-manifest.json`, 기존 ID와 `order`, 멤버 사진 |
-| 회사명 스크롤·포트폴리오 | `assets/portfolio/portfolio-manifest.json`의 동일한 `companies` 배열 |
+| 회사명 스크롤·포트폴리오 | Pages CMS → 별도 콘텐츠 저장소의 Portfolio 목록 |
 | 공지·Perspective | `/admin/` → Pages CMS → `taekimax/jsg-board-content` |
 | 연락처·지도 | `assets/contact/contact-manifest.json`과 연결된 텍스트·이미지 |
 
@@ -59,12 +59,7 @@ npm run verify
 
 홈 회사명과 포트폴리오 페이지는 같은 목록을 사용합니다. 회사 수를 코드에 고정하지 않습니다.
 
-1. `companies`에 고유한 `id`, `order`, `name`, `sector`, `logo`, `descriptionText`를 가진 항목을 추가합니다.
-2. 로고가 없으면 `"logo": ""`로 둡니다. 이는 기존 검증 규칙이 허용하는 형식입니다.
-3. `descriptionText`가 가리키는 설명 `.txt` 파일을 추가합니다. 기존 상세 페이지 계약을 유지하므로 설명 파일은 계속 필요합니다.
-4. `assetVersion`을 변경합니다. 이름 변경은 `name`, 순서 변경은 `order`만 수정하면 됩니다. 이미 사용한 ID는 다른 회사에 재사용하지 않습니다.
-
-텍스트는 UTF-8 일반 텍스트이며 HTML을 넣지 않습니다. 문단은 빈 줄로 구분합니다.
+Pages CMS의 **Portfolio 투자기업**에서 회사명·분야·순서·소개를 입력하고 **공식 웹사이트**와 **기업 CI**를 등록합니다. CI는 상세 상단 오른쪽에 원본 비율로 표시됩니다. 흰색 CI는 검정 표시 옵션을 켤 수 있습니다. CI가 없으면 투명한 빈 영역을 유지하고, 웹사이트가 없으면 링크를 생략합니다. 기존 ID는 재사용하거나 변경하지 않습니다. 상세 절차는 [콘텐츠 관리 안내](docs/board-authoring.md)를 참고하세요.
 
 ## 검증 상태 — 2026-09-07
 
@@ -171,3 +166,13 @@ GitHub Pages는 `tools/stage-site.mjs --github-pages`로 방문자용 파일만 
 ## 디자인 일관성
 
 현재 디자인 결정은 [AGENTS.md](AGENTS.md)에 기록합니다. 방향성 내비게이션은 모두 `.nav-chevron[data-direction]`을 사용하며 문자·크기는 `styles/tokens.css`, 공통 표시는 `styles/layout.css`가 소유합니다. 이전·다음·Top·섹션 복귀·프로필·모바일 메뉴에 별도 화살표를 추가하지 않습니다. Advisors의 빈 사진도 기존 사진과 같은 크기의 회색 영역으로 유지합니다.
+
+## Tailscale 로컬 검토
+
+[원격 미리보기](https://jessie.adal-alhena.ts.net/jsg/)는 Tailscale 연결 상태에서 접근합니다. 현재 작업 파일을 바로 제공하므로 새로고침하면 변경을 볼 수 있습니다. 공개 사이트 배포와는 별도입니다.
+
+서버: `node tools/preview-server.mjs` (127.0.0.1:4174). 콘텐츠는 인접한 `jsg-board-content/dist/`를 사용하며 콘텐츠 수정 후 그 저장소에서 `npm run build`를 실행합니다. `JSG_CONTENT_DIST`와 `JSG_PREVIEW_PORT`로 경로·포트를 지정할 수 있습니다.
+
+현재 실행 PID는 `/tmp/jsg-preview-4174.pid`, 로그는 `/tmp/jsg-preview-4174.log`에 있습니다. 종료할 때 해당 프로세스를 확인한 뒤 종료하고 `tailscale serve --https=443 --set-path=/jsg off`로 이 경로만 해제합니다. 다른 Tailscale 경로를 초기화하지 않습니다.
+
+제목과 본문 시작이 데스크톱 144px·모바일 96px의 짧은 스크롤 구간 동안 함께 고정된 뒤 자연스럽게 올라갑니다. 전환 공간은 고정 높이이며 동작 줄이기에서는 고정과 추가 공간을 모두 제거합니다. 재생/일시정지 문자 버튼은 Partners와 Portfolio 제목 오른쪽에 있습니다. iPhone에서는 화면 가장자리까지 표시하고 상·하단 및 가로 safe-area를 반영합니다. 기존 색상은 그대로 유지합니다. 모든 화면의 메뉴는 햄버거 버튼 안에 있으며 Perspective는 Philosophy 내부 위치로 이동합니다.

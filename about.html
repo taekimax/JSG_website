@@ -3,16 +3,17 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>JSG INVESTMENT</title>
     <link rel="preload" href="assets/fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="assets/fonts/JetBrainsMonoNerdFont-Regular.ttf" as="font" type="font/ttf" crossorigin>
-    <link rel="stylesheet" href="styles/tokens.css?v=20260908-chevrons">
+    <link rel="stylesheet" href="styles/tokens.css?v=20260908-screen-edges">
     <link rel="stylesheet" href="styles/reset.css">
-    <link rel="stylesheet" href="styles/layout.css?v=20260908-chevrons">
-    <link rel="stylesheet" href="styles/main.css?v=20260908-shared-scroll">
+    <link rel="stylesheet" href="styles/layout.css?v=20260908-screen-edges">
+    <link rel="stylesheet" href="styles/main.css?v=20260908-carousel-speed">
     <link rel="stylesheet" href="styles/about-editorial.css?v=20260908-team-profile-2">
-    <link rel="stylesheet" href="styles/home.css?v=20260908-chevrons">
+    <link rel="stylesheet" href="styles/home.css?v=20260908-screen-edges">
+    <link rel="stylesheet" href="styles/section-reveal.css?v=20260908-screen-edges">
 </head>
 
 <body id="top" class="about-editorial home-page">
@@ -20,13 +21,14 @@
     <header class="site-header">
         <div class="header-inner">
             <a href="about.html" class="logo" aria-label="JSG INVESTMENT"><img class="brand-mark" src="assets/shared/jsg-emblem.png" alt="" width="80" height="80"><span class="brand-wordmark">JSG INVESTMENT</span></a>
-            <button class="menu-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false">
-                <span class="menu-toggle-label">Menu</span><span class="nav-chevron" data-direction="down" aria-hidden="true"></span>
+            <button class="menu-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false" aria-label="Open menu">
+                <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
             </button>
             <nav id="primary-navigation" class="desktop-nav" aria-label="주요 메뉴">
                 <a href="about.html#about" aria-current="page">About</a>
                 <a href="about.html#team">Team</a>
                 <a href="about.html#philosophy">Philosophy</a>
+                <a href="about.html#perspective">Perspective</a>
                 <a href="about.html#portfolio">Portfolio</a>
                 <a href="about.html#notice">Notice</a>
                 <a href="about.html#contact">Contact</a>
@@ -37,12 +39,14 @@
     <main id="main-content" class="site-main site-main--interior" tabindex="-1">
         <section id="about" class="home-section" aria-label="About" tabindex="-1">
 
-            <div class="about-title-band">
+            <div class="curtain-track"><div class="curtain-scene">
+<div class="about-title-band curtain-band">
                 <div class="section-inner about-title-grid">
                     <h1 id="about-title-ko" data-break-before="길을" class="about-section-title" lang="ko">Loading...</h1>
                     <h2 id="about-title-en" data-break-before="you're" class="about-section-title" lang="en">Loading...</h2>
                 </div>
             </div>
+<div class="curtain-body">
             <div class="about-story section-inner">
                 <section class="text-block about-section" lang="ko" aria-labelledby="about-title-ko">
                     <p>Loading...</p>
@@ -54,18 +58,21 @@
             </div>
 
 
-        </section>
+        </div>
+</div>
+</div>
+</section>
         <section id="team" class="home-section" aria-label="Team" tabindex="-1">
 
-            <section class="page-hero section-title-band">
+            <div class="curtain-track"><div class="curtain-scene">
+<section class="page-hero section-title-band curtain-band">
                 <div class="page-hero-surface section-inner">
-                    <div class="page-hero-text bilingual-stack">
+                    <div class="page-hero-text">
                         <h2 class="section-title">Team</h2>
-                        <p class="page-hero-sub">경험과 전문성이 결합된 투자 팀과 자문 네트워크</p>
-                        <p class="page-hero-sub">An investment team and advisory network built on operating judgment and domain expertise.</p>
                     </div>
                 </div>
             </section>
+<div class="curtain-body">
 
             <div class="team-index-shell section-inner">
                 <div id="team-member-app">
@@ -78,11 +85,15 @@
                 </div>
             </div>
 
-        </section>
+        </div>
+</div>
+</div>
+</section>
         <section id="philosophy" aria-label="Philosophy" tabindex="-1">
             <div class="philosophy-main home-section home-section--blue">
                 <div class="section-inner">
-                    <section class="page-hero">
+                    <div class="curtain-track"><div class="curtain-scene">
+<section class="page-hero curtain-band">
                         <div class="page-hero-surface">
                             <div class="page-hero-text bilingual-stack">
                                 <h2 class="page-hero-kicker section-title">Philosophy</h2>
@@ -91,6 +102,7 @@
                             </div>
                         </div>
                     </section>
+<div class="curtain-body">
 
                     <section class="philosophy-section">
 
@@ -133,45 +145,59 @@
                         </div>
                     </section>
                 </div>
+</div>
+</div>
+</div>
             </div>
 
-            <section id="perspective" class="perspective-section home-section" aria-label="Perspective">
-                <section class="page-hero section-title-band">
+            <section id="perspective" class="perspective-section home-section" aria-label="Perspective" tabindex="-1">
+                <div class="curtain-track"><div class="curtain-scene">
+<section class="page-hero section-title-band curtain-band">
                     <div class="page-hero-surface section-inner">
                         <div class="page-hero-text">
                             <h3 class="section-title">Perspective</h3>
                         </div>
                     </div>
                 </section>
+<div class="curtain-body">
 
                 <div class="section-inner">
                     <div id="perspective-posts" aria-live="polite">글 목록을 불러오는 중입니다...</div>
                 </div>
-            </section>
+            </div>
+</div>
+</div>
+</section>
         </section>
         <section id="portfolio" aria-labelledby="portfolio-band-title" tabindex="-1">
             <section class="portfolio-band home-section" aria-labelledby="portfolio-band-title">
-                <div class="portfolio-band-heading section-title-band">
-                    <div class="section-inner"><h2 id="portfolio-band-title" class="section-title">Portfolio</h2></div>
+                <div class="curtain-track"><div class="curtain-scene">
+<div class="portfolio-band-heading section-title-band curtain-band">
+                    <div class="section-inner carousel-heading"><h2 id="portfolio-band-title" class="section-title">Portfolio</h2><button id="company-motion-toggle" class="carousel-toggle" type="button" aria-pressed="false" aria-label="Pause Portfolio carousel" aria-controls="portfolio-name-list" hidden><span class="media-character" aria-hidden="true"></span></button></div>
                 </div>
+<div class="curtain-body">
                 <div class="portfolio-companies section-inner">
-                    <div class="portfolio-controls"><button id="company-motion-toggle" type="button" aria-pressed="false" hidden>일시정지</button></div>
                 <div id="portfolio-name-list" class="company-name-window">
                     <p>불러오는 중...</p>
                 </div>
                 </div>
-            </section>
+            </div>
+</div>
+</div>
+</section>
 
         </section>
         <section id="notice" class="home-section" aria-label="Notice" tabindex="-1">
 
-            <section class="page-hero section-title-band">
+            <div class="curtain-track"><div class="curtain-scene">
+<section class="page-hero section-title-band curtain-band">
                 <div class="page-hero-surface section-inner">
                     <div class="page-hero-text">
                         <h2 class="section-title">Notice</h2>
                     </div>
                 </div>
             </section>
+<div class="curtain-body">
 
             <!-- Dynamic Content Mount Point -->
             <div id="notice-app" class="section-inner" aria-live="polite">
@@ -181,16 +207,21 @@
                 </article>
             </div>
 
-        </section>
+        </div>
+</div>
+</div>
+</section>
         <section id="contact" class="home-section home-section--navy" aria-label="Contact" tabindex="-1">
             <div class="section-inner">
-            <section class="page-hero">
+            <div class="curtain-track"><div class="curtain-scene">
+<section class="page-hero curtain-band">
                 <div class="page-hero-surface">
                     <div class="page-hero-text">
                         <h2 class="page-hero-kicker section-title" id="contact-hero-kicker">Loading...</h2>
                     </div>
                 </div>
             </section>
+<div class="curtain-body">
 
             <div class="contact-section">
                 <div class="contact-card">
@@ -216,6 +247,9 @@
             </div>
 
             </div>
+</div>
+</div>
+</div>
         </section>
     </main>
 
@@ -235,17 +269,18 @@
         <div class="footer-bottom"><a href="#top">Top <span class="nav-chevron" data-direction="up" aria-hidden="true"></span></a></div>
     </footer>
 
-    <script src="scripts/ui.js"></script>
+    <script src="scripts/ui.js?v=20260908-menu"></script>
     <script src="scripts/assets.js"></script>
     <script src="scripts/sharedAssets.js"></script>
     <script src="scripts/aboutCopy.js"></script>
-    <script src="scripts/carousel.js?v=20260908-shared-scroll"></script>
-    <script src="scripts/portfolio.js?v=20260908-chevrons"></script>
-    <script src="scripts/team.js?v=20260908-chevrons"></script>
-    <script src="scripts/philosophyCopy.js?v=20260907-author"></script>
+    <script src="scripts/carousel.js?v=20260908-partners-control"></script>
+    <script src="scripts/portfolio.js?v=20260908-ci"></script>
+    <script src="scripts/team.js?v=20260908-partners-control"></script>
+    <script src="scripts/philosophyCopy.js?v=20260908-new-tab"></script>
     <script src="scripts/boardPager.js?v=20260908-chevrons"></script>
     <script src="scripts/notice.js?v=20260908-chevrons"></script>
     <script src="scripts/contact.js"></script>
+    <script src="scripts/sectionReveal.js?v=20260908-screen-edges"></script>
 </body>
 
 </html>

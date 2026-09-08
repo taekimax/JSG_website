@@ -3,15 +3,16 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>JSG INVESTMENT</title>
     <link rel="preload" href="assets/fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="assets/fonts/JetBrainsMonoNerdFont-Regular.ttf" as="font" type="font/ttf" crossorigin>
-    <link rel="stylesheet" href="styles/tokens.css?v=20260908-chevrons">
+    <link rel="stylesheet" href="styles/tokens.css?v=20260908-screen-edges">
     <link rel="stylesheet" href="styles/reset.css">
-    <link rel="stylesheet" href="styles/layout.css?v=20260908-chevrons">
+    <link rel="stylesheet" href="styles/layout.css?v=20260908-screen-edges">
     <link rel="stylesheet" href="styles/main.css?v=20260907-detail-nav">
-    <link rel="stylesheet" href="styles/detail.css?v=20260908-chevrons">
+    <link rel="stylesheet" href="styles/detail.css?v=20260908-screen-edges">
+    <link rel="stylesheet" href="styles/section-reveal.css?v=20260908-screen-edges">
 </head>
 
 <body class="detail-page detail-page--team">
@@ -19,13 +20,14 @@
     <header class="site-header">
         <div class="header-inner">
             <a href="about.html" class="logo" aria-label="JSG INVESTMENT"><img class="brand-mark" src="assets/shared/jsg-emblem.png" alt="" width="80" height="80"><span class="brand-wordmark">JSG INVESTMENT</span></a>
-            <button class="menu-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false">
-                <span class="menu-toggle-label">Menu</span><span class="nav-chevron" data-direction="down" aria-hidden="true"></span>
+            <button class="menu-toggle" type="button" aria-controls="primary-navigation" aria-expanded="false" aria-label="Open menu">
+                <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
             </button>
             <nav id="primary-navigation" class="desktop-nav" aria-label="주요 메뉴">
                 <a href="about.html#about">About</a>
                 <a href="about.html#team" aria-current="page">Team</a>
                 <a href="about.html#philosophy">Philosophy</a>
+                <a href="about.html#perspective">Perspective</a>
                 <a href="about.html#portfolio">Portfolio</a>
                 <a href="about.html#notice">Notice</a>
                 <a href="about.html#contact">Contact</a>
@@ -35,7 +37,8 @@
 
     <main id="main-content" class="site-main site-main--interior" tabindex="-1">
         <div class="detail-shell">
-            <section class="page-hero detail-hero">
+            <div class="curtain-track"><div class="curtain-scene">
+<section class="page-hero detail-hero curtain-band">
                 <div class="page-hero-surface detail-inner">
                     <div class="page-hero-text bilingual-stack">
                         <p class="page-hero-kicker">Team</p>
@@ -44,6 +47,7 @@
                     </div>
                 </div>
             </section>
+<div class="curtain-body">
 
             <div class="team-detail-shell detail-inner">
                 <div id="team-member-app">
@@ -57,6 +61,9 @@
             </div>
 
         </div>
+</div>
+</div>
+</div>
     </main>
 
     <footer class="detail-footer detail-inner">
@@ -64,10 +71,11 @@
         <a href="about.html#team" class="detail-return">Team <span class="nav-chevron" data-direction="up" aria-hidden="true"></span></a>
     </footer>
 
-    <script src="scripts/ui.js"></script>
+    <script src="scripts/ui.js?v=20260908-menu"></script>
     <script src="scripts/assets.js"></script>
     <script src="scripts/sharedAssets.js"></script>
-    <script src="scripts/team.js?v=20260908-chevrons"></script>
+    <script src="scripts/team.js?v=20260908-partners-control"></script>
+    <script src="scripts/sectionReveal.js?v=20260908-screen-edges"></script>
 </body>
 
 </html>

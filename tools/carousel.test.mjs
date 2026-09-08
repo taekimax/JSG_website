@@ -29,11 +29,11 @@ function carousel(reduced = false) {
     running: () => Boolean(frame) };
 }
 
-test('carousel advances 39 pixels in a second despite integer scroll rounding', () => {
+test('carousel advances 117 pixels in two seconds despite integer scroll rounding', () => {
   const c = carousel();
   c.tick(100);
-  for (let i = 1; i <= 60; i++) c.tick(100 + i * 1000 / 60);
-  assert.equal(c.viewport.scrollLeft, 1039);
+  for (let i = 1; i <= 120; i++) c.tick(100 + i * 1000 / 60);
+  assert.equal(c.viewport.scrollLeft, 1117);
 });
 
 test('manual scrolling pauses motion, wraps in both directions and resumes from that position', () => {
@@ -47,7 +47,7 @@ test('manual scrolling pauses motion, wraps in both directions and resumes from 
   assert.equal(c.viewport.scrollLeft, 1050);
   c.buttons.click();
   c.tick(100); c.tick(150);
-  assert.equal(c.viewport.scrollLeft, 1052);
+  assert.equal(c.viewport.scrollLeft, 1053);
   c.events.focusin();
   assert.equal(c.running(), false);
 });

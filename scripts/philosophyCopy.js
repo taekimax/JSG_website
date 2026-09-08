@@ -107,6 +107,8 @@ async function renderPhilosophyWriting() {
             const link = document.createElement('a');
             link.className = 'notice-link';
             link.href = preview ? post.url : new URL(post.url).href;
+            link.target = '_blank';
+            link.rel = 'noopener';
             link.textContent = post.title;
             header.append(link);
             const meta = document.createElement('div');

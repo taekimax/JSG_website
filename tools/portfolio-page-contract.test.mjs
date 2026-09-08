@@ -77,7 +77,7 @@ test('portfolio detail renderer shows the selected company profile and shared na
   assert.doesNotMatch(html, /portfolio-detail-back/);
 });
 
-test('portfolio retains detail routing after retiring company logo presentation', async () => {
+test('portfolio retains detail routing without the retired local logo field', async () => {
   const [js, css] = await Promise.all([
     readRepoFile('scripts/portfolio.js'),
     readRepoFile('styles/main.css'),
@@ -154,4 +154,18 @@ test('market badges follow explicit KOSDAQ/KOSPI fields and do not invent listin
   assert.match(primary, /코스닥기업\s*<span class="company-market-badge">KOSDAQ<\/span>/);
   assert.match(primary, /유가증권기업\s*<span class="company-market-badge">KOSPI<\/span>/);
   assert.doesNotMatch(primary, /<img|비상장기업<span/);
+});
+
+test('company detail renders versioned CI and official website while rejecting unsafe links', async () => {
+  const company = { id: 'a', name: 'R&D', sector: 'Tech', descriptionText: 'a.txt', ciImage: '/board-content/portfolio-ci/a.svg', ciMonochrome: true };
+  for (const [websiteUrl, visible] of [['https://example.com/about', true], ['javascript:alert(1)', false], ['https://user:pass@example.com', false], ['', false]]) {
+    const { html } = await renderPortfolioApp({ manifest: { assetVersion: 'ci-2', companies: [{ ...company, websiteUrl }] }, descriptions: { 'a.txt': 'Company business.' }, search: '?id=a' });
+    assert.match(html, /src="\/board-content\/portfolio-ci\/a.svg\?v=ci-2" alt="R&amp;D CI" class="ci-monochrome"/);
+    assert.match(html, /portfolio-profile-header/);
+    assert.equal(html.includes('class="portfolio-website"'), visible);
+    if (visible) {
+      assert.ok(html.indexOf('Company business.') < html.indexOf('class="portfolio-website"'));
+      assert.match(html, /target="_blank" rel="noopener noreferrer"/);
+    }
+  }
 });

@@ -1,4 +1,4 @@
-// Shared native scrolling for Team and Portfolio, at 39 CSS pixels per second.
+// Shared native scrolling for Team and Portfolio, at 58.5 CSS pixels per second.
 window.JsgCarousel = ({ viewport, button, group, randomStart = false }) => {
     // Keep the accessible group between identical buffers for bidirectional wrapping.
     const buffer = group.nextElementSibling.cloneNode(true);
@@ -34,13 +34,15 @@ window.JsgCarousel = ({ viewport, button, group, randomStart = false }) => {
     }).observe(group);
     const updateButton = () => {
         button.setAttribute('aria-pressed', String(paused));
-        button.textContent = paused ? '재생' : '일시정지';
+        const label = `${paused ? 'Play' : 'Pause'} ${button.id === 'partners-motion-toggle' ? 'Partners' : 'Portfolio'} carousel`;
+        button.setAttribute('aria-label', label);
+        button.setAttribute('title', label);
     };
     const step = (time) => {
         const elapsed = previousTime ? Math.min(time - previousTime, 64) : 0;
         previousTime = time;
         if (width > 0) {
-            writePosition(scrollPosition + elapsed * 0.039);
+            writePosition(scrollPosition + elapsed * 0.0585);
         }
         frame = requestAnimationFrame(step);
     };

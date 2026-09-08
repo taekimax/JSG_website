@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggle = document.querySelector('.menu-toggle');
     if (!header || !nav || !toggle) return;
 
-    const desktop = window.matchMedia('(min-width: 1024px)');
     const links = [...nav.querySelectorAll('a')];
     const path = window.location.pathname;
     const page = path.endsWith('team-member.html') ? 'team.html'
@@ -12,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
         : path.split('/').pop();
 
     const sections = links.map(link => document.getElementById(new URL(link.href).hash.slice(1))).filter(Boolean);
+    // Nested navigation targets share their outer section's content lifecycle.
+    const contentSections = sections.filter(section => !sections.some(parent => parent !== section && parent.contains(section)));
     const setCurrent = (section) => links.forEach(link => {
         if (new URL(link.href).hash === `#${section}`) {
             link.setAttribute('aria-current', sections.length ? 'location' : 'page');
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setCurrent(page.replace('.html', ''));
     let revealHash = () => {};
     if (sections.length) {
+        history.scrollRestoration = 'manual';
         let scheduled = false;
         const updateSection = () => {
             scheduled = false;
@@ -41,21 +43,26 @@ document.addEventListener('DOMContentLoaded', () => {
             cancelAnimationFrame(revealFrame);
             revealFrame = requestAnimationFrame(() => {
                 const target = sections.find(section => `#${section.id}` === location.hash);
-                target?.scrollIntoView({ block: 'start' });
+                if (target) target.scrollIntoView({ block: 'start', behavior: 'instant' });
+                else if (!location.hash || location.hash === '#top') window.scrollTo({ top: 0, behavior: 'instant' });
                 target?.focus({ preventScroll: true });
                 updateSection();
             });
         };
         window.addEventListener('hashchange', revealHash);
-        window.addEventListener('popstate', revealHash);
+        window.addEventListener('popstate', () => {
+            history.scrollRestoration = 'manual';
+            requestAnimationFrame(revealHash);
+        });
         let initialHash = location.hash;
         const finishInitialScroll = () => {
-            if (!sections.every(section => section.getAttribute('data-content-ready') === 'true')) return;
+            if (!contentSections.every(section => section.getAttribute('data-content-ready') === 'true')) return;
             if (initialHash && initialHash === location.hash) revealHash();
             initialHash = '';
             document.removeEventListener('jsg:section-ready', finishInitialScroll);
         };
         document.addEventListener('jsg:section-ready', finishInitialScroll);
+        finishInitialScroll();
         for (const type of ['wheel', 'touchmove', 'keydown', 'pointerdown']) {
             document.addEventListener(type, () => { initialHash = ''; }, { once: true, passive: true });
         }
@@ -67,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeMenu = (restoreFocus = false) => {
         nav.classList.remove('is-open');
         toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Open menu');
         if (restoreFocus) toggle.focus();
     };
 
@@ -74,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const open = toggle.getAttribute('aria-expanded') === 'true';
         nav.classList.toggle('is-open', !open);
         toggle.setAttribute('aria-expanded', String(!open));
+        toggle.setAttribute('aria-label', open ? 'Open menu' : 'Close menu');
     });
 
     document.addEventListener('keydown', event => {
@@ -90,20 +99,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!header.contains(event.target)) closeMenu();
     });
 
-    links.forEach(link => link.addEventListener('click', event => {
+    const navigationLinks = [...links, ...document.querySelectorAll('.footer-bottom a[href="#top"]')];
+    navigationLinks.forEach(link => link.addEventListener('click', event => {
         closeMenu();
         if (!sections.length || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
         event.preventDefault();
-        location.hash = new URL(link.href).hash;
+        const hash = new URL(link.href).hash;
+        if (location.hash !== hash) history.pushState(null, '', hash);
         revealHash();
     }));
-    desktop.addEventListener('change', () => {
-        const focusedLink = nav.contains(document.activeElement);
-        closeMenu(!desktop.matches && focusedLink);
-        if (desktop.matches && document.activeElement === toggle) {
-            (nav.querySelector('[aria-current]') || links[0])?.focus();
-        }
-    });
+
 
     document.documentElement.classList.add('js-navigation');
 });

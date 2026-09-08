@@ -19,6 +19,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
         .join('');
 
+    const officialWebsite = (value) => {
+        try {
+            const url = new URL(value);
+            return ['https:', 'http:'].includes(url.protocol) && !url.username && !url.password ? url.href : '';
+        } catch { return ''; }
+    };
+
     const marketBadge = (company) => ['KOSDAQ', 'KOSPI'].includes(company.market)
         ? ` <span class="company-market-badge">${company.market}</span>`
         : '';
@@ -81,11 +88,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.title = `${company.name} | JSG INVESTMENT`;
             const detail = document.createElement('article');
             detail.className = 'portfolio-detail';
+            const websiteUrl = officialWebsite(company.websiteUrl);
             detail.innerHTML = `
                 <div class="portfolio-detail-copy">
-                    <span class="company-sector">${escapeHtml(company.sector || '')}</span>
-                    <h1 class="portfolio-detail-name">${escapeHtml(company.name || '')}</h1>
+                    <header class="portfolio-profile-header">
+                        <div class="portfolio-profile-title">
+                            <span class="company-sector">${escapeHtml(company.sector || '')}</span>
+                            <h1 class="portfolio-detail-name">${escapeHtml(company.name || '')}</h1>
+                        </div>
+                        ${company.ciImage ? `<div class="portfolio-ci"><img src="${escapeHtml(window.JsgAssets.versionedUrl(company.ciImage, assetVersion))}" alt="${escapeHtml(company.name)} CI"${company.ciMonochrome ? ' class="ci-monochrome"' : ''}></div>` : '<div class="portfolio-ci portfolio-ci--placeholder" aria-hidden="true"></div>'}
+                    </header>
                     <div class="portfolio-detail-body">${buildParagraphs(descriptions[company.id] || '')}</div>
+                    ${websiteUrl ? `<a class="portfolio-website" href="${escapeHtml(websiteUrl)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(company.name)} 공식 웹사이트 (새 탭)"><span class="portfolio-website-label">공식웹사이트</span><span class="nav-chevron" data-direction="right" aria-hidden="true"></span></a>` : ''}
                 </div>
             `;
             app.appendChild(detail);

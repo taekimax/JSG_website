@@ -64,8 +64,7 @@ Required filename conventions:
 Required ID-based patterns:
 - Team member portrait filename base must match member `id`:
   - `assets/team/{member-id}.{ext}`
-- Portfolio company logo filename base must match company `id` when a non-empty path is supplied:
-  - `assets/portfolio/{company-id}.{ext}`
+- Portfolio CI uploads belong to the separate content repository under `media/portfolio/`; the publisher exposes `/board-content/portfolio-ci/` paths.
 
 Recommended patterns:
 - Hero: `{page}-hero.jpg` (example: `team-hero.jpg`)
@@ -103,7 +102,7 @@ If a new content type is required, it must be added by a developer once, then be
 
 Portfolio content is managed in the private `jsg-board-content` repository through Pages CMS. The website reads `portfolioManifest` from `assets/shared/board-endpoints.json`, then the generated `/board-content/portfolio-manifest.json` and `descriptionText` files. Local Portfolio TXT files and the old manifest have been migrated and removed; no second editable copy remains.
 
-The generated company schema contains stable `id`, `order`, `name`, `sector`, `market`, `ticker`, `listingDate`, `listingNote` and `descriptionText`. Only explicit `KOSDAQ` or `KOSPI` markets create badges. Drafts are omitted by the publisher. The website renders descriptions as escaped plain-text paragraphs. IDs and existing `portfolio.html?id=` links are preserved. The scrolling name row keeps its original line height with inline market badges.
+The generated company schema contains stable `id`, `order`, `name`, `sector`, `market`, `ticker`, `listingDate`, `listingNote` and `descriptionText`, plus optional `websiteUrl`, `ciImage` and `ciMonochrome`. The detail header places company identity on the left and an unboxed, contained CI on the right. Missing CI keeps a transparent placeholder; missing website omits the link below the description. Home names remain text only. Only explicit `KOSDAQ` or `KOSPI` markets create badges. Drafts are omitted by the publisher. The website renders descriptions as escaped plain-text paragraphs. IDs and existing `portfolio.html?id=` links are preserved. The scrolling name row keeps its original line height with inline market badges.
 
 ## Authorized Additions (2026-09-07)
 

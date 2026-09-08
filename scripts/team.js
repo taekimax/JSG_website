@@ -112,8 +112,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             const cardsHtml = groupMembers.map(member => renderMemberCard(member)).join('');
             if (group === 'core') {
                 return `<section class="team-group" data-group="core">
-                    <h2 class="h2-title">${escapeHtml(label)}</h2>
-                    ${groupMembers.length > 1 ? '<div class="partners-controls"><button id="partners-motion-toggle" type="button" aria-pressed="false">일시정지</button></div>' : ''}
+                    <div class="partners-heading carousel-heading">
+                        <h2 class="h2-title">${escapeHtml(label)}</h2>
+                        <button id="partners-motion-toggle" class="carousel-toggle" type="button" aria-pressed="false" aria-label="Pause Partners carousel" aria-controls="partners-window" hidden><span class="media-character" aria-hidden="true"></span></button>
+                    </div>
                     <div id="partners-window" class="partners-window" aria-label="Partners">
                         <div class="partners-track">
                             <div class="partners-group">${cardsHtml}</div>${groupMembers.length > 1 ? `<div class="partners-group" aria-hidden="true">${groupMembers.map(member => renderMemberCard(member, true)).join('')}</div>` : ''}
@@ -138,13 +140,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                 ${renderGroup('Advisors', 'advisory')}
             </div>
         `;
-        startPartnerScroll();
+        startPartnerScroll(members.filter(member => member.group === 'core').length > 1);
     };
 
-    const startPartnerScroll = () => {
+    const startPartnerScroll = (enabled) => {
         const viewport = document.getElementById('partners-window');
         const button = document.getElementById('partners-motion-toggle');
         if (!viewport || !button) return;
+        button.hidden = !enabled;
+        if (!enabled) return;
         const group = viewport.querySelector('.partners-group');
         window.JsgCarousel({ viewport, button, group, randomStart: true });
     };

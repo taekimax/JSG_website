@@ -1,0 +1,13 @@
+/* A short, fixed scroll interval holds the title and opening content together. */
+.home-page { overflow-anchor: none; }
+.curtain-track, .curtain-scene, .curtain-body { display: flow-root; }
+.curtain-track { --curtain-hold: 144px; --curtain-safe-top: env(safe-area-inset-top, 0px); }
+.detail-page .curtain-track { --curtain-hold: 64px; }
+@media (max-width: 699px) {
+    .curtain-track { --curtain-hold: 96px; }
+    .detail-page .curtain-track { --curtain-hold: 48px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+    .js-section-reveal .curtain-track::after { content: ""; display: block; height: var(--curtain-hold); }
+    .js-section-reveal .curtain-scene { transform: translateY(var(--curtain-shift, 0px)); }
+}
