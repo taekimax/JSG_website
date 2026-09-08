@@ -1,3 +1,5 @@
 .worktrees/
 node_modules/
 __pycache__/
+_site/
+board-content

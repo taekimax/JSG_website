@@ -102,7 +102,7 @@ test('home company names grow from the same manifest without logos or descriptio
   const manifest = { assetVersion: 'growth-2', companies };
   const originalOrder = companies.map(company => company.id);
   const { html, jsonRequests, textRequests, heroSrc } = await renderPortfolioApp({ manifest, namesOnly: true });
-  assert.deepEqual(jsonRequests, ['assets/portfolio/portfolio-manifest.json']);
+  assert.deepEqual(jsonRequests, ['assets/shared/board-endpoints.json', '/board-content/portfolio-manifest.json']);
   assert.equal(textRequests.length, 0);
   assert.equal(heroSrc, '', 'home company names must not replace the About hero image');
   assert.deepEqual(companies.map(company => company.id), originalOrder);
@@ -139,4 +139,19 @@ test('company detail navigation follows manifest order and stops at each end', a
     assert.doesNotMatch(html, /portfolio-detail-back|<button/);
     if (id !== 'middle') assert.match(html, /R&amp;D &lt;Company&gt;/);
   }
+});
+
+test('market badges follow explicit KOSDAQ/KOSPI fields and do not invent listings', async () => {
+  const companies = [
+    { id: 'kosdaq', name: '코스닥기업', market: 'KOSDAQ' },
+    { id: 'kospi', name: '유가증권기업', market: 'KOSPI' },
+    { id: 'private', name: '비상장기업', market: '' },
+    { id: 'unsafe', name: '검증안됨', market: '<img src=x>' },
+  ];
+  const { html } = await renderPortfolioApp({ manifest: { companies }, namesOnly: true });
+  const primary = html.split('<ul class="company-name-group" aria-hidden="true">')[0];
+  assert.equal((primary.match(/company-market-badge/g) || []).length, 2);
+  assert.match(primary, /코스닥기업\s*<span class="company-market-badge">KOSDAQ<\/span>/);
+  assert.match(primary, /유가증권기업\s*<span class="company-market-badge">KOSPI<\/span>/);
+  assert.doesNotMatch(primary, /<img|비상장기업<span/);
 });

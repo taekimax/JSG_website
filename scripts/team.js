@@ -66,6 +66,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         getSummaryKo(member) ? `<p class="team-card-summary" lang="ko">${escapeHtml(getSummaryKo(member))}</p>` : '',
         getSummaryEn(member) ? `<p class="team-card-summary" lang="en">${escapeHtml(getSummaryEn(member))}</p>` : ''
     ].join('') : '';
+    const portraitLayout = (member) => member.image
+        ? (member.imageLayout === 'torso' ? 'torso' : 'compact')
+        : 'text';
     const renderMemberCard = (member, duplicate = false) => {
         const profileLabel = member.nameEn
             ? `${member.nameEn} profile`
@@ -79,7 +82,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             : escapeHtml(roleEn);
 
         return `
-            <a class="team-card team-card-link team-card--stacked" href="team-member.html?id=${encodeURIComponent(member.id)}" aria-label="${escapeHtml(profileLabel)}"${duplicate ? ' tabindex="-1"' : ''}>
+            <a class="team-card team-card-link team-card--stacked" data-portrait="${portraitLayout(member)}" href="team-member.html?id=${encodeURIComponent(member.id)}" aria-label="${escapeHtml(profileLabel)}"${duplicate ? ' tabindex="-1"' : ''}>
                 <div class="team-card-media team-card-media--portrait">
                     ${imageHtml}
                 </div>
@@ -233,7 +236,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             : `<span class="detail-pager-spacer" aria-hidden="true"></span>`;
 
         app.innerHTML = `
-            <article class="team-card member-hero-card member-hero-card--stacked">
+            <article class="team-card member-hero-card member-hero-card--stacked" data-portrait="${portraitLayout(member)}">
                 <div class="team-card-media team-card-media--portrait">
                     ${imgHtml}
                 </div>
@@ -264,7 +267,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     `;
 
     try {
-        const response = await fetch('assets/team/team-manifest.json');
+        const response = await fetch('assets/team/team-manifest.json', { cache: 'no-cache' });
         const data = await response.json();
         const assetVersion = data.assetVersion || '';
         const rawMembers = Array.isArray(data) ? data : (data.members || []);

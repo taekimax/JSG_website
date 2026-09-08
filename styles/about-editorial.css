@@ -40,7 +40,6 @@
     grid-template-columns: 1.08fr 1fr;
     column-gap: clamp(56px, 8vw, 120px);
     padding-bottom: 100px;
-    border-bottom: 1px solid var(--editorial-rule);
 }
 
 .about-editorial .about-section {

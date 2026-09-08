@@ -149,6 +149,7 @@ export async function renderPortfolioApp({ manifest, descriptions = {}, search =
     JsgAssets: {
       async fetchJson(url) {
         jsonRequests.push(url);
+        if (url === 'assets/shared/board-endpoints.json') return { portfolioManifest: '/board-content/portfolio-manifest.json' };
         return manifest;
       },
       async fetchText(url) {

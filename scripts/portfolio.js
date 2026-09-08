@@ -19,6 +19,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
         .join('');
 
+    const marketBadge = (company) => ['KOSDAQ', 'KOSPI'].includes(company.market)
+        ? ` <span class="company-market-badge">${company.market}</span>`
+        : '';
+
     app.innerHTML = '<p class="portfolio-loading">불러오는 중...</p>';
 
     const renderNames = (companies) => {
@@ -28,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         const renderGroup = (duplicate = false) => `<ul class="company-name-group"${duplicate ? ' aria-hidden="true"' : ''}>${companies.map(company => `
-            <li><a href="portfolio.html?id=${encodeURIComponent(company.id)}"${duplicate ? ' tabindex="-1"' : ''}>${escapeHtml(company.name || '')}</a></li>
+            <li><a href="portfolio.html?id=${encodeURIComponent(company.id)}"${duplicate ? ' tabindex="-1"' : ''}>${escapeHtml(company.name || '')}${marketBadge(company)}</a></li>
         `).join('')}</ul>`;
 
         app.innerHTML = `<div class="company-name-track">${renderGroup()}${companies.length > 1 ? renderGroup(true) : ''}</div>`;
@@ -48,7 +52,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     try {
-        const manifest = await window.JsgAssets.fetchJson('assets/portfolio/portfolio-manifest.json');
+        const endpoints = await window.JsgAssets.fetchJson('assets/shared/board-endpoints.json');
+        const manifest = await window.JsgAssets.fetchJson(endpoints.portfolioManifest);
         const assetVersion = manifest.assetVersion;
 
         const companies = Array.isArray(manifest.companies) ? manifest.companies.slice() : [];

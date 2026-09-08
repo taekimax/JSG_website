@@ -313,12 +313,16 @@ const main = async () => {
       if (endpoints.perspectiveManifest !== '/board-content/perspective-manifest.json') {
         errors.push('assets/shared/board-endpoints.json: unexpected Perspective manifest endpoint');
       }
+      if (endpoints.portfolioManifest !== '/board-content/portfolio-manifest.json') {
+        errors.push('assets/shared/board-endpoints.json: unexpected Portfolio manifest endpoint');
+      }
     } catch (e) {
       errors.push(`assets/shared/board-endpoints.json: invalid JSON (${e.message})`);
     }
   }
 
   for (const relative of [
+    'assets/portfolio/portfolio-manifest.json',
     'assets/notices/notices-manifest.json',
     'assets/notices/notices.json',
     'assets/notices/source',

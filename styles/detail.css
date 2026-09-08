@@ -158,7 +158,7 @@
     .detail-footer { align-items: flex-start; flex-direction: column; gap: 16px; }
 }
 
-/* Member pages retain a blank portrait space when no photo is available. */
+/* Member pages adapt the portrait space to the available source image. */
 .detail-page--team .detail-hero { background: var(--brand-royal-blue); color: var(--base-white); }
 .detail-page--team .detail-hero .page-hero-text > :first-child { grid-row: auto; }
 .detail-page--team .team-detail-shell { margin-block: 64px 80px; }
@@ -198,4 +198,15 @@
     .detail-page--team .member-name { font-size: 32px; }
     .detail-page--team .member-name-en { font-size: 18px; }
     .detail-page--team :is(.team-role, .team-role-en, .team-card-summary, .member-highlights) { font-size: 17px; }
+}
+
+.detail-page--team .member-hero-card[data-portrait="torso"] { grid-template-columns: minmax(0, 420px) minmax(0, 1fr); }
+.detail-page--team .member-hero-card[data-portrait="torso"] .team-card-media { width: 100%; aspect-ratio: 7 / 9; }
+.detail-page--team .member-hero-card[data-portrait="compact"] { grid-template-columns: minmax(0, 180px) minmax(0, 1fr); }
+.detail-page--team .member-hero-card[data-portrait="text"] { grid-template-columns: minmax(0, 1fr); }
+.detail-page--team [data-portrait="text"] .team-card-media { display: none; }
+@media (max-width: 699px) {
+    .detail-page--team .member-hero-card[data-portrait="torso"] { grid-template-columns: minmax(0, 1fr); }
+    .detail-page--team .member-hero-card[data-portrait="torso"] .team-card-media { max-width: 420px; }
+    .detail-page--team .member-hero-card[data-portrait="compact"] { grid-template-columns: minmax(0, 1fr); }
 }

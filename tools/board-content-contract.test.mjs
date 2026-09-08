@@ -9,7 +9,8 @@ test('website uses fixed external board manifests and keeps content out of the s
   assert.deepEqual(endpoints, {
     schemaVersion: 1,
     noticesManifest: '/board-content/notices-manifest.json',
-    perspectiveManifest: '/board-content/perspective-manifest.json'
+    perspectiveManifest: '/board-content/perspective-manifest.json',
+    portfolioManifest: '/board-content/portfolio-manifest.json'
   });
   const [noticeScript, perspectiveScript] = await Promise.all([
     read('scripts/notice.js'),
@@ -17,7 +18,7 @@ test('website uses fixed external board manifests and keeps content out of the s
   ]);
   assert.match(noticeScript, /board-endpoints\.json/);
   assert.match(perspectiveScript, /board-endpoints\.json/);
-  for (const path of ['assets/notices/notices.json', 'assets/notices/source', 'assets/notices/attachments', 'assets/philosophy/posts.json']) {
+  for (const path of ['assets/portfolio/portfolio-manifest.json', 'assets/portfolio/acryl.txt', 'assets/notices/notices.json', 'assets/notices/source', 'assets/notices/attachments', 'assets/philosophy/posts.json']) {
     await assert.rejects(fs.access(new URL(`../${path}`, import.meta.url)), { code: 'ENOENT' });
   }
 });

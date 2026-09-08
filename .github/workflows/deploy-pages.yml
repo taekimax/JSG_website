@@ -25,13 +25,23 @@ jobs:
       - name: Check out site
         uses: actions/checkout@v4
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Verify site
+        run: npm run verify
+
+      - name: Stage public website files
+        run: node tools/stage-site.mjs --github-pages
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
 
       - name: Deploy to GitHub Pages
         id: deployment

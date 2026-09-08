@@ -139,3 +139,18 @@
 - 사용자 승인: 제공 회사소개 PPT의 기업 목록을 기준으로 공식 웹 자료를 조사해 소개를 갱신한다. 펀드 자체는 제외하고 펀드를 통해 투자한 기업은 포함한다. 샘플 기업 4개를 제거하고 18개 기업을 표시한다.
 - 회사 상세는 이름·분야·짧은 사업 소개만 표시한다. 펀드 이름·규모·조건, 투자 세부정보, 출처 링크, PPT 이미지는 표시하지 않는다. 기존 manifest와 회사별 TXT가 콘텐츠를 소유한다.
 - Team·Portfolio·Notice 상세는 공통 `detail-pager`의 이전/다음 링크와 footer의 섹션 복귀 링크를 사용한다. 본문 안의 중복 섹션 버튼은 제거한다.
+
+### 사진·상장 정보·구분선 — 2026-09-08
+
+- 사용자 요청으로 About 본문 아래의 불필요한 회색 구분선을 제거했다. 다른 섹션의 목록·탐색 구분선은 해당 기능을 유지한다.
+- 제공된 팀 사진 중 1260×1620 상반신 버전만 사용한다. 최승만·윤영진·김태형·박준혁·김석범의 새 JPG는 `assets/team/`에 있으며 `imageLayout: "torso"`로 표시한다. 홈 카드는 데스크톱·모바일 모두 큰 사진 위·이름과 소개 아래 구성이다. 상세 사진도 원본 비율을 유지한다.
+- 새 사진이 없는 멤버는 기존 작은 사진을 사용하는 compact 카드 또는 사진 공간 없는 text 카드를 사용한다. 기존 이름·직함·소개·정렬·상세 ID는 유지한다.
+- 사용자 요청으로 확인된 상장사의 회사별 TXT 맨 아래에 코스닥·종목코드·상장일을 추가했다. 지투지바이오·그래피·아크릴·알지노믹스·삼보모터스가 해당하며 삼보모터스는 합병 상장으로 구분한다. 근거는 `docs/research/portfolio-listing-2026-09-08.md`에 있으며 공개 화면에는 출처 링크를 추가하지 않는다.
+
+### Portfolio CMS와 GitHub Pages 출력 — 2026-09-08
+
+- 사용자 승인: Portfolio 이름 옆에 KOSDAQ·KOSPI 배지를 표시하되 기존 줄 높이는 유지한다. 320·390·768·1440px에서 추가 전후 줄 높이가 같음을 확인했다.
+- Portfolio의 18개 회사 원문·ID·정렬을 `/Volumes/dev/jsg-board-content/content/portfolio/`로 이관하고 Pages CMS에 회사 편집 화면을 추가했다. 기존 사이트의 Portfolio manifest·TXT 소유 규칙을 이 결정으로 대체한다. 웹사이트는 `assets/shared/board-endpoints.json`의 `portfolioManifest`와 생성된 TXT만 읽는다.
+- Notice는 같은 CMS, Perspective는 기존 Substack RSS 동기화를 유지한다. 콘텐츠 저장은 웹사이트 소스 저장소를 변경하지 않는다.
+- GitHub Pages artifact는 `tools/stage-site.mjs`로 방문자용 파일만 준비한다. 로컬 `board-content` 심볼릭 링크는 Git과 artifact에서 제외한다.
+- 공개 출력 전용 `jsg-public-content` 저장소와 그 저장소로 제한된 배포 키를 이용한 자동 배포를 준비했다. 저장소 생성·키 등록은 별도 승인 후 연결하며 Cafe24는 비활성 상태를 유지한다.

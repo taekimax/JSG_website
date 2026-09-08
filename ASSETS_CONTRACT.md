@@ -12,7 +12,7 @@ This document defines non-negotiable conventions for the `assets/` migration so:
 - Canonical ownership is page-based: `assets/{page}/...`
 - Shared assets live in: `assets/shared/...`
 - Notice page artwork remains in `assets/notices/`; Notice records and media live in the separate private `jsg-board-content` repository.
-- `assets/shared/board-endpoints.json` is the fixed bridge to generated Notice and Perspective manifests at `/board-content/`.
+- `assets/shared/board-endpoints.json` is the fixed bridge to generated Notice, Perspective and Portfolio manifests at `/board-content/`.
 
 Rule: if an asset is used by 2+ pages and is expected to be updated, it belongs in `assets/shared/`.
 
@@ -101,7 +101,9 @@ If a new content type is required, it must be added by a developer once, then be
 
 ## Current Presentation Note (2026-09-06)
 
-Company logos are not displayed in this experiment. The existing `logo` key remains in the schema; the current validator already accepts an empty string for a company without a logo. Existing files and manifest references are retained. Company names, ordering and detail links all come from the same `companies` array; `descriptionText` remains required for the existing detail view. This is a presentation change, not a replacement content pipeline.
+Portfolio content is managed in the private `jsg-board-content` repository through Pages CMS. The website reads `portfolioManifest` from `assets/shared/board-endpoints.json`, then the generated `/board-content/portfolio-manifest.json` and `descriptionText` files. Local Portfolio TXT files and the old manifest have been migrated and removed; no second editable copy remains.
+
+The generated company schema contains stable `id`, `order`, `name`, `sector`, `market`, `ticker`, `listingDate`, `listingNote` and `descriptionText`. Only explicit `KOSDAQ` or `KOSPI` markets create badges. Drafts are omitted by the publisher. The website renders descriptions as escaped plain-text paragraphs. IDs and existing `portfolio.html?id=` links are preserved. The scrolling name row keeps its original line height with inline market badges.
 
 ## Authorized Additions (2026-09-07)
 
@@ -119,3 +121,7 @@ Company logos are not displayed in this experiment. The existing `logo` key rema
 - The content publisher generates `/board-content/notices.json`, `/board-content/posts/{id}.html`, referenced attachments, and Notice/Perspective asset manifests. Raw Markdown HTML is disabled. Drafts and preview fixtures are excluded from published output.
 - Pages CMS deletion and rename are disabled. Withdrawing a notice uses `draft: true`. Administrators edit only the private content repository through the browser editor.
 - Posting changes the content repository and generated `/board-content/` files. It does not change the website source repository.
+
+### Team portrait layouts — 2026-09-08
+
+The optional member field `imageLayout: "torso"` selects the large image-first home card and large detail portrait. Use the supplied torso-cut image at `assets/team/{member-id}.jpg`; keep its original proportions (the current five are 1260×1620). Omit the field for existing small portraits. An empty `image` uses a text layout without reserving an empty photo panel. Names, biographies, ordering and detail IDs retain their existing owners. Bump the Team `assetVersion` after photo changes.

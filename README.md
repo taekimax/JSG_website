@@ -15,15 +15,15 @@
 
 - 승인된 About 시안을 홈으로 사용합니다. 사이트 루트와 기존 `landing.html` 주소는 `about.html`로 연결됩니다.
 - 모든 페이지는 간결한 상단 메뉴와 모바일 펼침 메뉴를 사용합니다. 내비게이션 아일랜드는 제거했습니다.
-- 홈에는 기존 manifest에서 불러오는 회사명 스크롤이 있습니다. 회사명을 누르면 기존 상세 페이지로 이동합니다.
-- 회사 로고는 화면에서 표시하지 않습니다. 기존 파일과 manifest 필드는 보존했습니다.
+- 홈에는 별도 콘텐츠 저장소의 생성 manifest에서 불러오는 회사명 스크롤과 상장 시장 배지가 있습니다. 회사명을 누르면 기존 상세 페이지로 이동합니다.
+- 회사 로고는 화면에서 표시하지 않습니다. 회사 정보는 별도 콘텐츠 저장소에서 관리합니다.
 - 콘텐츠 원문과 관리 파이프라인은 유지합니다. About → Team → Philosophy → Portfolio → Notice → Contact를 한 페이지에 통합했습니다. 사진은 Team과 멤버 상세에 집중합니다. Philosophy는 파랑, Contact는 남색을 사용합니다.
 
 ## 구성과 미리보기
 
 - 루트 HTML: `about.html` 통합 홈과 멤버·회사·공지 상세 화면. 이전 섹션 주소는 홈의 해당 앵커로 연결됩니다.
 - `styles/`, `scripts/`: 표현, 공통 내비게이션, manifest 기반 콘텐츠 렌더링.
-- `assets/`: 웹사이트 카피·이미지와 페이지별 manifest. 게시판 데이터는 별도 저장소가 소유합니다.
+- `assets/`: 웹사이트 카피·이미지와 페이지별 manifest. Portfolio·Notice·Perspective 데이터는 별도 저장소가 소유합니다.
 - `tools/`: 자산 검사와 Node 기반 구조·렌더러 검사.
 
 랜딩 전용 React·Three·Vite 코드와 생성 번들을 제거했습니다. 방문자용 사이트는 빌드가 필요 없는 정적 파일입니다.
@@ -161,3 +161,9 @@ Notice는 파란 배경에 흰 제목·목록을 사용하며 설명을 제거�
 [게시판 작성 안내](docs/board-authoring.md)에 브라우저 편집과 분리된 배포 흐름이 있습니다. `/admin/`은 `taekimax/jsg-board-content`의 Pages CMS 화면으로 이동합니다. 공지 저장은 웹사이트 저장소를 변경하지 않습니다.
 
 콘텐츠 저장소의 GitHub Actions가 검증과 정적 생성을 수행합니다. Cafe24 SFTP 단계는 준비되어 있지만 변수와 비밀값을 넣기 전까지 실행되지 않습니다.
+
+## Portfolio 관리 — 2026-09-08
+
+`/admin/`의 Pages CMS에서 **Portfolio 투자기업**을 선택합니다. 회사명·분야·정렬·소개를 수정하고 상장사는 시장·종목코드·상장일을 입력합니다. 초안을 끄면 공개 대상이며 켜면 목록에서 내립니다. 회사 ID와 상세 주소는 유지됩니다. 작성 방법과 배포 경로는 [콘텐츠 관리 안내](docs/board-authoring.md)에 있습니다.
+
+GitHub Pages는 `tools/stage-site.mjs --github-pages`로 방문자용 파일만 `_site/`에 준비합니다. 로컬 `board-content` 연결은 배포 artifact에 포함하지 않습니다. 게시판과 Portfolio는 별도 공개 출력 사이트에서 읽으므로 콘텐츠 변경으로 웹사이트 소스가 변경되지 않습니다.

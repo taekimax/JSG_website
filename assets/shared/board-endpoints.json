@@ -1,5 +1,6 @@
 {
   "schemaVersion": 1,
   "noticesManifest": "/board-content/notices-manifest.json",
-  "perspectiveManifest": "/board-content/perspective-manifest.json"
+  "perspectiveManifest": "/board-content/perspective-manifest.json",
+  "portfolioManifest": "/board-content/portfolio-manifest.json"
 }

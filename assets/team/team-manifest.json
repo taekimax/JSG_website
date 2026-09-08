@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "page": "team",
-  "assetVersion": "2026-09-07-team-ppt-2",
+  "assetVersion": "2026-09-08-team-torso-1",
   "heroImage": "assets/team/team-hero.jpg",
   "members": [
     {
@@ -36,7 +36,7 @@
       "roleKo": "부사장 / 수석심사역",
       "roleEn": "",
       "summaryEn": "",
-      "image": "assets/team/choi-seung-man.png",
+      "image": "assets/team/choi-seung-man.jpg",
       "highlights": [
         "기업기술가치평가사",
         "한화도시개발 본부장(상무)",
@@ -48,7 +48,8 @@
       "sourceUrl": "http://www.jsginvest.com/bbs/board.php?bo_table=0201&wr_id=2",
       "wrId": "2",
       "summaryKo": "기업기술가치평가사 · 한화도시개발 본부장(상무)",
-      "sourceSlide": 6
+      "sourceSlide": 6,
+      "imageLayout": "torso"
     },
     {
       "id": "yoon-young-jin",
@@ -60,7 +61,7 @@
       "roleEn": "",
       "summaryEn": "",
       "summaryKo": "알펜루트 PE 부대표 · 오비트파트너스 투자본부장",
-      "image": "",
+      "image": "assets/team/yoon-young-jin.jpg",
       "highlights": [
         "알펜루트 PE 부대표",
         "오비트파트너스 투자본부장",
@@ -69,7 +70,8 @@
         "대우증권 리서치센터 투자분석부",
         "고려대 통계학과 학사"
       ],
-      "sourceSlide": 6
+      "sourceSlide": 6,
+      "imageLayout": "torso"
     },
     {
       "id": "kim-tae-hyung",
@@ -81,7 +83,7 @@
       "roleEn": "",
       "summaryEn": "",
       "summaryKo": "케이기술투자 운용본부 상무 · 오비트파트너스 투자본부 이사",
-      "image": "",
+      "image": "assets/team/kim-tae-hyung.jpg",
       "highlights": [
         "케이기술투자 운용본부 상무",
         "오비트파트너스 투자본부 이사",
@@ -90,7 +92,8 @@
         "쿼드자산운용 주식운용본부",
         "고려대 법대 학사"
       ],
-      "sourceSlide": 6
+      "sourceSlide": 6,
+      "imageLayout": "torso"
     },
     {
       "id": "park-jun-hyuk",
@@ -101,7 +104,7 @@
       "roleKo": "팀장 / 심사역",
       "roleEn": "",
       "summaryEn": "",
-      "image": "assets/team/park-jun-hyuk.png",
+      "image": "assets/team/park-jun-hyuk.jpg",
       "highlights": [
         "고려대 경영대학원",
         "건국대 의학공학부",
@@ -112,7 +115,8 @@
       "sourceUrl": "http://www.jsginvest.com/bbs/board.php?bo_table=0201&wr_id=6",
       "wrId": "6",
       "summaryKo": "고려대 경영대학원 · 건국대 의학공학부",
-      "sourceSlide": 6
+      "sourceSlide": 6,
+      "imageLayout": "torso"
     },
     {
       "id": "kim-seok-beom",
@@ -123,7 +127,7 @@
       "roleKo": "부사장 / 준법감시인",
       "roleEn": "",
       "summaryEn": "",
-      "image": "assets/team/kim-seok-beom.png",
+      "image": "assets/team/kim-seok-beom.jpg",
       "highlights": [
         "준법감시인",
         "기업 성장 지원"
@@ -131,7 +135,8 @@
       "sourceUrl": "http://www.jsginvest.com/bbs/board.php?bo_table=0201&wr_id=11",
       "wrId": "11",
       "summaryKo": "준법감시인 · 기업 성장 지원",
-      "sourceSlide": 5
+      "sourceSlide": 5,
+      "imageLayout": "torso"
     },
     {
       "id": "lee-jong-ki",
