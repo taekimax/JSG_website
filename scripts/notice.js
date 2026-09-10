@@ -12,14 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return urlParams.get(name);
     };
 
-    // Render Loading State
-    app.innerHTML = `
-        <div class="notice-list">
-            <article class="notice-record-item notice-loading">
-                <span>불러오는 중...</span>
-            </article>
-        </div>
-    `;
+    app.innerHTML = '';
 
     try {
         const endpointsResponse = await fetch('assets/shared/board-endpoints.json', { cache: 'no-cache' });
@@ -56,7 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('Failed to fetch notices:', error);
         app.innerHTML = '<div class="notice-error">공지사항을 불러올 수 없습니다.</div>';
     } finally {
-        const section = document.getElementById('notice');
+        const section = document.getElementById('notice') || app;
         if (section) {
             section.setAttribute('data-content-ready', 'true');
             section.dispatchEvent(new Event('jsg:section-ready', { bubbles: true }));
@@ -148,7 +141,7 @@ async function renderDetail(notices, id, container, attachmentsBase, postsBase, 
     document.title = `${notice.title} | JSG INVESTMENT`;
     const body = container.querySelector('.notice-record-body');
     if (body) {
-        body.textContent = '본문을 불러오는 중입니다...';
+        body.textContent = '';
         try {
             const text = await fetchNoticeBodyText(id, postsBase, assetVersion, notice.bodyFormat);
             if (notice.bodyFormat === 'html') {

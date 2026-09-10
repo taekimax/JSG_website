@@ -9,7 +9,7 @@
     <link rel="preload" href="assets/fonts/JetBrainsMonoNerdFont-Regular.ttf" as="font" type="font/ttf" crossorigin>
     <link rel="stylesheet" href="styles/tokens.css?v=20260910-team-refinement">
     <link rel="stylesheet" href="styles/reset.css">
-    <link rel="stylesheet" href="styles/layout.css?v=20260910-team-refinement">
+    <link rel="stylesheet" href="styles/layout.css?v=20260910-page-greeting">
     <link rel="stylesheet" href="styles/main.css?v=20260910-team-refinement">
     <link rel="stylesheet" href="styles/detail.css?v=20260910-team-refinement">
     <link rel="stylesheet" href="styles/section-reveal.css?v=20260908-screen-edges">
@@ -46,15 +46,12 @@
                 </div>
             </section>
 <div class="curtain-body">
+    <p id="page-loading" class="page-loading" role="status" aria-live="polite" hidden></p>
+
 
             <div class="team-detail-shell detail-inner">
-                <div id="team-member-app">
-                    <div class="team-card team-loading-card">
-                        <div class="team-content">
-                            <h3 class="team-name">Loading...</h3>
-                            <p class="team-bio team-loading-copy">프로필을 불러오는 중입니다.</p>
-                        </div>
-                    </div>
+                <div id="team-member-app" data-content-ready="false">
+
                 </div>
             </div>
 
@@ -69,10 +66,10 @@
         <a href="about.html#team" class="detail-return">Team <span class="nav-chevron" data-direction="up" aria-hidden="true"></span></a>
     </footer>
 
-    <script src="scripts/ui.js?v=20260908-menu"></script>
+    <script src="scripts/ui.js?v=20260910-page-greeting"></script>
     <script src="scripts/assets.js"></script>
     <script src="scripts/sharedAssets.js"></script>
-    <script src="scripts/team.js?v=20260910-team-refinement"></script>
+    <script src="scripts/team.js?v=20260910-page-greeting"></script>
     <script src="scripts/sectionReveal.js?v=20260908-screen-edges"></script>
 </body>
 

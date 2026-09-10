@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         ? ` <span class="company-market-badge">${company.market}</span>`
         : '';
 
-    app.innerHTML = '<p class="portfolio-loading">불러오는 중...</p>';
+    app.innerHTML = '';
 
     const renderNames = (companies) => {
         if (!companies.length) {
@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('Failed to render portfolio:', error);
         app.innerHTML = '<div class="about-card"><p style="margin: 0; color: var(--text-muted);">포트폴리오를 불러올 수 없습니다.</p></div>';
     } finally {
-        const section = document.getElementById('portfolio');
+        const section = document.getElementById('portfolio') || app;
         if (section) {
             section.setAttribute('data-content-ready', 'true');
             section.dispatchEvent(new Event('jsg:section-ready', { bubbles: true }));

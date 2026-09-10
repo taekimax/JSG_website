@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "page": "team",
-  "assetVersion": "2026-09-10-park-sang-jin-proportions-2",
+  "assetVersion": "2026-09-10-team-web-optimized",
   "heroImage": "assets/team/team-hero.jpg",
   "members": [
     {
@@ -13,7 +13,7 @@
       "roleKo": "대표이사 / 회장",
       "roleEn": "",
       "summaryEn": "",
-      "image": "assets/team/park-sang-jin.png",
+      "image": "assets/team/park-sang-jin.jpg",
       "highlights": [
         "(미국) Invent Medical 등기 이사",
         "진성과학 대표이사",
@@ -170,7 +170,7 @@
       "roleKo": "강동경희대병원 응급의학과 센터장",
       "roleEn": "",
       "summaryEn": "",
-      "image": "assets/team/kim-myung-chun.png",
+      "image": "assets/team/kim-myung-chun.jpg",
       "highlights": [
         "강동경희대 응급의학과 교수",
         "대한응급의학회 동남지회장",
@@ -213,7 +213,7 @@
       "roleEn": "",
       "summaryEn": "",
       "summaryKo": "",
-      "image": "assets/team/choi-eun-sun.jpeg",
+      "image": "assets/team/choi-eun-sun.jpg",
       "highlights": [
         "김앤장법률사무소 변리사",
         "범부처신약개발사업단 투심위원",
@@ -232,7 +232,7 @@
       "roleKo": "가천대 의과대학 생화학교실 교수",
       "roleEn": "",
       "summaryEn": "",
-      "image": "assets/team/kim-jae-hong.jpeg",
+      "image": "assets/team/kim-jae-hong.jpg",
       "highlights": [
         "국립중앙의료원 연구부장",
         "Cells지의 편집위원 등",
@@ -255,7 +255,7 @@
       "roleEn": "",
       "summaryEn": "",
       "summaryKo": "",
-      "image": "assets/team/kim-young-woo.png",
+      "image": "assets/team/kim-young-woo.jpg",
       "highlights": [
         "국립암센터 위암센터 외과 전문의",
         "국제암연구소 과학위원회 의장",
@@ -273,7 +273,7 @@
       "roleEn": "",
       "summaryEn": "",
       "summaryKo": "",
-      "image": "assets/team/jung-ki-won.png",
+      "image": "assets/team/jung-ki-won.jpg",
       "highlights": [
         "차의과대학 부교수",
         "서울대 약학대학 겸임교수",
@@ -293,7 +293,7 @@
       "roleEn": "",
       "summaryEn": "",
       "summaryKo": "",
-      "image": "assets/team/baek-dae-woo.png",
+      "image": "assets/team/baek-dae-woo.jpg",
       "highlights": [
         "한양대 디지털의료융합과 겸임교수",
         "한국산업진흥원",
@@ -333,7 +333,7 @@
       "roleEn": "",
       "summaryEn": "",
       "summaryKo": "",
-      "image": "assets/team/lee-do-yong.jpeg",
+      "image": "assets/team/lee-do-yong.jpg",
       "highlights": [
         "베스텔라랩 CSO",
         "티플러스 컨설턴트",

@@ -149,10 +149,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         button.hidden = !enabled;
         if (!enabled) return;
         const group = viewport.querySelector('.partners-group');
-        window.JsgCarousel({
-            viewport, button, group, randomStart: true,
-            startPaused: window.matchMedia('(max-width: 699px)').matches
-        });
+        window.JsgCarousel({ viewport, button, group, randomStart: true });
     };
 
     const renderMemberDetail = (member) => {
@@ -213,13 +210,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         `;
     };
 
-    app.innerHTML = `
-        <div class="team-card team-loading-card">
-            <div class="team-content">
-                <p class="team-bio team-loading-copy">Loading...</p>
-            </div>
-        </div>
-    `;
+    app.innerHTML = '';
 
     try {
         const response = await fetch('assets/team/team-manifest.json', { cache: 'no-cache' });
@@ -279,7 +270,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             </div>
         `;
     } finally {
-        const section = document.getElementById('team');
+        const section = document.getElementById('team') || app;
         if (section) {
             section.setAttribute('data-content-ready', 'true');
             section.dispatchEvent(new Event('jsg:section-ready', { bubbles: true }));

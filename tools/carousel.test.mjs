@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 
-function carousel(reduced = false, speed = 0.0585, startPaused = false) {
+function carousel(reduced = false, speed = 0.0585) {
   const events = {}, buttons = {}, attributes = {};
   let x = 0, frame, visibility;
   const viewport = {
@@ -22,7 +22,7 @@ function carousel(reduced = false, speed = 0.0585, startPaused = false) {
     IntersectionObserver: class { constructor(fn) { visibility = fn; } observe() {} },
     requestAnimationFrame(fn) { frame = fn; return 1; }, cancelAnimationFrame() { frame = undefined; } };
   vm.runInNewContext(fs.readFileSync(new URL('../scripts/carousel.js', import.meta.url), 'utf8'), context);
-  context.window.JsgCarousel({ viewport, button, group, speed, startPaused });
+  context.window.JsgCarousel({ viewport, button, group, speed });
   visibility([{ isIntersecting: true }]);
   return { viewport, events, buttons, attributes,
     tick(time) { const fn = frame; frame = undefined; fn?.(time); events.scroll(); },
@@ -67,16 +67,18 @@ test('reduced motion starts paused and still permits native horizontal scrolling
   assert.equal(c.attributes['aria-pressed'], 'true');
 });
 
-test('a reading carousel starts still, plays on request and pauses on touch', () => {
-  const c = carousel(false, 0.0585, true);
-  assert.equal(c.running(), false);
-  c.tick(100); c.tick(150);
-  assert.equal(c.viewport.scrollLeft, 1000);
-  c.buttons.click();
+test('carousel starts playing and pauses on touch until explicitly resumed', () => {
+  const c = carousel();
+  assert.equal(c.running(), true);
   assert.equal(c.attributes['aria-pressed'], 'false');
-  c.tick(200); c.tick(250);
+  c.tick(100); c.tick(150);
   assert.equal(c.viewport.scrollLeft, 1003);
   c.events.pointerdown();
   assert.equal(c.running(), false);
   assert.equal(c.attributes['aria-pressed'], 'true');
+  c.tick(200); c.tick(250);
+  assert.equal(c.viewport.scrollLeft, 1003);
+  c.buttons.click();
+  assert.equal(c.running(), true);
+  assert.equal(c.attributes['aria-pressed'], 'false');
 });

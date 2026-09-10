@@ -9,7 +9,7 @@
     <link rel="preload" href="assets/fonts/JetBrainsMonoNerdFont-Regular.ttf" as="font" type="font/ttf" crossorigin>
     <link rel="stylesheet" href="styles/tokens.css?v=20260910-team-refinement">
     <link rel="stylesheet" href="styles/reset.css">
-    <link rel="stylesheet" href="styles/layout.css?v=20260910-team-refinement">
+    <link rel="stylesheet" href="styles/layout.css?v=20260910-page-greeting">
     <link rel="stylesheet" href="styles/main.css?v=20260910-team-refinement">
     <link rel="stylesheet" href="styles/about-editorial.css?v=20260910-team-refinement">
     <link rel="stylesheet" href="styles/home.css?v=20260910-team-refinement">
@@ -37,23 +37,25 @@
     </header>
 
     <main id="main-content" class="site-main site-main--interior" tabindex="-1">
-        <section id="about" class="home-section" aria-label="About" tabindex="-1">
+        <section id="about" data-content-ready="false" class="home-section" aria-label="About" tabindex="-1">
 
             <div class="curtain-track"><div class="curtain-scene">
 <div class="about-title-band curtain-band">
                 <div class="section-inner about-title-grid">
-                    <h1 id="about-title-ko" data-break-before="길을" class="about-section-title" lang="ko">Loading...</h1>
-                    <h2 id="about-title-en" data-break-before="you're" class="about-section-title" lang="en">Loading...</h2>
+                    <h1 id="about-title-ko" data-break-before="길을" class="about-section-title" lang="ko"></h1>
+                    <h2 id="about-title-en" data-break-before="you're" class="about-section-title" lang="en"></h2>
                 </div>
             </div>
 <div class="curtain-body">
+    <p id="page-loading" class="page-loading" role="status" aria-live="polite" hidden></p>
+
             <div class="about-story section-inner">
                 <section class="text-block about-section" lang="ko" aria-labelledby="about-title-ko">
-                    <p>Loading...</p>
+                    <p></p>
                 </section>
 
                 <section class="text-block about-section" lang="en" aria-labelledby="about-title-en">
-                    <p>Loading...</p>
+                    <p></p>
                 </section>
             </div>
 
@@ -62,7 +64,7 @@
 </div>
 </div>
 </section>
-        <section id="team" class="home-section" aria-label="Team" tabindex="-1">
+        <section id="team" data-content-ready="false" class="home-section" aria-label="Team" tabindex="-1">
 
             <div class="curtain-track"><div class="curtain-scene">
 <section class="page-hero section-title-band curtain-band">
@@ -77,12 +79,7 @@
 
             <div class="team-index-shell section-inner">
                 <div id="team-member-app">
-                    <div class="team-card team-loading-card">
-                        <div class="team-content">
-                            <h3 class="team-name">Loading...</h3>
-                            <p class="team-bio team-loading-copy">팀 정보를 불러오는 중입니다.</p>
-                        </div>
-                    </div>
+
                 </div>
             </div>
 
@@ -90,7 +87,7 @@
 </div>
 </div>
 </section>
-        <section id="philosophy" aria-label="Philosophy" tabindex="-1">
+        <section id="philosophy" data-content-ready="false" aria-label="Philosophy" tabindex="-1">
             <div class="philosophy-main home-section home-section--blue">
                 <div class="section-inner">
                     <div class="curtain-track"><div class="curtain-scene">
@@ -112,10 +109,10 @@
                             <article class="philosophy-card">
                                 <div class="phil-strip"></div>
                                 <div class="phil-content">
-                                    <h3 class="phil-title">Loading...</h3>
+                                    <h3 class="phil-title"></h3>
                                     <div class="phil-copy-stack">
-                                        <p class="phil-desc-en">Loading...</p>
-                                        <p class="phil-desc-ko">Loading...</p>
+                                        <p class="phil-desc-en"></p>
+                                        <p class="phil-desc-ko"></p>
                                     </div>
                                 </div>
                             </article>
@@ -124,10 +121,10 @@
                             <article class="philosophy-card">
                                 <div class="phil-strip"></div>
                                 <div class="phil-content">
-                                    <h3 class="phil-title">Loading...</h3>
+                                    <h3 class="phil-title"></h3>
                                     <div class="phil-copy-stack">
-                                        <p class="phil-desc-en">Loading...</p>
-                                        <p class="phil-desc-ko">Loading...</p>
+                                        <p class="phil-desc-en"></p>
+                                        <p class="phil-desc-ko"></p>
                                     </div>
                                 </div>
                             </article>
@@ -136,10 +133,10 @@
                             <article class="philosophy-card">
                                 <div class="phil-strip"></div>
                                 <div class="phil-content">
-                                    <h3 class="phil-title">Loading...</h3>
+                                    <h3 class="phil-title"></h3>
                                     <div class="phil-copy-stack">
-                                        <p class="phil-desc-en">Loading...</p>
-                                        <p class="phil-desc-ko">Loading...</p>
+                                        <p class="phil-desc-en"></p>
+                                        <p class="phil-desc-ko"></p>
                                     </div>
                                 </div>
                             </article>
@@ -163,14 +160,14 @@
 <div class="curtain-body">
 
                 <div class="section-inner">
-                    <div id="perspective-posts" aria-live="polite">글 목록을 불러오는 중입니다...</div>
+                    <div id="perspective-posts" aria-live="polite"></div>
                 </div>
             </div>
 </div>
 </div>
 </section>
         </section>
-        <section id="portfolio" aria-labelledby="portfolio-band-title" tabindex="-1">
+        <section id="portfolio" data-content-ready="false" aria-labelledby="portfolio-band-title" tabindex="-1">
             <section class="portfolio-band home-section" aria-labelledby="portfolio-band-title">
                 <div class="curtain-track"><div class="curtain-scene">
 <div class="portfolio-band-heading section-title-band curtain-band">
@@ -179,7 +176,7 @@
 <div class="curtain-body">
                 <div class="portfolio-companies section-inner">
                 <div id="portfolio-name-list" class="company-name-window">
-                    <p>불러오는 중...</p>
+                    <p></p>
                 </div>
                 </div>
             </div>
@@ -188,7 +185,7 @@
 </section>
 
         </section>
-        <section id="notice" class="home-section" aria-label="Notice" tabindex="-1">
+        <section id="notice" data-content-ready="false" class="home-section" aria-label="Notice" tabindex="-1">
 
             <div class="curtain-track"><div class="curtain-scene">
 <section class="page-hero section-title-band curtain-band">
@@ -202,9 +199,8 @@
 
             <!-- Dynamic Content Mount Point -->
             <div id="notice-app" class="section-inner" aria-live="polite">
-                <!-- Fallback / Loading -->
                 <article class="notice-record-item">
-                    <span>불러오는 중...</span>
+                    <span></span>
                 </article>
             </div>
 
@@ -212,13 +208,13 @@
 </div>
 </div>
 </section>
-        <section id="contact" class="home-section home-section--navy" aria-label="Contact" tabindex="-1">
+        <section id="contact" data-content-ready="false" class="home-section home-section--navy" aria-label="Contact" tabindex="-1">
             <div class="section-inner">
             <div class="curtain-track"><div class="curtain-scene">
 <section class="page-hero curtain-band">
                 <div class="page-hero-surface">
                     <div class="page-hero-text">
-                        <h2 class="page-hero-kicker section-title" id="contact-hero-kicker">Loading...</h2>
+                        <h2 class="page-hero-kicker section-title" id="contact-hero-kicker"></h2>
                     </div>
                 </div>
             </section>
@@ -227,18 +223,18 @@
             <div class="contact-section">
                 <div class="contact-card">
                     <div class="contact-row">
-                        <span class="contact-label" id="contact-phone-label">Loading...</span>
-                        <span class="contact-value" id="contact-phone-value">Loading...</span>
+                        <span class="contact-label" id="contact-phone-label"></span>
+                        <span class="contact-value" id="contact-phone-value"></span>
                     </div>
                     <div class="contact-row">
-                        <span class="contact-label" id="contact-email-label">Loading...</span>
-                        <span class="contact-value" id="contact-email-value">Loading...</span>
+                        <span class="contact-label" id="contact-email-label"></span>
+                        <span class="contact-value" id="contact-email-value"></span>
                     </div>
                     <div class="contact-row">
-                        <span class="contact-label" id="contact-address-label">Loading...</span>
+                        <span class="contact-label" id="contact-address-label"></span>
                         <div class="contact-address">
-                            <p class="contact-value" id="contact-location-address" lang="ko">Loading...</p>
-                            <p class="contact-value" id="contact-location-address-en" lang="en">Loading...</p>
+                            <p class="contact-value" id="contact-location-address" lang="ko"></p>
+                            <p class="contact-value" id="contact-location-address-en" lang="en"></p>
                         </div>
                     </div>
                 </div>
@@ -261,25 +257,25 @@
                         <img src="assets/shared/jsg-emblem.png" alt="" width="180" height="180"><span class="brand-wordmark">JSG INVESTMENT</span>
                     </div>
                     <div class="page-hero-text bilingual-stack">
-                        <p class="page-hero-kicker">Loading...</p>
-                        <p class="page-hero-sub" lang="ko">Loading...</p>
-                        <p class="page-hero-sub" lang="en">Loading...</p>
+                        <p class="page-hero-kicker"></p>
+                        <p class="page-hero-sub" lang="ko"></p>
+                        <p class="page-hero-sub" lang="en"></p>
                     </div>
                 </div>
             </section>
         <div class="footer-bottom"><a href="#top">Top <span class="nav-chevron" data-direction="up" aria-hidden="true"></span></a></div>
     </footer>
 
-    <script src="scripts/ui.js?v=20260908-menu"></script>
+    <script src="scripts/ui.js?v=20260910-page-greeting"></script>
     <script src="scripts/assets.js"></script>
     <script src="scripts/sharedAssets.js"></script>
     <script src="scripts/aboutCopy.js"></script>
-    <script src="scripts/carousel.js?v=20260910-team-refinement"></script>
-    <script src="scripts/portfolio.js?v=20260910-team-refinement"></script>
-    <script src="scripts/team.js?v=20260910-team-refinement"></script>
+    <script src="scripts/carousel.js?v=20260910-carousel-autoplay"></script>
+    <script src="scripts/portfolio.js?v=20260910-page-greeting"></script>
+    <script src="scripts/team.js?v=20260910-page-greeting"></script>
     <script src="scripts/philosophyCopy.js?v=20260908-new-tab"></script>
     <script src="scripts/boardPager.js?v=20260908-chevrons"></script>
-    <script src="scripts/notice.js?v=20260908-chevrons"></script>
+    <script src="scripts/notice.js?v=20260910-page-greeting"></script>
     <script src="scripts/contact.js"></script>
     <script src="scripts/sectionReveal.js?v=20260908-screen-edges"></script>
 </body>

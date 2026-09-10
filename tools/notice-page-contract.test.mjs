@@ -80,7 +80,7 @@ test('notice detail renderer includes record hooks and preserves pager and attac
   );
 });
 
-test('notice loading state is applied through the DOMContentLoaded path before fetches resolve', async () => {
+test('notice leaves its content empty while the shared page status owns loading', async () => {
   let resolveManifest;
   let resolveNotices;
   const manifestResponse = new Promise((resolve) => {
@@ -108,8 +108,7 @@ test('notice loading state is applied through the DOMContentLoaded path before f
 
   const readyPromise = runtime.runDomContentLoaded();
 
-  assert.match(runtime.app.innerHTML, /class="notice-record-item notice-loading"/);
-  assert.match(runtime.app.innerHTML, /불러오는 중/);
+  assert.equal(runtime.app.innerHTML, '');
 
   resolveManifest({
     async json() {

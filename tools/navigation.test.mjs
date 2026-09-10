@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import { readRepoFile } from './portfolio-render-harness.mjs';
 
-async function navigationRuntime(hash = '') {
+async function navigationRuntime(hash = '', resources = {}) {
   class Element extends EventTarget {
     constructor(id) {
       super();
@@ -38,11 +38,15 @@ async function navigationRuntime(hash = '') {
   const header = new Element('header');
   header.children.push(nav, toggle);
   const main = new Element('main');
+  const loading = new Element('page-loading');
+  const contentSections = sections.filter(section => section.id !== 'perspective');
+  contentSections.forEach(section => section.setAttribute('data-content-ready', 'false'));
   const document = new EventTarget();
-  document.querySelectorAll = () => [];
+  document.querySelectorAll = selector => selector === '[data-content-ready]' ? contentSections : selector === 'img' ? resources.images || [] : [];
+  document.fonts = { ready: resources.fonts || Promise.resolve() };
   document.documentElement = new Element('html');
   document.activeElement = null;
-  document.getElementById = id => id === nav.id ? nav : sections.find(section => section.id === id);
+  document.getElementById = id => id === loading.id ? loading : id === nav.id ? nav : sections.find(section => section.id === id);
   document.querySelector = selector => ({ '.site-header': header, '.menu-toggle': toggle, main })[selector];
   const location = { pathname: '/jsg/about.html', hash };
   const window = Object.assign(new EventTarget(), { location });
@@ -53,8 +57,44 @@ async function navigationRuntime(hash = '') {
   vm.runInContext(await readRepoFile('scripts/ui.js'), runtime);
   document.dispatchEvent(new Event('DOMContentLoaded'));
   const flush = () => { const callbacks = [...frames.values()]; frames.clear(); callbacks.forEach(fn => fn()); };
-  return { document, window, sections, nav, toggle, location, flush };
+  return { document, window, sections, nav, toggle, location, flush, loading, contentSections };
 }
+
+test('one page status waits for the final content owner and clears after settlement', async () => {
+  const r = await navigationRuntime();
+  assert.equal(r.loading.hidden, false);
+  assert.equal(r.loading.textContent, 'Hello!');
+  for (const section of r.contentSections.slice(0, -1)) {
+    section.setAttribute('data-content-ready', 'true');
+    r.document.dispatchEvent(new Event('jsg:section-ready'));
+  }
+  assert.equal(r.loading.hidden, false);
+  r.contentSections.at(-1).setAttribute('data-content-ready', 'true');
+  r.document.dispatchEvent(new Event('jsg:section-ready'));
+  assert.equal(r.loading.hidden, false);
+  r.flush();
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(r.loading.hidden, true);
+  assert.equal(r.loading.textContent, '');
+});
+
+test('greeting waits for fonts and image decoding and settles after an image failure', async () => {
+  let finishFonts, finishImage;
+  const fonts = new Promise(resolve => { finishFonts = resolve; });
+  const decoded = new Promise((_resolve, reject) => { finishImage = reject; });
+  const image = { loading: 'eager', getBoundingClientRect: () => ({}), decode: () => decoded };
+  const r = await navigationRuntime('', { fonts, images: [image] });
+  r.contentSections.forEach(section => section.setAttribute('data-content-ready', 'true'));
+  r.document.dispatchEvent(new Event('jsg:section-ready'));
+  r.flush();
+  assert.equal(r.loading.hidden, false);
+  finishFonts();
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(r.loading.hidden, false);
+  finishImage(new Error('unavailable image'));
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(r.loading.hidden, true);
+});
 
 test('nested Perspective initial navigation waits for content owners then focuses the requested section', async () => {
   const r = await navigationRuntime('#perspective');

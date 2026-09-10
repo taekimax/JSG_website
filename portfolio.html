@@ -10,7 +10,7 @@
     <link rel="preload" href="assets/fonts/JetBrainsMonoNerdFont-Regular.ttf" as="font" type="font/ttf" crossorigin>
     <link rel="stylesheet" href="styles/tokens.css?v=20260910-team-refinement">
     <link rel="stylesheet" href="styles/reset.css">
-    <link rel="stylesheet" href="styles/layout.css?v=20260910-team-refinement">
+    <link rel="stylesheet" href="styles/layout.css?v=20260910-page-greeting">
     <link rel="stylesheet" href="styles/main.css?v=20260910-team-refinement">
     <link rel="stylesheet" href="styles/detail.css?v=20260910-team-refinement">
     <link rel="stylesheet" href="styles/section-reveal.css?v=20260908-screen-edges">
@@ -48,8 +48,10 @@
                 </div>
             </section>
 <div class="curtain-body">
+    <p id="page-loading" class="page-loading" role="status" aria-live="polite" hidden></p>
 
-            <div id="portfolio-app" class="portfolio-grid detail-inner" aria-live="polite"></div>
+
+            <div id="portfolio-app" data-content-ready="false" class="portfolio-grid detail-inner" aria-live="polite"></div>
 
         </div>
 </div>
@@ -62,10 +64,10 @@
         <a href="about.html#portfolio" class="detail-return">Portfolio <span class="nav-chevron" data-direction="up" aria-hidden="true"></span></a>
     </footer>
 
-    <script src="scripts/ui.js?v=20260908-menu"></script>
+    <script src="scripts/ui.js?v=20260910-page-greeting"></script>
     <script src="scripts/assets.js"></script>
     <script src="scripts/sharedAssets.js"></script>
-    <script src="scripts/portfolio.js?v=20260910-team-refinement"></script>
+    <script src="scripts/portfolio.js?v=20260910-page-greeting"></script>
     <script src="scripts/sectionReveal.js?v=20260908-screen-edges"></script>
 </body>
 

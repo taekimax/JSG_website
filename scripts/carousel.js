@@ -1,11 +1,11 @@
 // Shared native scrolling for Team and Portfolio. Default speed is 58.5 CSS pixels per second.
 const DEFAULT_CAROUSEL_SPEED = 0.0585;
-window.JsgCarousel = ({ viewport, button, group, randomStart = false, startPaused = false, speed = DEFAULT_CAROUSEL_SPEED }) => {
+window.JsgCarousel = ({ viewport, button, group, randomStart = false, speed = DEFAULT_CAROUSEL_SPEED }) => {
     // Keep the accessible group between identical buffers for bidirectional wrapping.
     const buffer = group.nextElementSibling.cloneNode(true);
     group.before(buffer);
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    let paused = motion.matches || startPaused;
+    let paused = motion.matches;
     let visible = false;
     let frame = 0;
     let previousTime = 0;
@@ -59,7 +59,7 @@ window.JsgCarousel = ({ viewport, button, group, randomStart = false, startPause
     viewport.addEventListener('pointerdown', pause, { passive: true });
     viewport.addEventListener('wheel', pause, { passive: true });
     viewport.addEventListener('focusin', pause);
-    motion.addEventListener('change', () => { paused = motion.matches || startPaused; updateMotion(); });
+    motion.addEventListener('change', () => { paused = motion.matches; updateMotion(); });
     new IntersectionObserver(entries => {
         visible = entries[0].isIntersecting;
         updateMotion();

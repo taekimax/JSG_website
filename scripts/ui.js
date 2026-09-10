@@ -1,4 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const loading = document.getElementById('page-loading');
+    const pendingSections = [...document.querySelectorAll('[data-content-ready]')];
+    let settling = false;
+    const updateLoading = () => {
+        if (!loading || settling) return;
+        loading.hidden = false;
+        loading.textContent = 'Hello!';
+        if (pendingSections.some(section => section.getAttribute('data-content-ready') !== 'true')) return;
+        settling = true;
+        document.removeEventListener('jsg:section-ready', updateLoading);
+        // Let hydration and initial anchor navigation settle before selecting visible images.
+        requestAnimationFrame(async () => {
+            await document.fonts?.ready;
+            const greetingHeight = loading.getBoundingClientRect().height || 0;
+            const images = [...document.querySelectorAll('img')].filter(img => {
+                const rect = img.getBoundingClientRect();
+                return img.loading !== 'lazy' || (rect.width > 0 && rect.height > 0 &&
+                    rect.bottom > 0 && rect.top < window.innerHeight + greetingHeight &&
+                    rect.right > 0 && rect.left < window.innerWidth);
+            });
+            await Promise.all(images.map(img => {
+                img.loading = 'eager';
+                return img.decode().catch(() => {});
+            }));
+            loading.hidden = true;
+            loading.textContent = '';
+        });
+    };
+    document.addEventListener('jsg:section-ready', updateLoading);
+    updateLoading();
+
     const header = document.querySelector('.site-header');
     const nav = document.getElementById('primary-navigation');
     const toggle = document.querySelector('.menu-toggle');

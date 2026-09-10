@@ -76,8 +76,9 @@ class FakeElement {
   }
 }
 
-class FakeContainer {
+class FakeContainer extends EventTarget {
   constructor() {
+    super();
     this._innerHTML = '';
     this.children = [];
     this.attributes = new Map();
@@ -179,6 +180,7 @@ export async function renderPortfolioApp({ manifest, descriptions = {}, search =
     document,
     console: { error() {} },
     URL,
+    Event,
     URLSearchParams,
     encodeURIComponent
   });

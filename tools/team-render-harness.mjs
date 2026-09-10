@@ -24,7 +24,7 @@ export function extractMemberIdsFromLinks(html) {
 
 export async function renderTeamApp({ manifest, search = '' }) {
   const source = await readRepoFile('scripts/team.js');
-  const app = { innerHTML: '' };
+  const app = Object.assign(new EventTarget(), { innerHTML: '', setAttribute(name, value) { this[name] = value; } });
   const listeners = new Map();
   const heroStyle = {};
   const heroSurface = {
@@ -64,6 +64,7 @@ export async function renderTeamApp({ manifest, search = '' }) {
       }
     }),
     console: { error() {} },
+    Event,
     URLSearchParams,
     encodeURIComponent,
     decodeURIComponent

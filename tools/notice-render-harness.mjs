@@ -59,8 +59,10 @@ class FakeElement {
   }
 }
 
-class FakeContainer {
+class FakeContainer extends EventTarget {
+  setAttribute(name, value) { this[name] = value; }
   constructor() {
+    super();
     this._innerHTML = '';
     this.children = [];
     this.bodyText = null;
@@ -179,6 +181,7 @@ export async function createNoticeRuntime({ fetchImpl, search = '' } = {}) {
     },
     fetch: fetchImpl || (async () => ({ ok: true, async json() { return {}; }, async text() { return ''; } })),
     console: { error() {} },
+    Event,
     URLSearchParams,
     encodeURIComponent,
     decodeURIComponent,
