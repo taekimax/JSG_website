@@ -4,8 +4,7 @@ window.JsgCarousel = ({ viewport, button, group, randomStart = false, speed = DE
     // Keep the accessible group between identical buffers for bidirectional wrapping.
     const buffer = group.nextElementSibling.cloneNode(true);
     group.before(buffer);
-    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    let paused = motion.matches;
+    let paused = false;
     let visible = false;
     let frame = 0;
     let previousTime = 0;
@@ -54,12 +53,7 @@ window.JsgCarousel = ({ viewport, button, group, randomStart = false, speed = DE
         if (!paused && visible) frame = requestAnimationFrame(step);
         updateButton();
     };
-    const pause = () => { paused = true; updateMotion(); };
     button.addEventListener('click', () => { paused = !paused; updateMotion(); });
-    viewport.addEventListener('pointerdown', pause, { passive: true });
-    viewport.addEventListener('wheel', pause, { passive: true });
-    viewport.addEventListener('focusin', pause);
-    motion.addEventListener('change', () => { paused = motion.matches; updateMotion(); });
     new IntersectionObserver(entries => {
         visible = entries[0].isIntersecting;
         updateMotion();
