@@ -39,6 +39,5 @@ test('team list renderer uses stacked horizontal bilingual cards with manifest o
   assert.match(html, /class="team-card-summary" lang="ko">한국어 소개/);
   assert.match(html, /class="team-card-summary" lang="en">English introduction/);
   assert.doesNotMatch(html.split('data-group="advisory"')[1], /team-card-summary/);
-  assert.match(html, />Partners</);
   assert.match(html, />Advisors</);
 });

@@ -62,10 +62,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const getRoleEn = (member) => String((member?.roleEn ?? fallbackRoleEn(member)) || '').trim();
     const getSummaryEn = (member) => String(member?.summaryEn || '').trim();
     const getSummaryKo = (member) => String(member?.summaryKo || '').trim();
-    const renderSummary = (member) => member.group === 'core' ? [
-        getSummaryKo(member) ? `<p class="team-card-summary" lang="ko">${escapeHtml(getSummaryKo(member))}</p>` : '',
-        getSummaryEn(member) ? `<p class="team-card-summary" lang="en">${escapeHtml(getSummaryEn(member))}</p>` : ''
-    ].join('') : '';
+    const renderSummary = (member) => member.group === 'core'
+        ? [[getSummaryKo(member), 'ko'], [getSummaryEn(member), 'en']]
+            .flatMap(([summary, lang]) => summary.split(/\s+·\s+|\r?\n/)
+                .map(item => item.trim()).filter(Boolean)
+                .map(item => `<p class="team-card-summary" lang="${lang}">${escapeHtml(item)}</p>`))
+            .join('')
+        : '';
     const portraitLayout = (member) => member.image
         ? (member.imageLayout === 'torso' ? 'torso' : 'compact')
         : 'text';
@@ -112,10 +115,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             const cardsHtml = groupMembers.map(member => renderMemberCard(member)).join('');
             if (group === 'core') {
                 return `<section class="team-group" data-group="core">
-                    <div class="partners-heading carousel-heading">
-                        <h2 class="h2-title">${escapeHtml(label)}</h2>
-                        <button id="partners-motion-toggle" class="carousel-toggle" type="button" aria-pressed="false" aria-label="Pause Partners carousel" aria-controls="partners-window" hidden><span class="media-character" aria-hidden="true"></span></button>
-                    </div>
                     <div id="partners-window" class="partners-window" aria-label="Partners">
                         <div class="partners-track">
                             <div class="partners-group">${cardsHtml}</div>${groupMembers.length > 1 ? `<div class="partners-group" aria-hidden="true">${groupMembers.map(member => renderMemberCard(member, true)).join('')}</div>` : ''}
@@ -150,7 +149,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         button.hidden = !enabled;
         if (!enabled) return;
         const group = viewport.querySelector('.partners-group');
-        window.JsgCarousel({ viewport, button, group, randomStart: true });
+        window.JsgCarousel({
+            viewport, button, group, randomStart: true,
+            startPaused: window.matchMedia('(max-width: 699px)').matches
+        });
     };
 
     const renderMemberDetail = (member) => {

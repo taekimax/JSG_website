@@ -48,7 +48,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const motionToggle = document.getElementById('company-motion-toggle');
         if (motionToggle && companies.length > 1) {
             motionToggle.hidden = false;
-            window.JsgCarousel({ viewport: app, button: motionToggle, group: app.querySelector('.company-name-group') });
+            // Portfolio advances at exactly 120 CSS pixels per second.
+            window.JsgCarousel({ viewport: app, button: motionToggle, group: app.querySelector('.company-name-group'), speed: 0.12 });
         }
     };
 

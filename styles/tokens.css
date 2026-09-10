@@ -1,9 +1,16 @@
 /* Bundled fonts: pinned versions and licenses in assets/fonts/README.md. */
 @font-face {
-  font-family: "Pretendard";
-  src: url("../assets/fonts/PretendardVariable.woff2") format("woff2");
+  font-family: "D2Coding";
+  src: url("../assets/fonts/D2Coding-Regular.ttf") format("truetype");
   font-style: normal;
-  font-weight: 100 900;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "D2Coding";
+  src: url("../assets/fonts/D2Coding-Bold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 700;
   font-display: swap;
 }
 @font-face {
@@ -15,8 +22,8 @@
 }
 /* JSG shared palette. Only this file owns literal UI colors. */
 :root {
-    --media-play: ">";
-    --media-pause: "‖";
+  --media-play: ">";
+  --media-pause: "‖";
   --palette-cyan: #04f8fd; /* dominant cyan sampled from jsg-emblem.png */
   --palette-blue: #1d4ed8;
   --palette-navy: #0f172a;
@@ -64,8 +71,8 @@
   --nav-chevron-control-size: 20px;
 
   /* Typography */
-  --font-family-base: "Pretendard", sans-serif;
-  --font-family-title: "JetBrainsMono NF", "Pretendard", monospace;
+  --font-family-base: "JetBrainsMono NF", "D2Coding", monospace;
+  --font-family-title: var(--font-family-base);
 
   --h1-size: 28px;
   --h1-weight: 700;

@@ -22,10 +22,10 @@
 
 .logo {
     display: inline-flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 0;
+    gap: 12px;
     flex-shrink: 0;
     color: var(--brand-deep-blue);
 }
@@ -33,12 +33,18 @@
 .brand-wordmark {
     display: block;
     color: var(--brand-deep-blue);
-    font-family: var(--font-family-base);
+    font-family: var(--font-family-title);
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 400;
     letter-spacing: 0.025em;
     line-height: 1.35;
     white-space: nowrap;
+}
+.site-header .brand-wordmark { font-size: 18px; }
+@media (max-width: 599px) {
+    .site-header .header-inner { gap: 8px; }
+    .logo { gap: 8px; }
+    .brand-mark { width: 40px; height: 40px; }
 }
 .desktop-nav {
     display: flex;
@@ -68,7 +74,7 @@
 }
 
 :is(a, button):focus-visible {
-    outline: 2px solid var(--brand-royal-blue);
+    outline: 2px solid var(--focus-ring-color, var(--brand-royal-blue));
     outline-offset: 6px;
 }
 

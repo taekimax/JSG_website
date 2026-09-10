@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 
-function carousel(reduced = false) {
+function carousel(reduced = false, speed = 0.0585, startPaused = false) {
   const events = {}, buttons = {}, attributes = {};
   let x = 0, frame, visibility;
   const viewport = {
@@ -22,7 +22,7 @@ function carousel(reduced = false) {
     IntersectionObserver: class { constructor(fn) { visibility = fn; } observe() {} },
     requestAnimationFrame(fn) { frame = fn; return 1; }, cancelAnimationFrame() { frame = undefined; } };
   vm.runInNewContext(fs.readFileSync(new URL('../scripts/carousel.js', import.meta.url), 'utf8'), context);
-  context.window.JsgCarousel({ viewport, button, group });
+  context.window.JsgCarousel({ viewport, button, group, speed, startPaused });
   visibility([{ isIntersecting: true }]);
   return { viewport, events, buttons, attributes,
     tick(time) { const fn = frame; frame = undefined; fn?.(time); events.scroll(); },
@@ -34,6 +34,13 @@ test('carousel advances 117 pixels in two seconds despite integer scroll roundin
   c.tick(100);
   for (let i = 1; i <= 120; i++) c.tick(100 + i * 1000 / 60);
   assert.equal(c.viewport.scrollLeft, 1117);
+});
+
+test('portfolio speed override advances 240 pixels in two seconds at 120 pixels per second', () => {
+  const c = carousel(false, 0.12);
+  c.tick(100);
+  for (let i = 1; i <= 120; i++) c.tick(100 + i * 1000 / 60);
+  assert.equal(c.viewport.scrollLeft, 1240);
 });
 
 test('manual scrolling pauses motion, wraps in both directions and resumes from that position', () => {
@@ -57,5 +64,19 @@ test('reduced motion starts paused and still permits native horizontal scrolling
   assert.equal(c.running(), false);
   c.viewport.scrollLeft = 1400; c.events.scroll();
   assert.equal(c.viewport.scrollLeft, 1400);
+  assert.equal(c.attributes['aria-pressed'], 'true');
+});
+
+test('a reading carousel starts still, plays on request and pauses on touch', () => {
+  const c = carousel(false, 0.0585, true);
+  assert.equal(c.running(), false);
+  c.tick(100); c.tick(150);
+  assert.equal(c.viewport.scrollLeft, 1000);
+  c.buttons.click();
+  assert.equal(c.attributes['aria-pressed'], 'false');
+  c.tick(200); c.tick(250);
+  assert.equal(c.viewport.scrollLeft, 1003);
+  c.events.pointerdown();
+  assert.equal(c.running(), false);
   assert.equal(c.attributes['aria-pressed'], 'true');
 });

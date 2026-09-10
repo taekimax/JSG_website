@@ -636,7 +636,7 @@
 }
 
 .phil-desc-en {
-    font-weight: 600;
+    font-weight: 400;
     margin: 0;
     display: block;
     color: var(--text-main);
@@ -1144,7 +1144,7 @@
     color: var(--brand-royal-blue);
 }
 
-/* Shared readable typography; content titles retain Korean-capable Pretendard. */
+/* Shared readable typography uses the bundled Latin/Korean coding-font stack. */
 :is(.page-hero-kicker, .member-profile-title, .attachment-title) {
     font-family: var(--font-family-title);
     font-weight: 400;

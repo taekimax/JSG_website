@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "page": "team",
-  "assetVersion": "2026-09-08-team-torso-1",
+  "assetVersion": "2026-09-10-park-sang-jin-proportions-2",
   "heroImage": "assets/team/team-hero.jpg",
   "members": [
     {
@@ -25,7 +25,8 @@
       "sourceUrl": "http://www.jsginvest.com/bbs/board.php?bo_table=0201&wr_id=1",
       "wrId": "1",
       "summaryKo": "(미국) Invent Medical 등기 이사 · 진성과학 대표이사",
-      "sourceSlide": 6
+      "sourceSlide": 6,
+      "imageLayout": "torso"
     },
     {
       "id": "choi-seung-man",
@@ -121,7 +122,7 @@
     {
       "id": "kim-seok-beom",
       "group": "core",
-      "order": 60,
+      "order": 15,
       "nameKo": "김석범",
       "nameEn": "",
       "roleKo": "부사장 / 준법감시인",
@@ -139,54 +140,6 @@
       "imageLayout": "torso"
     },
     {
-      "id": "lee-jong-ki",
-      "group": "core",
-      "order": 70,
-      "nameKo": "이종기",
-      "nameEn": "",
-      "roleKo": "감사",
-      "roleEn": "",
-      "summaryEn": "",
-      "image": "assets/team/lee-jong-ki.png",
-      "highlights": [],
-      "sourceUrl": "http://www.jsginvest.com/bbs/board.php?bo_table=0201&wr_id=12",
-      "wrId": "12",
-      "summaryKo": "",
-      "sourceSlide": 5
-    },
-    {
-      "id": "park-geun-ryeong",
-      "group": "core",
-      "order": 80,
-      "nameKo": "박근령",
-      "nameEn": "",
-      "roleKo": "실장",
-      "roleEn": "",
-      "summaryEn": "",
-      "summaryKo": "경영관리실 · 경영 관리",
-      "image": "",
-      "highlights": [
-        "경영관리실",
-        "경영 관리",
-        "펀드 관리"
-      ],
-      "sourceSlide": 5
-    },
-    {
-      "id": "ha-ji-hye",
-      "group": "core",
-      "order": 90,
-      "nameKo": "하지혜",
-      "nameEn": "",
-      "roleKo": "대리",
-      "roleEn": "",
-      "summaryEn": "",
-      "summaryKo": "",
-      "image": "",
-      "highlights": [],
-      "sourceSlide": 5
-    },
-    {
       "id": "song-sang-hoon",
       "group": "advisory",
       "order": 100,
@@ -195,7 +148,7 @@
       "roleKo": "서울의대 진단검사의학과 교수",
       "roleEn": "",
       "summaryEn": "",
-      "image": "assets/team/song-sang-hoon.png",
+      "image": "assets/team/song-sang-hoon.jpg",
       "highlights": [
         "서울대병원 임상교수",
         "서울대병원 진료교수",
@@ -240,7 +193,7 @@
       "roleEn": "",
       "summaryEn": "",
       "summaryKo": "",
-      "image": "",
+      "image": "assets/team/hwang-jung-wook.jpg",
       "highlights": [
         "AstraZenaca CFO",
         "Accenture 시니어 컨설턴트",
@@ -256,11 +209,11 @@
       "order": 130,
       "nameKo": "최은선",
       "nameEn": "",
-      "roleKo": "최은선 국제특허 법률사무소 대표",
+      "roleKo": "최은선 국제특허법률사무소 대표",
       "roleEn": "",
       "summaryEn": "",
       "summaryKo": "",
-      "image": "",
+      "image": "assets/team/choi-eun-sun.jpeg",
       "highlights": [
         "김앤장법률사무소 변리사",
         "범부처신약개발사업단 투심위원",
@@ -279,7 +232,7 @@
       "roleKo": "가천대 의과대학 생화학교실 교수",
       "roleEn": "",
       "summaryEn": "",
-      "image": "assets/team/kim-jae-hong.png",
+      "image": "assets/team/kim-jae-hong.jpeg",
       "highlights": [
         "국립중앙의료원 연구부장",
         "Cells지의 편집위원 등",
@@ -293,26 +246,22 @@
       "sourceSlide": 7
     },
     {
-      "id": "lee-do-hoon",
+      "id": "kim-young-woo",
       "group": "advisory",
       "order": 150,
-      "nameKo": "이도훈",
+      "nameKo": "김영우",
       "nameEn": "",
-      "roleKo": "국립암센터 진단검사의학과장",
+      "roleKo": "국립암센터 국제암대학원대학교 교수",
       "roleEn": "",
       "summaryEn": "",
-      "image": "assets/team/lee-do-hoon.png",
-      "highlights": [
-        "서울의대 전문의",
-        "국립암센터 진단검사센터장",
-        "국립암센터 진단검사의학과 전문의",
-        "분당제생병원 진단검사의학과장",
-        "서울의대 임상병리학과 의학박사"
-      ],
-      "sourceUrl": "http://www.jsginvest.com/bbs/board.php?bo_table=0201&wr_id=14",
-      "wrId": "14",
       "summaryKo": "",
-      "sourceSlide": 8
+      "image": "assets/team/kim-young-woo.png",
+      "highlights": [
+        "국립암센터 위암센터 외과 전문의",
+        "국제암연구소 과학위원회 의장",
+        "(전)국립암센터 연구소장",
+        "서울대학교 의학박사"
+      ]
     },
     {
       "id": "jung-ki-won",
@@ -320,11 +269,11 @@
       "order": 160,
       "nameKo": "정기원",
       "nameEn": "",
-      "roleKo": "제이투에이치 바이오텍 부사장",
+      "roleKo": "제이투에이치바이오텍 부사장",
       "roleEn": "",
       "summaryEn": "",
       "summaryKo": "",
-      "image": "",
+      "image": "assets/team/jung-ki-won.png",
       "highlights": [
         "차의과대학 부교수",
         "서울대 약학대학 겸임교수",
@@ -344,7 +293,7 @@
       "roleEn": "",
       "summaryEn": "",
       "summaryKo": "",
-      "image": "",
+      "image": "assets/team/baek-dae-woo.png",
       "highlights": [
         "한양대 디지털의료융합과 겸임교수",
         "한국산업진흥원",
@@ -360,11 +309,11 @@
       "order": 180,
       "nameKo": "전이현",
       "nameEn": "",
-      "roleKo": "정진세림회계법인 CEO",
+      "roleKo": "정진세림회계법인 대표",
       "roleEn": "",
       "summaryEn": "",
       "summaryKo": "",
-      "image": "",
+      "image": "assets/team/jeon-yi-hyun.jpg",
       "highlights": [
         "한영회계법인 회계사",
         "정진회계법인 대표이사",
@@ -384,7 +333,7 @@
       "roleEn": "",
       "summaryEn": "",
       "summaryKo": "",
-      "image": "",
+      "image": "assets/team/lee-do-yong.jpeg",
       "highlights": [
         "베스텔라랩 CSO",
         "티플러스 컨설턴트",

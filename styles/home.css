@@ -1,5 +1,6 @@
 /* Single-page composition. Content continues to use the existing page manifests. */
-.home-page .site-main { padding: 64px 0 0; }
+.home-page { --home-item-title-size: clamp(15px, calc(10px + 1.56vw), 24px); }
+.home-page .site-main { padding: 0; }
 .home-page .section-inner {
     width: calc(100% - 2 * var(--site-gutter));
     max-width: var(--site-width);
@@ -40,16 +41,13 @@
 .home-page .home-section:where(:not(#about)) .page-hero-text .page-hero-sub + .page-hero-sub {
     margin-top: -18px;
 }
+.home-page #philosophy .page-hero-sub { font-weight: 400; }
 .home-page .home-section:where(:not(#about)) .page-hero-surface::after { content: none; }
 .home-page .team-index-layout { gap: 64px; }
-.home-page .team-group + .team-group { margin-top: 64px; }
-.home-page .team-group > :is(.h2-title, .partners-heading) {
+.home-page .team-group > .h2-title {
     padding-bottom: 18px;
     margin-bottom: 28px;
     border-bottom: 1px solid var(--border-light);
-    font-size: 15px;
-    font-weight: 450;
-    letter-spacing: 0.02em;
 }
 .home-page .team-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 28px; }
 .home-page .team-card {
@@ -79,6 +77,12 @@
 .home-page [data-group="advisory"] .team-card-media { height: 140px; }
 .home-page [data-group="advisory"] .team-card-copy { padding-top: 0; }
 .home-page [data-group="advisory"] .team-name { font-size: 23px; }
+.home-page [data-group="advisory"] .team-card-media:has(.team-img) { background: var(--bg-page); }
+.home-page [data-group="advisory"] .team-card-media:has(.team-img) .team-img {
+    object-fit: cover;
+    object-position: center;
+}
+.home-page :is(.home-section--blue, .home-section--navy) { --focus-ring-color: var(--base-white); }
 .home-page .home-section--blue { color: var(--base-white); background: var(--brand-royal-blue); }
 .home-page .home-section--navy { color: var(--base-white); background: var(--brand-deep-blue); }
 .home-page :is(.home-section--blue, .home-section--navy) .page-hero-sub { color: var(--base-white); }
@@ -97,15 +101,14 @@
 .home-page .philosophy-card:hover { transform: none; box-shadow: none; }
 .home-page .phil-strip { display: none; }
 .home-page .phil-content { padding: 0; }
-.home-page :is(.phil-title, .team-group > .h2-title, .partners-heading > .h2-title) { color: inherit; font-family: var(--font-family-title); font-size: var(--subheading-size); font-weight: 400; letter-spacing: var(--subheading-tracking); line-height: var(--subheading-leading); }
+.home-page :is(.phil-title, .team-group > .h2-title) { color: inherit; font-family: var(--font-family-title); font-size: var(--subheading-size); font-weight: 400; letter-spacing: var(--subheading-tracking); line-height: var(--subheading-leading); }
 .home-page .phil-copy-stack { display: flex; flex-direction: column; gap: 6px; }
 .home-page :is(.phil-desc-ko, .phil-desc-en) { color: inherit; font-size: 18px; line-height: 1.85; margin: 0; }
 .home-page .phil-desc-ko { order: -1; }
 .home-page #portfolio { background: var(--bg-page); }
-.home-page .portfolio-band { border: 0; }
-.home-page .portfolio-band-heading { margin-bottom: 60px; }
-.home-page .company-name-group a { display: inline-block; position: relative; font-family: var(--font-family-title); font-size: clamp(42px, 6vw, 76px); }
-.home-page .company-market-badge { position: absolute; right: 0; bottom: -6px; color: var(--brand-royal-blue); font-family: var(--font-family-title); font-size: calc(clamp(10px, 1.2vw, 13px) + 2pt); font-weight: 400; line-height: 1; letter-spacing: 0; }
+.home-page .portfolio-band { border: 0; padding-top: 0; }
+.home-page .company-name-group a { display: inline-block; position: relative; font-family: var(--font-family-title); font-size: calc(var(--home-item-title-size) + 6pt); line-height: 1.12; }
+.home-page .company-market-badge { position: absolute; right: 0; bottom: -6px; color: var(--brand-royal-blue); font-family: var(--font-family-title); font-size: calc(clamp(10px, 1.2vw, 13px) + 4pt); font-weight: 400; line-height: 1; letter-spacing: 0; }
 .home-page .notice-record-item {
     border: 0;
     border-top: 1px solid var(--border-light);
@@ -115,18 +118,18 @@
     background: none;
 }
 .home-page .notice-record-item:hover { background: none; }
-.home-page .notice-link { color: var(--brand-deep-blue); font-size: clamp(15px, calc(10px + 1.56vw), 24px); font-weight: 450; }
+.home-page .notice-link { color: var(--brand-deep-blue); font-size: var(--home-item-title-size); font-weight: 450; }
 .home-page .contact-section { margin: 0; min-width: 0; }
-.home-page .contact-card { padding: 0; border: 0; border-radius: 0; box-shadow: none; background: none; }
-.home-page .contact-row { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 24px; align-items: baseline; margin: 0; padding: 20px 0; border-top: 1px solid var(--text-muted); }
+.home-page .contact-card { padding: 0; border: 0; border-radius: 0; box-shadow: none; background: none; transition: none; }
+.home-page .contact-card:hover { transform: none; box-shadow: none; }
+.home-page .contact-row { display: grid; grid-template-columns: 3em minmax(0, 1fr); gap: 24px; align-items: baseline; margin: 0; padding: 20px 0; border-top: 1px solid var(--text-muted); }
+.home-page .contact-label { white-space: nowrap; }
 .home-page :is(.contact-value, .contact-label, .contact-subtext, .contact-map-caption) { color: inherit; }
 .home-page :is(.contact-value, .contact-label) { margin: 0; font-size: 20px; font-weight: 400; line-height: 1.6; word-break: keep-all; overflow-wrap: anywhere; }
 .home-page .contact-address { display: grid; gap: 4px; min-width: 0; }
 .home-page .contact-map-frame { width: min(100%, 572px); aspect-ratio: 10 / 7; margin: 32px 0 0; border: 0; border-radius: 12px; background: var(--bg-soft); overflow: hidden; }
-.home-page .home-section--navy :is(a, button, summary):focus-visible { outline: 2px solid var(--base-white); outline-offset: 6px; }
 .home-page .site-footer { display: block; padding-block: 56px calc(32px + env(safe-area-inset-bottom, 0px)); font-size: 14px; }
 @media (max-width: 1023px) {
-    .home-page .site-main { padding-top: 40px; }
     .home-page .home-section { padding-block: var(--section-band-space); }
     .home-page .team-card-media { height: 240px; }
     .home-page .philosophy-list { gap: 24px; }
@@ -142,13 +145,14 @@
     .home-page .team-card-copy { padding: 0; }
     .home-page .team-name { font-size: 23px; }
     .home-page .philosophy-list { grid-template-columns: 1fr; gap: 40px; }
-    .home-page .portfolio-band-heading { margin-bottom: 32px; }
-    .home-page .contact-row { grid-template-columns: 48px minmax(0, 1fr); gap: 16px; }
+    .home-page .contact-row { gap: 16px; }
     .home-page :is(.contact-value, .contact-label) { font-size: 17px; }
     .home-page .contact-map-frame { width: 100%; }
 }
+@media (max-width: 359px) {
+    .home-page .contact-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+}
 
-.home-page .home-section:where(:not(#about)) .page-hero-text { color: inherit; }
 .home-page .about-hero-media { display: flex; flex-direction: column; align-items: center; }
 .home-page .about-hero-media .brand-wordmark { font-size: 20px; margin-top: 0; }
 .home-page .site-footer .brand-wordmark { font-size: 20px; }
@@ -159,7 +163,6 @@
 .home-page .notice-list { border: 0; border-radius: 0; box-shadow: none; background: none; }
 
 /* Approved color bands: only the About, Team and Portfolio headings are colored. */
-.home-page .site-main { padding-top: 0; }
 .home-page .about-title-band {
     --about-title-size: clamp(26px, 3.4vw, 48px);
     --about-title-leading: calc(var(--about-title-size) * 1.5);
@@ -180,14 +183,12 @@
     color: var(--base-white);
     background: var(--brand-royal-blue);
 }
-.home-page #team .page-hero-text { display: block; }
-.home-page #notice { padding-block: 56px; color: var(--base-white); background: var(--notice-title-bg); }
+.home-page #notice { --focus-ring-color: var(--base-white); padding-block: 56px; color: var(--base-white); background: var(--notice-title-bg); }
 .home-page #notice .section-title-band { padding: 0 0 32px; margin: 0; color: inherit; background: none; }
 .home-page #notice :is(.notice-link, .notice-meta, .notice-loading, .notice-error) { color: inherit; }
 .home-page #notice .notice-record-item { padding-block: 20px; border-color: color-mix(in srgb, var(--base-white) 40%, transparent); }
 .home-page #notice .notice-category::before { color: inherit; }
 .home-page #notice .badge-important { background: var(--base-white); }
-.home-page .portfolio-band { padding-top: 0; }
 .home-page .portfolio-band-heading {
     padding-block: var(--section-band-space);
     margin: 0 0 32px;
@@ -199,8 +200,12 @@
 .home-page .footer-bottom { display: flex; justify-content: flex-end; border-top: 1px solid var(--border-light); padding-top: 24px; }
 .home-page .footer-bottom a { font-family: var(--font-family-title); font-size: 17px; }
 .home-page .company-footer { padding-top: 0; }
+.home-page .company-footer .page-hero-kicker { display: none; }
+.home-page .company-footer .about-hero-media { margin-top: 0; }
+/* Align the description with the circle inside the emblem's white image margin. */
+.home-page .company-footer .page-hero-text { padding-top: 13px; }
 @media (max-width: 699px) {
-    .home-page .about-title-band { --about-title-size: clamp(26px, 7vw, 40px); }
+    .home-page .about-title-band { --about-title-size: clamp(22px, 6.8vw, 40px); }
     .home-page .about-title-grid { grid-template-columns: 1fr; gap: 32px; }
     .home-page .about-story { padding-top: 40px; gap: 32px; }
     .home-page #team .section-title-band { padding-block: var(--section-band-space); margin-bottom: 40px; }
@@ -210,12 +215,9 @@
     .home-page :is(.phil-desc-ko, .phil-desc-en) { font-size: 17px; }
 }
 
-/* Partners and Advisors use the exact same heading treatment as the values. */
-.home-page .team-group > .h2-title, .home-page .partners-heading > .h2-title { line-height: 1.4; }
-.home-page .partners-heading > .h2-title { margin: 0; }
-
 /* Perspective: matches Notice board layout with a white background at the bottom of Philosophy */
 .home-page .perspective-section {
+    --focus-ring-color: var(--brand-deep-blue);
     padding-block: 56px;
     background: var(--base-white);
     color: var(--text-main);
@@ -238,12 +240,6 @@
 }
 .home-page .perspective-section .notice-link:hover {
     color: var(--brand-royal-blue);
-}
-.home-page .perspective-section :is(a, button):focus-visible {
-    outline-color: var(--brand-deep-blue);
-}
-.home-page #philosophy .home-section--blue :is(a, button):focus-visible {
-    outline-color: var(--base-white);
 }
 @media (max-width: 699px) {
     .home-page .perspective-section { padding-block: 40px; }
@@ -334,18 +330,33 @@
 .home-page .partners-group [data-portrait="text"] .team-card-media { display: none; }
 .home-page [data-group="advisory"] .member-photo-placeholder { min-height: 0; }
 @media (max-width: 699px) {
-    .home-page .partners-group { gap: 24px; padding-right: 24px; }
-    .home-page .partners-group .team-card-link { flex-basis: min(320px, 100cqw); width: min(320px, 100cqw); }
-    .home-page .partners-group .team-name { font-size: 24px; }
-    .home-page .partners-group :is(.team-name-en, .team-role, .team-role-en) { font-size: 16px; }
-    .home-page .partners-group .team-card-summary { font-size: 17px; line-height: 1.65; }
-    .home-page .partners-group .team-card-link[data-portrait="compact"] { flex-basis: min(320px, 100cqw); width: min(320px, 100cqw); grid-template-columns: clamp(84px, 30cqw, 104px) minmax(0, 1fr); padding: 20px; gap: 24px 16px; }
+    .home-page .partners-group { gap: 12px; padding-right: 12px; }
+    /* One readable card and a preview of the next; narrow phones keep a 220px minimum. */
+    .home-page .partners-group .team-card-link[data-portrait] {
+        --partner-card-width: max(220px, calc((100cqw - 12px) / 1.5));
+        flex-basis: var(--partner-card-width);
+        width: var(--partner-card-width);
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto;
+        padding: 0 0 16px;
+        gap: 12px;
+    }
+    .home-page .partners-group [data-portrait] .team-card-media { aspect-ratio: 7 / 9; }
+    .home-page .partners-group [data-portrait] .team-card-copy { padding: 0 16px; }
+    .home-page .partners-group [data-portrait] .partners-summary { margin-inline: 16px; }
+    .home-page .partners-group [data-portrait] .team-name { font-size: 22px; }
+    .home-page .partners-group :is(.team-name-en, .team-role, .team-role-en) { font-size: 16px; overflow-wrap: anywhere; }
+    .home-page .partners-group :is(.team-card-summary, .partners-highlights) { font-size: 16px; line-height: 1.6; }
+    .home-page .partners-group .partners-profile-link { grid-row: auto; margin-inline: 16px; font-size: 16px; }
+    .home-page .partners-group .team-card-link[data-portrait="text"] { padding-top: 16px; }
 }
 
 /* Media controls share the board headings' reading order and 44px targets. */
-.home-page .carousel-heading { display: flex; flex-direction: row; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 12px 24px; }
+.home-page .carousel-heading,
+.home-page #team .page-hero-text.carousel-heading { display: flex; flex-direction: row; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 12px 24px; }
 .home-page .carousel-toggle { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 44px; width: 44px; height: 44px; padding: 0; border: 0; background: none; color: inherit; cursor: pointer; }
 .home-page .carousel-toggle[hidden] { display: none; }
+.home-page .carousel-toggle:hover { background: var(--board-control-hover); }
 .home-page .media-character { display: inline-block; flex: 0 0 32px; width: 32px; height: 32px; overflow: visible; font-family: var(--font-family-title); font-size: var(--nav-chevron-control-size); line-height: 32px; text-align: center; }
 .home-page .media-character::before { display: block; width: 100%; overflow: visible; content: var(--media-pause); }
 .home-page .carousel-toggle[aria-pressed="true"] .media-character::before { content: var(--media-play); }

@@ -15,11 +15,6 @@
     background: var(--editorial-accent);
 }
 
-.about-editorial :is(a, button):focus-visible {
-    outline: 2px solid var(--editorial-accent);
-    outline-offset: 6px;
-}
-
 .about-editorial .site-main {
     padding: 84px var(--editorial-gutter) 0;
     min-height: 0;
