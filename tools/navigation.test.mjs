@@ -39,6 +39,7 @@ async function navigationRuntime(hash = '', resources = {}) {
   header.children.push(nav, toggle);
   const main = new Element('main');
   const loading = new Element('page-loading');
+  if (resources.minimum) loading.setAttribute('data-min-display-ms', String(resources.minimum));
   const contentSections = sections.filter(section => section.id !== 'perspective');
   contentSections.forEach(section => section.setAttribute('data-content-ready', 'false'));
   const document = new EventTarget();
@@ -54,7 +55,7 @@ async function navigationRuntime(hash = '', resources = {}) {
   const frames = new Map();
   let sequence = 0;
   const history = { pushState: (_state, _title, hash) => { location.hash = hash; } };
-  const runtime = vm.createContext({ document, window, location, history, setTimeout, URL, Event, requestAnimationFrame: fn => { frames.set(++sequence, fn); return sequence; }, cancelAnimationFrame: id => frames.delete(id), ResizeObserver: class { observe() {} } });
+  const runtime = vm.createContext({ document, window, location, history, setTimeout: resources.setTimeout || setTimeout, URL, Event, requestAnimationFrame: fn => { frames.set(++sequence, fn); return sequence; }, cancelAnimationFrame: id => frames.delete(id), ResizeObserver: class { observe() {} } });
   vm.runInContext(await readRepoFile('scripts/ui.js'), runtime);
   document.dispatchEvent(new Event('DOMContentLoaded'));
   const flush = () => { const callbacks = [...frames.values()]; frames.clear(); callbacks.forEach(fn => fn()); };
@@ -80,6 +81,28 @@ test('one page status waits for the final content owner and clears after settlem
   assert.equal(r.document.documentElement.classList.contains('page-pending'), true);
   r.flush();
   assert.equal(r.document.documentElement.classList.contains('page-pending'), false);
+});
+
+test('home minimum overlaps loading and holds fast content until 500 ms', async () => {
+  for (const timerFirst of [false, true]) {
+    let finishMinimum;
+    const r = await navigationRuntime('', { minimum: 500, setTimeout: (fn, delay) => {
+      assert.equal(delay, 500);
+      finishMinimum = fn;
+    } });
+    if (timerFirst) finishMinimum();
+    assert.equal(r.loading.hidden, false);
+    r.contentSections.forEach(section => section.setAttribute('data-content-ready', 'true'));
+    r.document.dispatchEvent(new Event('jsg:section-ready'));
+    r.flush();
+    await new Promise(resolve => setImmediate(resolve));
+    if (!timerFirst) {
+      assert.equal(r.loading.hidden, false);
+      finishMinimum();
+      await new Promise(resolve => setImmediate(resolve));
+    }
+    assert.equal(r.loading.hidden, true);
+  }
 });
 
 test('greeting waits for fonts and image decoding and settles after an image failure', async () => {

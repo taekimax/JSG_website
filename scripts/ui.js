@@ -1,5 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     const loading = document.getElementById('page-loading');
+    const minimumDisplay = Number(loading?.getAttribute('data-min-display-ms')) || 0;
+    const minimumElapsed = minimumDisplay > 0
+        ? new Promise(resolve => setTimeout(resolve, minimumDisplay))
+        : Promise.resolve();
     const pendingSections = [...document.querySelectorAll('[data-content-ready]')];
     let settling = false;
     const updateLoading = () => {
@@ -24,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 img.loading = 'eager';
                 return img.decode().catch(() => {});
             }));
+            await minimumElapsed;
             loading.hidden = true;
             loading.textContent = '';
             requestAnimationFrame(() => {
