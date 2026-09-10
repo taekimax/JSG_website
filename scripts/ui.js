@@ -12,11 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Let hydration and initial anchor navigation settle before selecting visible images.
         requestAnimationFrame(async () => {
             await document.fonts?.ready;
-            const greetingHeight = loading.getBoundingClientRect().height || 0;
+            const initialTarget = location.hash && document.getElementById(location.hash.slice(1));
+            const viewTop = initialTarget ? initialTarget.getBoundingClientRect().top - 24 : 0;
             const images = [...document.querySelectorAll('img')].filter(img => {
                 const rect = img.getBoundingClientRect();
                 return img.loading !== 'lazy' || (rect.width > 0 && rect.height > 0 &&
-                    rect.bottom > 0 && rect.top < window.innerHeight + greetingHeight &&
+                    rect.bottom > viewTop && rect.top < viewTop + window.innerHeight &&
                     rect.right > 0 && rect.left < window.innerWidth);
             });
             await Promise.all(images.map(img => {
@@ -25,6 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }));
             loading.hidden = true;
             loading.textContent = '';
+            requestAnimationFrame(() => {
+                document.documentElement.classList.remove('page-pending');
+                document.dispatchEvent(new Event('jsg:page-ready'));
+            });
         });
     };
     document.addEventListener('jsg:section-ready', updateLoading);
@@ -87,12 +92,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         let initialHash = location.hash;
         const finishInitialScroll = () => {
+            if (document.documentElement.classList.contains('page-pending')) return;
             if (!contentSections.every(section => section.getAttribute('data-content-ready') === 'true')) return;
             if (initialHash && initialHash === location.hash) revealHash();
             initialHash = '';
             document.removeEventListener('jsg:section-ready', finishInitialScroll);
+            document.removeEventListener('jsg:page-ready', finishInitialScroll);
         };
         document.addEventListener('jsg:section-ready', finishInitialScroll);
+        document.addEventListener('jsg:page-ready', finishInitialScroll);
         finishInitialScroll();
         for (const type of ['wheel', 'touchmove', 'keydown', 'pointerdown']) {
             document.addEventListener(type, () => { initialHash = ''; }, { once: true, passive: true });

@@ -45,6 +45,7 @@ async function navigationRuntime(hash = '', resources = {}) {
   document.querySelectorAll = selector => selector === '[data-content-ready]' ? contentSections : selector === 'img' ? resources.images || [] : [];
   document.fonts = { ready: resources.fonts || Promise.resolve() };
   document.documentElement = new Element('html');
+  document.documentElement.classList.add('page-pending');
   document.activeElement = null;
   document.getElementById = id => id === loading.id ? loading : id === nav.id ? nav : sections.find(section => section.id === id);
   document.querySelector = selector => ({ '.site-header': header, '.menu-toggle': toggle, main })[selector];
@@ -76,6 +77,9 @@ test('one page status waits for the final content owner and clears after settlem
   await new Promise(resolve => setImmediate(resolve));
   assert.equal(r.loading.hidden, true);
   assert.equal(r.loading.textContent, '');
+  assert.equal(r.document.documentElement.classList.contains('page-pending'), true);
+  r.flush();
+  assert.equal(r.document.documentElement.classList.contains('page-pending'), false);
 });
 
 test('greeting waits for fonts and image decoding and settles after an image failure', async () => {
@@ -104,6 +108,10 @@ test('nested Perspective initial navigation waits for content owners then focuse
   assert.equal(r.sections[3].scrollCount, undefined);
   r.sections.at(-1).setAttribute('data-content-ready', 'true');
   r.document.dispatchEvent(new Event('jsg:section-ready'));
+  r.flush();
+  assert.equal(r.sections[3].scrollCount, undefined);
+  await new Promise(resolve => setImmediate(resolve));
+  r.flush();
   r.flush();
   assert.equal(r.sections[3].scrollCount, 1);
   assert.equal(r.document.activeElement, r.sections[3]);

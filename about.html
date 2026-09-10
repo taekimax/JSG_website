@@ -3,13 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
+    <script>document.documentElement.classList.add('page-pending');</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>JSG INVESTMENT</title>
     <link rel="preload" href="assets/fonts/D2Coding-Regular.ttf" as="font" type="font/ttf" crossorigin>
     <link rel="preload" href="assets/fonts/JetBrainsMonoNerdFont-Regular.ttf" as="font" type="font/ttf" crossorigin>
     <link rel="stylesheet" href="styles/tokens.css?v=20260910-team-refinement">
     <link rel="stylesheet" href="styles/reset.css">
-    <link rel="stylesheet" href="styles/layout.css?v=20260910-page-greeting">
+    <link rel="stylesheet" href="styles/layout.css?v=20260910-title-greeting">
     <link rel="stylesheet" href="styles/main.css?v=20260910-team-refinement">
     <link rel="stylesheet" href="styles/about-editorial.css?v=20260910-team-refinement">
     <link rel="stylesheet" href="styles/home.css?v=20260910-team-refinement">
@@ -40,14 +41,15 @@
         <section id="about" data-content-ready="false" class="home-section" aria-label="About" tabindex="-1">
 
             <div class="curtain-track"><div class="curtain-scene">
-<div class="about-title-band curtain-band">
+<div class="about-title-band curtain-band greeting-title-band">
+    <p id="page-loading" class="page-loading" role="status" aria-live="polite">Hello!</p>
+
                 <div class="section-inner about-title-grid">
                     <h1 id="about-title-ko" data-break-before="길을" class="about-section-title" lang="ko"></h1>
                     <h2 id="about-title-en" data-break-before="you're" class="about-section-title" lang="en"></h2>
                 </div>
             </div>
 <div class="curtain-body">
-    <p id="page-loading" class="page-loading" role="status" aria-live="polite" hidden></p>
 
             <div class="about-story section-inner">
                 <section class="text-block about-section" lang="ko" aria-labelledby="about-title-ko">
@@ -266,16 +268,16 @@
         <div class="footer-bottom"><a href="#top">Top <span class="nav-chevron" data-direction="up" aria-hidden="true"></span></a></div>
     </footer>
 
-    <script src="scripts/ui.js?v=20260910-page-greeting"></script>
+    <script src="scripts/ui.js?v=20260910-title-greeting"></script>
     <script src="scripts/assets.js"></script>
     <script src="scripts/sharedAssets.js"></script>
     <script src="scripts/aboutCopy.js"></script>
     <script src="scripts/carousel.js?v=20260910-carousel-autoplay"></script>
-    <script src="scripts/portfolio.js?v=20260910-page-greeting"></script>
-    <script src="scripts/team.js?v=20260910-page-greeting"></script>
+    <script src="scripts/portfolio.js?v=20260910-title-greeting"></script>
+    <script src="scripts/team.js?v=20260910-title-greeting"></script>
     <script src="scripts/philosophyCopy.js?v=20260908-new-tab"></script>
     <script src="scripts/boardPager.js?v=20260908-chevrons"></script>
-    <script src="scripts/notice.js?v=20260910-page-greeting"></script>
+    <script src="scripts/notice.js?v=20260910-title-greeting"></script>
     <script src="scripts/contact.js"></script>
     <script src="scripts/sectionReveal.js?v=20260908-screen-edges"></script>
 </body>
