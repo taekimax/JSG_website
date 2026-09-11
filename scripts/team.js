@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const renderMemberDetail = (member) => {
         document.title = `${member.nameKo} | JSG INVESTMENT`;
-        const groupLabel = member.group === 'core' ? 'Partners' : 'Advisors';
+        const groupLabel = member.group === 'advisory' ? 'Advisors' : '';
         const nameEnHtml = member.nameEn
             ? `<span class="member-name-en">${escapeHtml(member.nameEn)}</span>`
             : '';
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     ${imgHtml}
                 </div>
                 <div class="team-card-copy member-hero-content">
-                    <p class="member-kicker">${escapeHtml(groupLabel)}</p>
+                    ${groupLabel ? `<p class="member-kicker">${escapeHtml(groupLabel)}</p>` : ''}
                     <div class="member-identity">
                         <h1 class="h1-title member-name">${escapeHtml(member.nameKo)}${nameEnHtml}</h1>
                         <p class="team-role">${escapeHtml(member.roleKo || '')}</p>

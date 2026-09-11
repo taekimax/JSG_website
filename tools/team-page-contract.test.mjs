@@ -41,3 +41,19 @@ test('team list renderer uses stacked horizontal bilingual cards with manifest o
   assert.doesNotMatch(html.split('data-group="advisory"')[1], /team-card-summary/);
   assert.match(html, />Advisors</);
 });
+
+test('team detail omits the Partners kicker while retaining the Advisors kicker', async () => {
+  const manifest = {
+    members: [
+      { id: 'core-a', group: 'core', order: 10, nameKo: '코어A', roleKo: '심사역' },
+      { id: 'adv-a', group: 'advisory', order: 20, nameKo: '자문A', roleKo: '자문위원' }
+    ]
+  };
+
+  const core = await renderTeamApp({ manifest, search: '?id=core-a' });
+  assert.doesNotMatch(core.html, /member-kicker/);
+  assert.doesNotMatch(core.html, />Partners</);
+
+  const advisory = await renderTeamApp({ manifest, search: '?id=adv-a' });
+  assert.match(advisory.html, /class="member-kicker">Advisors<\/p>/);
+});

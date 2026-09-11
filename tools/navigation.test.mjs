@@ -62,6 +62,15 @@ async function navigationRuntime(hash = '', resources = {}) {
   return { document, window, sections, nav, toggle, location, flush, loading, contentSections };
 }
 
+test('detail pages render without a loading message or greeting gate', async () => {
+  for (const page of ['team-member.html', 'portfolio.html', 'notice.html']) {
+    const html = await readRepoFile(page);
+    assert.doesNotMatch(html, /classList\.add\(['"]page-pending['"]\)/);
+    assert.doesNotMatch(html, /id="page-loading"/);
+    assert.doesNotMatch(html, />Hello!</);
+  }
+});
+
 test('one page status waits for the final content owner and clears after settlement', async () => {
   const r = await navigationRuntime();
   assert.equal(r.loading.hidden, false);

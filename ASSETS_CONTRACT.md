@@ -106,7 +106,7 @@ The generated company schema contains stable `id`, `order`, `name`, `sector`, `m
 
 ## Authorized Additions (2026-09-07)
 
-- Team partners (`group: "core"`) may provide `summaryKo` alongside their existing English `summary`. The displayed Korean summary translates the approved English summary. Advisor summaries remain in the data but are not displayed. Group IDs are unchanged; the UI label is Partners.
+- Team partners (`group: "core"`) may provide `summaryKo` alongside their existing English `summary`. The displayed Korean summary translates the approved English summary. Advisor summaries remain in the data but are not displayed. Group IDs are unchanged; the home list retains its Partners accessibility label, while core-member detail pages omit the group label.
 - Perspective reads the generated `/board-content/perspective-manifest.json`. Its index contains `schemaVersion: 1`, one HTTPS root `publicationUrl`, and `posts` entries with plain-text `title`, `YYYY-MM-DD` `date`, and a same-publication `/p/` article `url`.
 - The private content repository synchronizes the Substack RSS index and preserves older entries absent from the latest feed. The website reads the published index through the existing no-cache JSON loader.
 - Moving the About company introduction to the home footer preserves its About manifest/text sources. Removing decorative hero images from rendered pages does not remove their legacy manifest fields or asset files.

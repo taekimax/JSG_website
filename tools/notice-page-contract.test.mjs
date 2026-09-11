@@ -80,7 +80,7 @@ test('notice detail renderer includes record hooks and preserves pager and attac
   );
 });
 
-test('notice leaves its content empty while the shared page status owns loading', async () => {
+test('notice leaves its content empty while detail data loads', async () => {
   let resolveManifest;
   let resolveNotices;
   const manifestResponse = new Promise((resolve) => {
