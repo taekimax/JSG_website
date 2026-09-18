@@ -176,3 +176,11 @@ GitHub Pages는 `tools/stage-site.mjs --github-pages`로 방문자용 파일만 
 현재 실행 PID는 `/tmp/jsg-preview-4174.pid`, 로그는 `/tmp/jsg-preview-4174.log`에 있습니다. 종료할 때 해당 프로세스를 확인한 뒤 종료하고 `tailscale serve --https=443 --set-path=/jsg off`로 이 경로만 해제합니다. 다른 Tailscale 경로를 초기화하지 않습니다.
 
 제목과 본문 시작이 데스크톱 144px·모바일 96px의 짧은 스크롤 구간 동안 함께 고정된 뒤 자연스럽게 올라갑니다. 전환 공간은 고정 높이이며 동작 줄이기에서는 고정과 추가 공간을 모두 제거합니다. 재생/일시정지 문자 버튼은 Partners와 Portfolio 제목 오른쪽에 있습니다. iPhone에서는 화면 가장자리까지 표시하고 상·하단 및 가로 safe-area를 반영합니다. 기존 색상은 그대로 유지합니다. 모든 화면의 메뉴는 햄버거 버튼 안에 있으며 Perspective는 Philosophy 내부 위치로 이동합니다.
+
+## Cafe24 live publishing
+
+The canonical website is https://jsginvest.com. HTTP requests, including the www hostname, redirect there. `.htaccess` owns these redirects and is included by `node tools/stage-site.mjs`; GitHub Pages staging excludes it.
+
+`.github/workflows/cafe24.yml` validates and uploads visitor files after a push to `main` or a manual run when `CAFE24_DEPLOY_ENABLED=true`. `CAFE24_REMOTE_DIR` is `/home/hosting_users/jinsungsc/www`. The workflow uses the `CAFE24_SFTP_HOST`, `CAFE24_SFTP_PORT`, `CAFE24_SFTP_USERNAME`, `CAFE24_SFTP_PASSWORD`, and `CAFE24_SFTP_KNOWN_HOSTS` Actions secrets. Passwords stay in Secrets and host keys are checked strictly. Website uploads preserve the separately managed `board-content/` directory.
+
+Pages CMS saves and the daily Substack sync publish through `taekimax/jsg-board-content` directly to `/board-content/`. Content changes do not require a website-source commit. That repository owns its publishing schedule and generated content. Local credentials, certificates, and SSH keys never enter the staged visitor files or Git.

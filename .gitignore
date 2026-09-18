@@ -3,3 +3,7 @@ node_modules/
 __pycache__/
 _site/
 board-content
+cafe24.env
+/ssl.key
+/ssl.crt
+/jinsungsc_key_20260918.pem

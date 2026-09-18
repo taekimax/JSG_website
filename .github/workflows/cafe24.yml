@@ -1,0 +1,67 @@
+name: Deploy website to Cafe24
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cafe24-website
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: vars.CAFE24_DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Verify and stage public files
+        run: |
+          npm run verify
+          node tools/stage-site.mjs
+      - name: Install SFTP client
+        run: sudo apt-get update && sudo apt-get install --yes lftp
+      - name: Publish website to Cafe24
+        env:
+          CAFE24_REMOTE_DIR: ${{ vars.CAFE24_REMOTE_DIR }}
+          CAFE24_SFTP_HOST: ${{ secrets.CAFE24_SFTP_HOST }}
+          CAFE24_SFTP_PORT: ${{ secrets.CAFE24_SFTP_PORT }}
+          CAFE24_SFTP_USERNAME: ${{ secrets.CAFE24_SFTP_USERNAME }}
+          CAFE24_SFTP_PASSWORD: ${{ secrets.CAFE24_SFTP_PASSWORD }}
+          CAFE24_SFTP_KNOWN_HOSTS: ${{ secrets.CAFE24_SFTP_KNOWN_HOSTS }}
+        run: |
+          test "$CAFE24_REMOTE_DIR" = "/home/hosting_users/jinsungsc/www"
+          test -n "$CAFE24_SFTP_HOST"
+          test -n "$CAFE24_SFTP_PORT"
+          test -n "$CAFE24_SFTP_USERNAME"
+          test -n "$CAFE24_SFTP_PASSWORD"
+          test -n "$CAFE24_SFTP_KNOWN_HOSTS"
+          install -d -m 700 "$HOME/.ssh"
+          printf '%s\n' "$CAFE24_SFTP_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
+          chmod 600 "$HOME/.ssh/known_hosts"
+          export LFTP_PASSWORD="$CAFE24_SFTP_PASSWORD"
+          lftp --env-password --user "$CAFE24_SFTP_USERNAME" "sftp://$CAFE24_SFTP_HOST:$CAFE24_SFTP_PORT" -e "
+            set cmd:fail-exit yes;
+            set net:max-retries 2;
+            set net:timeout 20;
+            set sftp:connect-program ssh -a -x -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts;
+            mirror --reverse --verbose _site/ $CAFE24_REMOTE_DIR/;
+            bye
+          "
+      - name: Verify published website
+        run: |
+          python3 - <<'PYVERIFY'
+          from pathlib import Path
+          from urllib.request import urlopen
+          for name in ['index.html', 'about.html', 'assets/shared/board-endpoints.json']:
+              with urlopen('https://jsginvest.com/' + name, timeout=30) as response:
+                  assert response.read() == Path('_site', name).read_bytes(), name
+              print('Verified:', name)
+          PYVERIFY

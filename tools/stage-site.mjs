@@ -10,6 +10,7 @@ export async function stageSite({ root = process.cwd(), output = path.join(root,
   const entries = await fs.readdir(root, { withFileTypes: true });
   const publicEntries = entries.filter(entry =>
     (entry.isFile() && entry.name.endsWith('.html')) ||
+    (entry.isFile() && entry.name === '.htaccess' && !githubPages) ||
     (entry.isDirectory() && ['assets', 'scripts', 'styles', 'admin'].includes(entry.name))
   );
   for (const entry of publicEntries) {

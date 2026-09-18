@@ -11,6 +11,10 @@ test('Pages artifact excludes private/local files and routes all CMS data to the
     await fs.mkdir(path.join(root, 'assets/shared'), { recursive: true });
     await fs.writeFile(path.join(root, 'about.html'), '<main>Public</main>');
     await fs.writeFile(path.join(root, 'AGENTS.md'), 'Not a public page');
+    await fs.writeFile(path.join(root, '.htaccess'), 'DirectoryIndex index.html\n');
+    for (const file of ['cafe24.env', 'ssl.key', 'ssl.crt', 'jinsungsc_key_20260918.pem']) {
+      await fs.writeFile(path.join(root, file), 'Private deployment file');
+    }
     await fs.symlink('/not/a/real/local/mount', path.join(root, 'board-content'));
     const endpoints = {
       schemaVersion: 1,
@@ -21,7 +25,7 @@ test('Pages artifact excludes private/local files and routes all CMS data to the
     await fs.writeFile(path.join(root, 'assets/shared/board-endpoints.json'), JSON.stringify(endpoints));
     const output = await stageSite({ root, githubPages: true });
     assert.equal(await fs.readFile(path.join(output, 'about.html'), 'utf8'), '<main>Public</main>');
-    for (const file of ['AGENTS.md', 'board-content', 'tools', '.git']) {
+    for (const file of ['AGENTS.md', 'board-content', 'tools', '.git', '.htaccess', 'cafe24.env', 'ssl.key', 'ssl.crt', 'jinsungsc_key_20260918.pem']) {
       await assert.rejects(fs.lstat(path.join(output, file)), { code: 'ENOENT' });
     }
     const staged = JSON.parse(await fs.readFile(path.join(output, 'assets/shared/board-endpoints.json'), 'utf8'));
@@ -29,6 +33,12 @@ test('Pages artifact excludes private/local files and routes all CMS data to the
     assert.equal(staged.noticesManifest, '/jsg-public-content/board-content/notices-manifest.json');
     assert.equal(staged.perspectiveManifest, '/jsg-public-content/board-content/perspective-manifest.json');
     assert.deepEqual(JSON.parse(await fs.readFile(path.join(root, 'assets/shared/board-endpoints.json'), 'utf8')), endpoints);
+    const cafe24Output = await stageSite({ root });
+    assert.equal(await fs.readFile(path.join(cafe24Output, '.htaccess'), 'utf8'), 'DirectoryIndex index.html\n');
+    assert.deepEqual(JSON.parse(await fs.readFile(path.join(cafe24Output, 'assets/shared/board-endpoints.json'), 'utf8')), endpoints);
+    for (const file of ['cafe24.env', 'ssl.key', 'ssl.crt', 'jinsungsc_key_20260918.pem']) {
+      await assert.rejects(fs.lstat(path.join(cafe24Output, file)), { code: 'ENOENT' });
+    }
   } finally {
     await fs.rm(root, { recursive: true, force: true });
   }

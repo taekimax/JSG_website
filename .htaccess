@@ -1,0 +1,10 @@
+DirectoryIndex index.html
+Options -Indexes
+
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.jsginvest\.com$ [NC]
+RewriteRule ^ https://jsginvest.com%{REQUEST_URI} [R=301,L,NE]
+
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
+RewriteRule ^ https://jsginvest.com%{REQUEST_URI} [R=301,L,NE]
