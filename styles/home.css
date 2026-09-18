@@ -124,7 +124,28 @@
 .home-page :is(.contact-value, .contact-label, .contact-subtext, .contact-map-caption) { color: inherit; }
 .home-page :is(.contact-value, .contact-label) { margin: 0; font-size: 20px; font-weight: 400; line-height: 1.6; word-break: keep-all; overflow-wrap: anywhere; }
 .home-page .contact-address { display: grid; gap: 4px; min-width: 0; }
-.home-page .contact-map-frame { width: min(100%, 572px); aspect-ratio: 4 / 3; margin: 32px auto 0; border: 0; border-radius: 0; background: none; overflow: visible; position: relative; isolation: isolate; }
+.home-page .contact-map-band {
+    width: 100vw;
+    margin: 32px 0 0 calc(50% - 50vw);
+    overflow: hidden;
+    background-image: url("../assets/contact/contact-map-road-extension.svg?v=20260918-curve"), linear-gradient(to right, var(--palette-blue) 50%, var(--palette-navy) 50%);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto 100%, 100% 100%;
+}
+.home-page .contact-map-frame {
+    width: min(572px, 75.389vw);
+    aspect-ratio: 4 / 3;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    overflow: visible;
+    position: relative;
+    left: 50%;
+    transform: translateX(-66.3225%);
+}
+.home-page #contact-map-image { clip-path: inset(0 1px); }
 .home-page .site-footer { display: block; padding-block: 56px calc(32px + env(safe-area-inset-bottom, 0px)); font-size: 14px; }
 @media (max-width: 1023px) {
     .home-page .home-section { padding-block: var(--section-band-space); }
@@ -144,7 +165,6 @@
     .home-page .philosophy-list { grid-template-columns: 1fr; gap: 40px; }
     .home-page .contact-row { gap: 16px; }
     .home-page :is(.contact-value, .contact-label) { font-size: 17px; }
-    .home-page .contact-map-frame { width: 100%; }
 }
 @media (max-width: 359px) {
     .home-page .contact-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
@@ -378,21 +398,6 @@
 }
 
 .home-page .philosophy-intro { display: grid; gap: 6px; margin-bottom: 48px; }
-
-/* Extend the exact SVG field colors beyond the centered map, to both page edges. */
-.home-page .contact-map-frame::before {
-    content: "";
-    position: absolute;
-    inset-block: 0;
-    left: 50%;
-    width: 100vw;
-    transform: translateX(-50%);
-    z-index: -1;
-    background-image: url("../assets/contact/contact-map-road-extension.svg?v=20260918-curve"), linear-gradient(to right, var(--palette-blue) 50%, var(--palette-navy) 50%);
-    background-size: auto 100%, 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-}
 
 /* Share bilingual row tracks so address wrapping keeps both languages aligned. */
 .home-page .contact-row { grid-template-columns: 7ch minmax(0, 1fr); column-gap: 24px; row-gap: 4px; align-items: start; }

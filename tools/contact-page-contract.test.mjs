@@ -17,10 +17,21 @@ test('home Contact section delegates content hydration to contact.js and exposes
   assert.match(html, /<script src="scripts\/assets\.js"><\/script>/);
   assert.match(html, /<script src="scripts\/contact\.js(?:\?[^"\s]+)?"><\/script>/);
   assert.match(html, /id="contact-map-image"/);
+  assert.match(html, /class="contact-map-band"/);
   assert.match(html, /src="assets\/contact\/contact-map\.svg"/);
+  assert.doesNotMatch(html, /contact-map-dialog/);
   assert.doesNotMatch(html, /\[대표 전화번호\]/);
   assert.doesNotMatch(html, /\[문의 이메일 주소\]/);
   assert.doesNotMatch(html, /href="#"/);
+});
+
+test('Contact map band keeps the full map visible with Yongdong-daero centered', async () => {
+  const css = await readRepoFile('styles/home.css');
+
+  assert.match(css, /\.home-page \.contact-map-band \{[^}]*width: 100vw;/);
+  assert.match(css, /\.home-page \.contact-map-frame \{[^}]*width: min\(572px, 75\.389vw\);/);
+  assert.match(css, /\.home-page \.contact-map-frame \{[^}]*left: 50%;[^}]*translateX\(-66\.3225%\)/);
+  assert.doesNotMatch(css, /\.contact-map-frame::(?:before|after)/);
 });
 
 test('contact content files are public-facing and use the updated daechi address', async () => {
