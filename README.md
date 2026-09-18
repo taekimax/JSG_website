@@ -161,7 +161,7 @@ Notice는 파란 배경에 흰 제목·목록을 사용하며 설명을 제거�
 
 `/admin/`의 Pages CMS에서 **Portfolio 투자기업**을 선택합니다. 회사명·분야·정렬·소개를 수정하고 상장사는 시장·종목코드·상장일을 입력합니다. 초안을 끄면 공개 대상이며 켜면 목록에서 내립니다. 회사 ID와 상세 주소는 유지됩니다. 작성 방법과 배포 경로는 [콘텐츠 관리 안내](docs/board-authoring.md)에 있습니다.
 
-GitHub Pages는 `tools/stage-site.mjs --github-pages`로 방문자용 파일만 `_site/`에 준비합니다. 로컬 `board-content` 연결은 배포 artifact에 포함하지 않습니다. 게시판과 Portfolio는 별도 공개 출력 사이트에서 읽으므로 콘텐츠 변경으로 웹사이트 소스가 변경되지 않습니다.
+Cafe24 배포는 `tools/stage-site.mjs`로 방문자용 파일만 `_site/`에 준비합니다. 콘텐츠는 `/board-content/`에서 읽습니다. 임시 GitHub Pages 배포는 종료했습니다.
 
 ## 디자인 일관성
 
@@ -179,7 +179,7 @@ GitHub Pages는 `tools/stage-site.mjs --github-pages`로 방문자용 파일만 
 
 ## Cafe24 live publishing
 
-The canonical website is https://jsginvest.com. HTTP requests, including the www hostname, redirect there. `.htaccess` owns these redirects and is included by `node tools/stage-site.mjs`; GitHub Pages staging excludes it.
+The canonical website is https://jsginvest.com. HTTP requests, including the www hostname, redirect there. `.htaccess` owns these redirects and is included by `node tools/stage-site.mjs`.
 
 `.github/workflows/cafe24.yml` validates and uploads visitor files after a push to `main` or a manual run when `CAFE24_DEPLOY_ENABLED=true`. `CAFE24_REMOTE_DIR` is `/home/hosting_users/jinsungsc/www`. The workflow uses the `CAFE24_SFTP_HOST`, `CAFE24_SFTP_PORT`, `CAFE24_SFTP_USERNAME`, `CAFE24_SFTP_PASSWORD`, and `CAFE24_SFTP_KNOWN_HOSTS` Actions secrets. Passwords stay in Secrets and host keys are checked strictly. Website uploads preserve the separately managed `board-content/` directory.
 

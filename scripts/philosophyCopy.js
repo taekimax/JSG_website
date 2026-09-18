@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const kickerEl = hero?.querySelector('.page-hero-kicker');
     if (!kickerEl) return;
 
-    const heroLeadEls = hero.querySelectorAll('.page-hero-sub');
+    const heroLeadEls = (document.getElementById('philosophy') || document).querySelectorAll('.philosophy-intro .page-hero-sub');
     const cards = document.querySelectorAll('.philosophy-card');
 
     try {
