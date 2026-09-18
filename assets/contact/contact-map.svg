@@ -16,7 +16,7 @@
   <text x="345" y="89" transform="rotate(-2 345 89)">코엑스</text>
   <text x="629.622" y="89" transform="rotate(-2 629.622 89)" style="fill:#ffffff">현대차</text>
   <text x="190" y="89" transform="rotate(-2 190 89)"><tspan x="190">도심공항</tspan><tspan x="190" dy="35">터미널</tspan></text>
-  <text x="220" y="211" transform="rotate(-2 220 211)">현대백화점</text>
+  <text x="190" y="211" transform="rotate(-2 190 211)">현대백화점</text>
   <text x="374" y="211" transform="rotate(-2 374 211)">파르나스</text>
   <text x="533.333" y="294.167" transform="rotate(-2 533.333 294.167)" style="fill:#001d6c;stroke:none;font-weight:650;letter-spacing:-1.4px">삼성역</text>
   <!-- A static button-shaped location mark: white face, crisp Contact-navy shadow. -->
@@ -26,6 +26,6 @@
     <text x="180" y="452" style="fill:#001d6c;stroke:none;font-family:JetBrainsMono,monospace;font-size:52px;font-weight:400;letter-spacing:0">JSG</text>
   </g>
   <text x="325" y="401" transform="rotate(-2 325 401)">섬유센터</text>
-  <text x="450" y="381" transform="rotate(-2 450 381)"><tspan x="450">글라스</tspan><tspan x="450" dy="35">타워</tspan></text>
+  <text x="436.389" y="385.508" transform="rotate(-2 436.389 385.508)"><tspan x="436.389">글라스</tspan><tspan x="436.389" dy="35">타워</tspan></text>
   <text x="704" y="371.300" transform="rotate(-2 704 371.300)" style="fill:#ffffff">파크 하얏트</text>
 </svg>
