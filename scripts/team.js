@@ -174,10 +174,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             `
             : '';
 
-        const orderedMembers = window.__teamMembers || [];
-        const index = orderedMembers.findIndex(m => m.id === member.id);
-        const prevMember = index > 0 ? orderedMembers[index - 1] : null;
-        const nextMember = index >= 0 && index < orderedMembers.length - 1 ? orderedMembers[index + 1] : null;
+        const orderedMembers = (window.__teamMembers || []).filter(candidate => candidate.group === member.group);
+        const index = orderedMembers.findIndex(candidate => candidate.id === member.id);
+        const prevMember = index >= 0 && orderedMembers.length > 1
+            ? orderedMembers[(index - 1 + orderedMembers.length) % orderedMembers.length]
+            : null;
+        const nextMember = index >= 0 && orderedMembers.length > 1
+            ? orderedMembers[(index + 1) % orderedMembers.length]
+            : null;
 
         const prevHtml = prevMember
             ? `<a class="detail-pager-link prev" href="team-member.html?id=${encodeURIComponent(prevMember.id)}" aria-label="Previous member: ${escapeHtml(formatNavLabel(prevMember))}"><span class="nav-chevron" data-direction="left" aria-hidden="true"></span> ${escapeHtml(formatNavLabel(prevMember))}</a>`

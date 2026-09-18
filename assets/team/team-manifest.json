@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "page": "team",
-  "assetVersion": "2026-09-18-team-roles-order",
+  "assetVersion": "2026-09-18-park-career-circular-navigation",
   "heroImage": "assets/team/team-hero.jpg",
   "members": [
     {
@@ -15,16 +15,16 @@
       "summaryEn": "",
       "image": "assets/team/park-sang-jin.jpg",
       "highlights": [
-        "(미국) Invent Medical 등기 이사",
         "진성과학 대표이사",
         "엘리어헬스케어 한국법인 대표",
         "진성메디텍 대표이사",
+        "(미국) Invent Medical 등기 이사",
         "(미국) Backman Instrument 부장",
         "고려대 경영학 석사"
       ],
       "sourceUrl": "http://www.jsginvest.com/bbs/board.php?bo_table=0201&wr_id=1",
       "wrId": "1",
-      "summaryKo": "(미국) Invent Medical 등기 이사 · 진성과학 대표이사",
+      "summaryKo": "진성과학 대표이사 · 엘리어헬스케어 한국법인 대표 · 진성메디텍 대표이사",
       "sourceSlide": 6,
       "imageLayout": "torso"
     },

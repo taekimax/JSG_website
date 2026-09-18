@@ -29,6 +29,27 @@ test('team detail renderer keeps the horizontal portrait layout and bilingual id
   assert.match(html, /class="detail-pager-link next" href="team-member\.html\?id=core-b"/);
 });
 
+test('team detail navigation loops within Partners and Advisors independently', async () => {
+  const manifest = {
+    members: [
+      { id: 'core-a', group: 'core', order: 10, nameKo: '코어A', roleKo: '대표이사' },
+      { id: 'core-b', group: 'core', order: 20, nameKo: '코어B', roleKo: '전무' },
+      { id: 'adv-a', group: 'advisory', order: 10, nameKo: '자문A', roleKo: '교수' },
+      { id: 'adv-b', group: 'advisory', order: 20, nameKo: '자문B', roleKo: '교수' }
+    ]
+  };
+
+  const firstPartner = await renderTeamApp({ manifest, search: '?id=core-a' });
+  assert.match(firstPartner.html, /class="detail-pager-link prev" href="team-member\.html\?id=core-b"/);
+  assert.match(firstPartner.html, /class="detail-pager-link next" href="team-member\.html\?id=core-b"/);
+  assert.doesNotMatch(firstPartner.html, /team-member\.html\?id=adv-/);
+
+  const lastAdvisor = await renderTeamApp({ manifest, search: '?id=adv-b' });
+  assert.match(lastAdvisor.html, /class="detail-pager-link prev" href="team-member\.html\?id=adv-a"/);
+  assert.match(lastAdvisor.html, /class="detail-pager-link next" href="team-member\.html\?id=adv-a"/);
+  assert.doesNotMatch(lastAdvisor.html, /team-member\.html\?id=core-/);
+});
+
 test('team detail renderer shows missing-member message when id is unknown', async () => {
   const manifest = {
     members: [
