@@ -37,6 +37,18 @@ test('Contact map band keeps the full map visible with Yongdong-daero centered',
   assert.doesNotMatch(css, /\.contact-map-frame::(?:before|after)/);
 });
 
+test('Contact map road strokes use continuous joins without raster seams', async () => {
+  const assets = await Promise.all([
+    readRepoFile('assets/contact/contact-map.svg'),
+    readRepoFile('assets/contact/contact-map-road-extension.svg'),
+    readRepoFile('assets/contact/contact-map-right-seam.svg'),
+  ]);
+
+  for (const asset of assets) {
+    assert.match(asset, /stroke="#ffffff"[^>]*stroke-linejoin="round"[^>]*stroke-linecap="round"/);
+  }
+});
+
 test('Contact map fits the viewport without extended color bands on mobile', async () => {
   const [css, script] = await Promise.all([
     readRepoFile('styles/home.css'),

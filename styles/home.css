@@ -128,7 +128,7 @@
     width: 100vw;
     margin: 32px 0 0 calc(50% - 50vw);
     overflow: hidden;
-    background-image: url("../assets/contact/contact-map-right-seam.svg?v=20260918"), var(--contact-map-image, url("../assets/contact/contact-map.svg?v=20260918-band-aligned")), url("../assets/contact/contact-map-road-extension.svg?v=20260918-map50"), linear-gradient(to right, var(--palette-blue) 50%, var(--palette-navy) 50%);
+    background-image: url("../assets/contact/contact-map-right-seam.svg?v=20260918-road-seams"), var(--contact-map-image, url("../assets/contact/contact-map.svg?v=20260918-road-seams")), url("../assets/contact/contact-map-road-extension.svg?v=20260918-road-seams"), linear-gradient(to right, var(--palette-blue) 50%, var(--palette-navy) 50%);
     background-position: calc(50% + min(192.64px, 25.389vw)) center, calc(50% - min(93.36px, 12.306vw)) center, calc(50% - min(93.36px, 12.306vw)) center, center;
     background-repeat: no-repeat;
     background-size: 4px 100%, auto 100%, auto 100%, 100% 100%;
@@ -166,7 +166,7 @@
     .home-page .contact-row { gap: 16px; }
     .home-page :is(.contact-value, .contact-label) { font-size: 17px; }
     .home-page .contact-map-band {
-        background-image: var(--contact-map-image, url("../assets/contact/contact-map.svg?v=20260918-mobile-fit"));
+        background-image: var(--contact-map-image, url("../assets/contact/contact-map.svg?v=20260918-road-seams"));
         background-position: center;
         background-size: 100% 100%;
     }
