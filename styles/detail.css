@@ -89,6 +89,7 @@
     word-break: keep-all;
     overflow-wrap: anywhere;
 }
+.detail-page .portfolio-detail-body { max-width: none; }
 .detail-page .portfolio-detail-body p { margin-bottom: 24px; white-space: pre-line; }
 .detail-page .notice-record-body { white-space: pre-wrap; }
 .notice-markdown { white-space: normal; }
