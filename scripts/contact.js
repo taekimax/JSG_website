@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!window.JsgAssets) return;
 
     const mapImageEl = document.getElementById('contact-map-image');
+    const mapBandEl = document.querySelector('.contact-map-band');
     const textTargets = {
         phoneLabelEn: document.getElementById('contact-phone-label-en'),
         emailLabelEn: document.getElementById('contact-email-label-en'),
@@ -36,12 +37,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         if (mapImageEl && manifest.mapImage) {
-            mapImageEl.src = window.JsgAssets.versionedUrl(manifest.mapImage, assetVersion);
+            const versionedMapPath = window.JsgAssets.versionedUrl(manifest.mapImage, assetVersion);
+            const mapImageUrl = new URL(versionedMapPath, document.baseURI).href;
+            mapImageEl.dataset.mapSrc = mapImageUrl;
+            if (mapBandEl) mapBandEl.style.setProperty('--contact-map-image', `url("${mapImageUrl}")`);
         }
 
         const mapLabel = await window.JsgAssets.fetchText(window.JsgAssets.versionedUrl(texts.mapLabel, assetVersion));
         if (mapImageEl && mapLabel.trim()) {
-            mapImageEl.alt = mapLabel.trim();
+            mapImageEl.setAttribute('aria-label', mapLabel.trim());
         }
 
     } catch (error) {

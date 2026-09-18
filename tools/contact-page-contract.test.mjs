@@ -18,7 +18,8 @@ test('home Contact section delegates content hydration to contact.js and exposes
   assert.match(html, /<script src="scripts\/contact\.js(?:\?[^"\s]+)?"><\/script>/);
   assert.match(html, /id="contact-map-image"/);
   assert.match(html, /class="contact-map-band"/);
-  assert.match(html, /src="assets\/contact\/contact-map\.svg"/);
+  assert.match(html, /data-map-src="assets\/contact\/contact-map\.svg"/);
+  assert.match(html, /id="contact-map-image"[^>]+role="img"[^>]+aria-label=/);
   assert.doesNotMatch(html, /contact-map-dialog/);
   assert.doesNotMatch(html, /\[대표 전화번호\]/);
   assert.doesNotMatch(html, /\[문의 이메일 주소\]/);
@@ -29,9 +30,22 @@ test('Contact map band keeps the full map visible with Yongdong-daero centered',
   const css = await readRepoFile('styles/home.css');
 
   assert.match(css, /\.home-page \.contact-map-band \{[^}]*width: 100vw;/);
+  assert.match(css, /contact-map-right-seam\.svg/);
+  assert.match(css, /background-position: calc\(50% \+ min\(192\.64px, 25\.389vw\)\) center, calc\(50% - min\(93\.36px, 12\.306vw\)\) center/);
   assert.match(css, /\.home-page \.contact-map-frame \{[^}]*width: min\(572px, 75\.389vw\);/);
   assert.match(css, /\.home-page \.contact-map-frame \{[^}]*left: 50%;[^}]*translateX\(-66\.3225%\)/);
   assert.doesNotMatch(css, /\.contact-map-frame::(?:before|after)/);
+});
+
+test('Contact map fits the viewport without extended color bands on mobile', async () => {
+  const [css, script] = await Promise.all([
+    readRepoFile('styles/home.css'),
+    readRepoFile('scripts/contact.js'),
+  ]);
+
+  assert.match(css, /@media \(max-width: 699px\) \{[\s\S]*?\.home-page \.contact-map-band \{[^}]*background-image: var\(--contact-map-image,[^}]*background-position: center;[^}]*background-size: 100% 100%;/);
+  assert.match(css, /@media \(max-width: 699px\) \{[\s\S]*?\.home-page \.contact-map-frame,[\s\S]*?width: 100vw;[^}]*left: 0;[^}]*transform: none;/);
+  assert.match(script, /new URL\(versionedMapPath, document\.baseURI\)\.href/);
 });
 
 test('contact content files are public-facing and use the updated daechi address', async () => {
