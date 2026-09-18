@@ -15,9 +15,9 @@ test('home Contact section delegates content hydration to contact.js and exposes
   const html = await readRepoFile('about.html');
 
   assert.match(html, /<script src="scripts\/assets\.js"><\/script>/);
-  assert.match(html, /<script src="scripts\/contact\.js"><\/script>/);
+  assert.match(html, /<script src="scripts\/contact\.js(?:\?[^"\s]+)?"><\/script>/);
   assert.match(html, /id="contact-map-image"/);
-  assert.match(html, /src="assets\/contact\/contact-map\.png"/);
+  assert.match(html, /src="assets\/contact\/contact-map\.svg"/);
   assert.doesNotMatch(html, /\[대표 전화번호\]/);
   assert.doesNotMatch(html, /\[문의 이메일 주소\]/);
   assert.doesNotMatch(html, /href="#"/);

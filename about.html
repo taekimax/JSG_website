@@ -8,12 +8,12 @@
     <title>JSG INVESTMENT</title>
     <link rel="preload" href="assets/fonts/D2Coding-Regular.ttf" as="font" type="font/ttf" crossorigin>
     <link rel="preload" href="assets/fonts/JetBrainsMonoNerdFont-Regular.ttf" as="font" type="font/ttf" crossorigin>
-    <link rel="stylesheet" href="styles/tokens.css?v=20260918-ci">
+    <link rel="stylesheet" href="styles/tokens.css?v=20260918-alternating">
     <link rel="stylesheet" href="styles/reset.css">
     <link rel="stylesheet" href="styles/layout.css?v=20260918-ci">
     <link rel="stylesheet" href="styles/main.css?v=20260910-team-refinement">
     <link rel="stylesheet" href="styles/about-editorial.css?v=20260918-ci">
-    <link rel="stylesheet" href="styles/home.css?v=20260918-ci">
+    <link rel="stylesheet" href="styles/home.css?v=20260918-contact-centered">
     <link rel="stylesheet" href="styles/section-reveal.css?v=20260908-screen-edges">
 </head>
 
@@ -90,21 +90,23 @@
 </div>
 </section>
         <section id="philosophy" data-content-ready="false" aria-label="Philosophy" tabindex="-1">
-            <div class="philosophy-main home-section home-section--blue ci-inverse-text">
-                <div class="section-inner">
+            <div class="philosophy-main home-section">
+                <div>
                     <div class="curtain-track"><div class="curtain-scene">
-<section class="page-hero curtain-band">
-                        <div class="page-hero-surface">
+<section class="page-hero section-title-band curtain-band ci-inverse-text">
+                        <div class="page-hero-surface section-inner">
                             <div class="page-hero-text bilingual-stack">
                                 <h2 class="page-hero-kicker section-title">Philosophy</h2>
-                                <p class="page-hero-sub">합리적 사고와 과학적 엄밀성을 바탕으로, 창업자·투자자·JSG가 함께 서는 진정한 파트너십을 통해 인류의 건강에 기여합니다.</p>
-                                <p class="page-hero-sub">Grounded in disciplined reasoning and scientific rigor, we partner with founders and investors to advance human health.</p>
                             </div>
                         </div>
                     </section>
 <div class="curtain-body">
 
-                    <section class="philosophy-section">
+                    <section class="philosophy-section section-inner">
+                        <div class="philosophy-intro">
+                                <p class="page-hero-sub">합리적 사고와 과학적 엄밀성을 바탕으로, 창업자·투자자·JSG가 함께 서는 진정한 파트너십을 통해 인류의 건강에 기여합니다.</p>
+                                <p class="page-hero-sub">Grounded in disciplined reasoning and scientific rigor, we partner with founders and investors to advance human health.</p>
+                        </div>
 
                         <div class="philosophy-list">
                             <!-- Respect -->
@@ -152,7 +154,7 @@
 
             <section id="perspective" class="perspective-section home-section" aria-label="Perspective" tabindex="-1">
                 <div class="curtain-track"><div class="curtain-scene">
-<section class="page-hero section-title-band curtain-band">
+<section class="page-hero section-title-band curtain-band ci-inverse-text">
                     <div class="page-hero-surface section-inner">
                         <div class="page-hero-text">
                             <h3 class="section-title">Perspective</h3>
@@ -187,7 +189,7 @@
 </section>
 
         </section>
-        <section id="notice" data-content-ready="false" class="home-section ci-inverse-text" aria-label="Notice" tabindex="-1">
+        <section id="notice" data-content-ready="false" class="home-section" aria-label="Notice" tabindex="-1">
 
             <div class="curtain-track"><div class="curtain-scene">
 <section class="page-hero section-title-band curtain-band ci-inverse-text">
@@ -211,10 +213,10 @@
 </div>
 </section>
         <section id="contact" data-content-ready="false" class="home-section" aria-label="Contact" tabindex="-1">
-            <div class="section-inner">
+            <div>
             <div class="curtain-track"><div class="curtain-scene">
-<section class="page-hero curtain-band">
-                <div class="page-hero-surface">
+<section class="page-hero section-title-band curtain-band ci-inverse-text">
+                <div class="page-hero-surface section-inner">
                     <div class="page-hero-text">
                         <h2 class="page-hero-kicker section-title" id="contact-hero-kicker"></h2>
                     </div>
@@ -222,18 +224,18 @@
             </section>
 <div class="curtain-body">
 
-            <div class="contact-section">
+            <div class="contact-section section-inner">
                 <div class="contact-card">
                     <div class="contact-row">
-                        <span class="contact-label" id="contact-phone-label"></span>
+                        <div class="contact-label-stack"><span class="contact-label" id="contact-phone-label" lang="ko"></span><span class="contact-label" id="contact-phone-label-en" lang="en"></span></div>
                         <span class="contact-value" id="contact-phone-value"></span>
                     </div>
                     <div class="contact-row">
-                        <span class="contact-label" id="contact-email-label"></span>
+                        <div class="contact-label-stack"><span class="contact-label" id="contact-email-label" lang="ko"></span><span class="contact-label" id="contact-email-label-en" lang="en"></span></div>
                         <span class="contact-value" id="contact-email-value"></span>
                     </div>
                     <div class="contact-row">
-                        <span class="contact-label" id="contact-address-label"></span>
+                        <div class="contact-label-stack"><span class="contact-label" id="contact-address-label" lang="ko"></span><span class="contact-label" id="contact-address-label-en" lang="en"></span></div>
                         <div class="contact-address">
                             <p class="contact-value" id="contact-location-address" lang="ko"></p>
                             <p class="contact-value" id="contact-location-address-en" lang="en"></p>
@@ -241,7 +243,7 @@
                     </div>
                 </div>
                 <figure class="contact-map-frame">
-                    <img id="contact-map-image" src="assets/contact/contact-map.png" width="800" height="600" alt="현대백화점 건너편 JSG와 주변 주요 건물의 위치 약도" loading="lazy" decoding="async">
+                    <img id="contact-map-image" src="assets/contact/contact-map.svg" width="800" height="600" alt="현대백화점 건너편 JSG와 주변 주요 건물의 위치 약도" loading="lazy" decoding="async">
                 </figure>
             </div>
 
@@ -278,7 +280,7 @@
     <script src="scripts/philosophyCopy.js?v=20260908-new-tab"></script>
     <script src="scripts/boardPager.js?v=20260908-chevrons"></script>
     <script src="scripts/notice.js?v=20260910-title-greeting"></script>
-    <script src="scripts/contact.js"></script>
+    <script src="scripts/contact.js?v=20260918-labels"></script>
     <script src="scripts/sectionReveal.js?v=20260908-screen-edges"></script>
 </body>
 

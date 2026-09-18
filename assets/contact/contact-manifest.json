@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "page": "contact",
-  "assetVersion": "2026-09-18-ci",
+  "assetVersion": "2026-09-18-map-alignment",
   "heroImage": "assets/contact/contact-hero.jpg",
   "mapUrl": "https://www.google.com/maps/search/?api=1&query=서울특별시+강남구+테헤란로+514+삼흥2빌딩",
-  "mapImage": "assets/contact/contact-map.png",
+  "mapImage": "assets/contact/contact-map.svg",
   "mapCaption": "assets/contact/map-caption.txt",
   "texts": {
     "heroKicker": "assets/contact/hero-kicker.txt",
@@ -20,6 +20,9 @@
     "emailLabel": "assets/contact/email-label.txt",
     "emailValue": "assets/contact/email-value.txt",
     "addressLabel": "assets/contact/address-label.txt",
-    "locationAddressEn": "assets/contact/location-address-en.txt"
+    "locationAddressEn": "assets/contact/location-address-en.txt",
+    "phoneLabelEn": "assets/contact/phone-label-en.txt",
+    "emailLabelEn": "assets/contact/email-label-en.txt",
+    "addressLabelEn": "assets/contact/address-label-en.txt"
   }
 }

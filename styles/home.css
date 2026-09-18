@@ -82,11 +82,8 @@
     object-fit: cover;
     object-position: center;
 }
-.home-page .home-section--blue { --focus-ring-color: var(--base-white); }
-.home-page .home-section--blue { color: var(--base-white); background: var(--brand-royal-blue); }
 .home-page #contact { color: var(--brand-deep-blue); background: var(--bg-page); }
-.home-page .home-section--blue .page-hero-sub { color: var(--base-white); }
-.home-page .philosophy-section { margin: 0; }
+.home-page .philosophy-section { margin-block: 0; }
 .home-page .philosophy-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; }
 .home-page .philosophy-card {
     display: block;
@@ -119,7 +116,7 @@
 }
 .home-page .notice-record-item:hover { background: none; }
 .home-page .notice-link { color: var(--brand-deep-blue); font-size: var(--home-item-title-size); font-weight: 450; }
-.home-page .contact-section { margin: 0; min-width: 0; }
+.home-page .contact-section { margin-block: 0; min-width: 0; }
 .home-page .contact-card { padding: 0; border: 0; border-radius: 0; box-shadow: none; background: none; transition: none; }
 .home-page .contact-card:hover { transform: none; box-shadow: none; }
 .home-page .contact-row { display: grid; grid-template-columns: 3em minmax(0, 1fr); gap: 24px; align-items: baseline; margin: 0; padding: 20px 0; border-top: 1px solid var(--text-muted); }
@@ -127,7 +124,7 @@
 .home-page :is(.contact-value, .contact-label, .contact-subtext, .contact-map-caption) { color: inherit; }
 .home-page :is(.contact-value, .contact-label) { margin: 0; font-size: 20px; font-weight: 400; line-height: 1.6; word-break: keep-all; overflow-wrap: anywhere; }
 .home-page .contact-address { display: grid; gap: 4px; min-width: 0; }
-.home-page .contact-map-frame { width: min(100%, 572px); aspect-ratio: 10 / 7; margin: 32px 0 0; border: 0; border-radius: 12px; background: var(--bg-soft); overflow: hidden; }
+.home-page .contact-map-frame { width: min(100%, 572px); aspect-ratio: 4 / 3; margin: 32px auto 0; border: 0; border-radius: 0; background: none; overflow: visible; position: relative; isolation: isolate; }
 .home-page .site-footer { display: block; padding-block: 56px calc(32px + env(safe-area-inset-bottom, 0px)); font-size: 14px; }
 @media (max-width: 1023px) {
     .home-page .home-section { padding-block: var(--section-band-space); }
@@ -162,7 +159,7 @@
 
 .home-page .notice-list { border: 0; border-radius: 0; box-shadow: none; background: none; }
 
-/* Approved color bands: only the About, Team and Portfolio headings are colored. */
+/* Title typography and section spacing. */
 .home-page .about-title-band {
     --about-title-size: clamp(26px, 3.4vw, 48px);
     --about-title-leading: calc(var(--about-title-size) * 1.5);
@@ -181,12 +178,9 @@
     padding-block: var(--section-band-space);
     margin-bottom: 64px;
     color: var(--base-white);
-    background: var(--brand-royal-blue);
+    background: var(--brand-deep-blue);
 }
-.home-page #notice { --focus-ring-color: var(--base-white); padding-block: 56px; color: var(--base-white); background: var(--notice-title-bg); }
-.home-page #notice .section-title-band { padding: 0 0 32px; margin: 0; color: inherit; background: none; }
 .home-page #notice :is(.notice-link, .notice-meta, .notice-loading, .notice-error) { color: inherit; }
-.home-page #notice .notice-record-item { padding-block: 20px; border-color: color-mix(in srgb, var(--base-white) 40%, transparent); }
 .home-page #notice .notice-category::before { color: inherit; }
 .home-page #notice .badge-important { background: var(--base-white); }
 .home-page .portfolio-band-heading {
@@ -209,8 +203,6 @@
     .home-page .about-title-grid { grid-template-columns: 1fr; gap: 32px; }
     .home-page .about-story { padding-top: 40px; gap: 32px; }
     .home-page #team .section-title-band { padding-block: var(--section-band-space); margin-bottom: 40px; }
-    .home-page #notice { padding-block: 40px; }
-    .home-page #notice .section-title-band { padding-bottom: 24px; }
     .home-page .portfolio-band-heading { padding-block: var(--section-band-space); }
     .home-page :is(.phil-desc-ko, .phil-desc-en) { font-size: 17px; }
 }
@@ -229,7 +221,7 @@
     background: none;
 }
 .home-page .perspective-section .section-title {
-    color: var(--brand-deep-blue);
+    color: inherit;
 }
 .home-page .perspective-section .notice-record-item {
     padding-block: 20px;
@@ -279,7 +271,6 @@
     white-space: nowrap;
     cursor: pointer;
 }
-.home-page .perspective-section .board-arrow { color: var(--brand-deep-blue); }
 .home-page .board-arrow .nav-chevron { font-size: var(--nav-chevron-control-size); }
 .home-page .board-arrow:hover:not([aria-disabled="true"]) { background: var(--board-control-hover); }
 .home-page .board-arrow[aria-disabled="true"] { opacity: 1; cursor: default; }
@@ -361,3 +352,52 @@
 .home-page .media-character::before { display: block; width: 100%; overflow: visible; content: var(--media-pause); }
 .home-page .carousel-toggle[aria-pressed="true"] .media-character::before { content: var(--media-play); }
 .home-page .carousel-toggle:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+/* Alternate CI title bands in reading order; content remains white. */
+.home-page :is(#about, #team, .philosophy-main, #perspective, #portfolio, #notice, #contact) {
+    --title-band-bg: var(--brand-royal-blue);
+    --focus-ring-color: var(--brand-deep-blue);
+    color: var(--brand-deep-blue);
+    background: var(--bg-page);
+}
+.home-page :is(#team, #perspective, #notice) { --title-band-bg: var(--brand-deep-blue); }
+.home-page :is(.philosophy-main, #perspective, #notice, #contact) { padding-top: 0; }
+.home-page :is(#team, .philosophy-main, #perspective, #portfolio, #notice, #contact) .section-title-band {
+    --focus-ring-color: var(--base-white);
+    padding-block: var(--section-band-space);
+    margin: 0 0 48px;
+    color: var(--base-white);
+    background: var(--title-band-bg);
+}
+.home-page .about-title-band { background: var(--title-band-bg); }
+.home-page .section-title-band :is(.section-title, .page-hero-sub, .board-arrow, .carousel-toggle) { color: inherit; }
+.home-page #notice .notice-record-item { padding-block: 20px; border-color: var(--border-light); }
+.home-page #notice .notice-meta { color: var(--text-muted); }
+@media (max-width: 699px) {
+    .home-page :is(#team, .philosophy-main, #perspective, #portfolio, #notice, #contact) .section-title-band { margin-bottom: 40px; }
+}
+
+.home-page .philosophy-intro { display: grid; gap: 6px; margin-bottom: 48px; }
+
+/* Extend the exact SVG field colors beyond the centered map, to both page edges. */
+.home-page .contact-map-frame::before {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+    z-index: -1;
+    background-image: url("../assets/contact/contact-map-road-extension.svg?v=20260918-curve"), linear-gradient(to right, var(--palette-blue) 50%, var(--palette-navy) 50%);
+    background-size: auto 100%, 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Share bilingual row tracks so address wrapping keeps both languages aligned. */
+.home-page .contact-row { grid-template-columns: 7ch minmax(0, 1fr); column-gap: 24px; row-gap: 4px; align-items: start; }
+.home-page :is(.contact-label-stack, .contact-address) { display: grid; grid-template-rows: subgrid; grid-row: span 2; row-gap: 4px; }
+.home-page .contact-row > .contact-value { grid-row: span 2; align-self: center; }
+@media (max-width: 699px) {
+    .home-page .contact-row { column-gap: 16px; }
+}

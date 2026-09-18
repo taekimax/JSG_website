@@ -60,7 +60,7 @@
   --action-disabled: var(--palette-gray-dark);
   --portfolio-title-bg: var(--palette-blue);
   --inverse-text-stroke: 0.22px var(--palette-navy);
-  --notice-title-bg: var(--palette-blue);
+  --notice-title-bg: var(--palette-navy);
   --board-control-hover: color-mix(in srgb, currentColor 10%, transparent);
 
   /* Directional navigation: JetBrains Mono Nerd Font angle glyphs. */

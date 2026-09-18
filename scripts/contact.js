@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const mapImageEl = document.getElementById('contact-map-image');
     const textTargets = {
+        phoneLabelEn: document.getElementById('contact-phone-label-en'),
+        emailLabelEn: document.getElementById('contact-email-label-en'),
+        addressLabelEn: document.getElementById('contact-address-label-en'),
         heroKicker: document.getElementById('contact-hero-kicker'),
         addressLabel: document.getElementById('contact-address-label'),
         locationAddress: document.getElementById('contact-location-address'),
