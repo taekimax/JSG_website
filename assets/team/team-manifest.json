@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "page": "team",
-  "assetVersion": "2026-09-18-team-careers-circular-navigation",
+  "assetVersion": "2026-09-18-team-careers-circular-navigation-2",
   "heroImage": "assets/team/team-hero.jpg",
   "members": [
     {
@@ -83,12 +83,11 @@
       "roleKo": "전무 / 성장투자본부",
       "roleEn": "",
       "summaryEn": "",
-      "summaryKo": "케이기술투자 운용본부장 · 오비트파트너스 투자본부 이사",
+      "summaryKo": "케이기술투자 운용본부장 · 아샘자산운용 주식운용본부장",
       "image": "assets/team/kim-tae-hyung.jpg",
       "highlights": [
         "케이기술투자 운용본부장",
-        "오비트파트너스 투자본부 이사",
-        "아샘자산운용 주식운용본부 이사",
+        "아샘자산운용 주식운용본부장",
         "브이파트너스자산운용 주식운용본부",
         "쿼드자산운용 주식운용본부",
         "고려대 법대 학사"
