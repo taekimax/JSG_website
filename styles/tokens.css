@@ -24,9 +24,9 @@
 :root {
   --media-play: ">";
   --media-pause: "‖";
-  --palette-cyan: #04f8fd; /* dominant cyan sampled from jsg-emblem.png */
-  --palette-blue: #1d4ed8;
-  --palette-navy: #0f172a;
+  --palette-cyan: #04f8fd; /* optional CI accent */
+  --palette-blue: #226cf5;
+  --palette-navy: #001d6c;
   --palette-yellow: #e8b51b;
   --palette-red: #dc2626;
   --palette-gray-light: #f4f4f4;
@@ -58,7 +58,8 @@
   --action-primary-bg: var(--palette-blue);
   --action-primary-text: var(--palette-blue);
   --action-disabled: var(--palette-gray-dark);
-  --portfolio-title-bg: var(--palette-cyan);
+  --portfolio-title-bg: var(--palette-blue);
+  --inverse-text-stroke: 0.22px var(--palette-navy);
   --notice-title-bg: var(--palette-blue);
   --board-control-hover: color-mix(in srgb, currentColor 10%, transparent);
 

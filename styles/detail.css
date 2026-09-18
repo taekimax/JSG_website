@@ -9,7 +9,7 @@
 .detail-page .detail-hero {
     padding: var(--section-band-space) 0;
     margin: 0;
-    color: var(--brand-deep-blue);
+    color: var(--base-white);
     background: var(--notice-title-bg);
 }
 .detail-page--portfolio .detail-hero { background: var(--portfolio-title-bg); }

@@ -82,10 +82,10 @@
     object-fit: cover;
     object-position: center;
 }
-.home-page :is(.home-section--blue, .home-section--navy) { --focus-ring-color: var(--base-white); }
+.home-page .home-section--blue { --focus-ring-color: var(--base-white); }
 .home-page .home-section--blue { color: var(--base-white); background: var(--brand-royal-blue); }
-.home-page .home-section--navy { color: var(--base-white); background: var(--brand-deep-blue); }
-.home-page :is(.home-section--blue, .home-section--navy) .page-hero-sub { color: var(--base-white); }
+.home-page #contact { color: var(--brand-deep-blue); background: var(--bg-page); }
+.home-page .home-section--blue .page-hero-sub { color: var(--base-white); }
 .home-page .philosophy-section { margin: 0; }
 .home-page .philosophy-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; }
 .home-page .philosophy-card {
@@ -167,8 +167,8 @@
     --about-title-size: clamp(26px, 3.4vw, 48px);
     --about-title-leading: calc(var(--about-title-size) * 1.5);
     padding-block: clamp(48px, 6vw, 88px);
-    background: var(--accent-cyan);
-    color: var(--brand-deep-blue);
+    background: var(--brand-royal-blue);
+    color: var(--base-white);
 }
 .home-page .about-title-grid {
     display: grid;
@@ -192,7 +192,7 @@
 .home-page .portfolio-band-heading {
     padding-block: var(--section-band-space);
     margin: 0 0 32px;
-    color: var(--brand-deep-blue);
+    color: var(--base-white);
     background: var(--portfolio-title-bg);
 }
 .home-page :is(.team-role, .team-role-en, .team-name-en) { font-size: 16px; }

@@ -46,7 +46,7 @@
 .about-editorial .about-section-title {
     margin: 0;
     padding: 0;
-    color: var(--editorial-ink);
+    color: inherit;
     font-family: var(--font-family-base);
     font-size: var(--about-title-size);
     font-weight: 400;

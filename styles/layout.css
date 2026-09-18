@@ -208,3 +208,12 @@ html:not(.page-pending) .page-loading { display: none; }
 .nav-chevron[data-direction="up"]::before { content: var(--chevron-up); }
 .nav-chevron[data-direction="down"]::before { content: var(--chevron-down); }
 .footer-bottom a, .detail-return { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
+
+/* Approved CI treatment: a fine edge behind white text, without changing glyph layout. */
+.ci-inverse-text {
+    --focus-ring-color: var(--base-white);
+    -webkit-text-stroke: var(--inverse-text-stroke);
+    paint-order: stroke fill;
+}
+/* The important badge has its own white surface and red text. */
+.ci-inverse-text .badge-important { -webkit-text-stroke: 0; }

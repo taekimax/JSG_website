@@ -1,0 +1,24 @@
+JSG CI 심벌 복원 기록 — 2026-09-18
+
+도구: built-in image_gen
+입력: /Users/tk/Downloads/jsg-logo-photo.jpg
+출력: assets/shared/jsg-emblem-ci-20260918.png (1254 x 1254)
+원본 제작 도면이 아닌 사진 기반 복원본이다.
+웹사이트의 기존 로고 참조는 변경하지 않았다.
+
+투명 버전: assets/shared/jsg-emblem-ci-20260918-transparent.png
+도구: built-in image_gen. 알파 채널의 실제 투명 영역을 확인했다.
+투명화 프롬프트:
+Background extraction only. Produce a genuinely TRANSPARENT RGBA PNG of this exact circular four-piece JSG emblem. Remove the white background AND white dividing gaps to alpha=0. Preserve the four blue shapes, their precise contours and positions, size, margins, and existing colors: bright blue left, dark navy right (target dark #001D6C). Do not redraw or redesign. Preserve smooth clean antialiased edges with no white fringe and no stray pixels. All solid blue interiors fully opaque. Outside and gaps fully transparent, not a drawn checkerboard, not white or black. Same square canvas. No text, no shadow, no added elements.
+
+최초 생성 프롬프트
+Use case: logo-brand / precise-object-edit.
+Reconstruct ONLY the circular JSG emblem from the supplied photograph into a crisp flat professional CI symbol, front-facing orthographic, centered on a pure white square background. Remove all photograph context, Korean/English text, shadows, bevels, lighting, wall texture, foliage. No text at all.
+Reference is geometry only, not photographed colors. Precisely preserve the unusual four-piece silhouette: circular outer contour split by a curved vertical white meridian bowed LEFT and a nearly horizontal white slit rising gently to the RIGHT. Two LEFT pieces bright blue #226CF5 (conviction, enterprise, action), two RIGHT pieces deep blue #011E91 (reason, rigor, responsibility). Flat solid exact sRGB fills, no gradients, no outlines.
+Measured photo geometry at original 960x1280: outer emblem approximately x357..637 y392..676, center (497,534), radius141. Vertical white meridian center roughly (551,405), (486,452), (452,513), (457,576), (495,636), (543,665). Its white gap is 16-19 pixels, smoothly curved; the curve bulges left of circle center. Horizontal slit center roughly (370,599) to (634,568), width17 pixels, slope about -0.12. Thus intersection is left and below center, at ~35% of diameter from left and ~70% from top. The large top-right piece dominates, top-left is crescent-like, bottom-left a curved small segment, bottom-right a small rounded wedge. Outer silhouette must remain a true circle, not oval. Preserve these reference proportions carefully; do not replace with centered cross, basketball, four equal quadrants, or symmetric globe.
+Output a high-resolution square PNG. Emblem diameter approximately 80% of canvas width, equal margin on all sides. Pure white background including dividing gaps. Smooth precise antialiased edges. No accompanying palette, annotations, typography, or mockup.
+
+후속 색상 조정: 사용자 요청으로 짙은 파랑 기준을 #011E91에서 #001D6C로 변경.
+도구: built-in image_gen. 입력은 최초 복원 PNG, 출력은 위 파일을 갱신.
+최종 편집 프롬프트:
+Return an OPAQUE white-background PNG of exactly this logo. Single change: replace the navy blue of both right-hand shapes with darker #001D6C RGB(0,29,108). Everything else unchanged: same vivid blue left pieces, same circular geometry and slit geometry, same white margins. The background and dividing gaps MUST be solid opaque pure WHITE #FFFFFF, never transparent or black. Clean antialiased edges, no specks or fragments in gaps. Flat colors. No text. Preserve the input composition exactly.
