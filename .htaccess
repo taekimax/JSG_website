@@ -1,6 +1,18 @@
 DirectoryIndex index.html
 Options -Indexes
 
+# Keep script hashes in sync with the small inline boot/redirect scripts.
+# tools/security-headers.test.mjs verifies them against every public HTML page.
+# Inline styles remain necessary for the current layout and carousel updates.
+Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'sha256-PowAA91P30XGmfHTXTfeAwIGoCck2beKE+DWOdxeFD8=' 'sha256-bFqDBYqFH8E9GqCwsrFNSlFWyMRQ0OWsaNptXkD9aSQ=' 'sha256-2q8oKfH8TPVN9c4EoTRnT723dDU+LNJ6fHFgpZnsamc=' 'sha256-tD4QjvSF963uZ50cCyyFzhj9dntY29Xkrr721cRz2F0=' 'sha256-gKhQGc75MJvijX4zdrBoeZnyWqj6CrZD1hBc/BLh8wU=' 'sha256-ooby1dlmr/HunSD2xGeSVK4/ANeq13H/Smitc9h9+Cc=' 'sha256-vZkkIgyYSo6dY9O5lE350zCjkCJDqtVyy/9qr2z/zHI=' 'sha256-C4lvtJBcv6hFlkQggTFhAej1X3VPc9mh1ub3GanueaY='; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' https:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-src 'none'; frame-ancestors 'none'; form-action 'none'"
+Header always set X-Content-Type-Options "nosniff"
+Header always set X-Frame-Options "DENY"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+# Main hostname only: www does not currently have a working TLS certificate.
+# Browsers ignore this header over HTTP; deliberately no includeSubDomains/preload.
+Header always set Strict-Transport-Security "max-age=31536000"
+
 RewriteEngine On
 RewriteCond %{HTTP_HOST} ^www\.jsginvest\.com$ [NC]
 RewriteRule ^ https://jsginvest.com%{REQUEST_URI} [R=301,L,NE]

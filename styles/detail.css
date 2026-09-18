@@ -105,6 +105,8 @@
 .notice-markdown pre { overflow-x: auto; padding: 16px; background: var(--bg-soft); }
 .notice-markdown table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; }
 .notice-markdown :is(th, td) { padding: 8px 16px; border: 1px solid var(--border-light); text-align: left; }
+.notice-markdown :is(th, td)[align="center"] { text-align: center; }
+.notice-markdown :is(th, td)[align="right"] { text-align: right; }
 .detail-page .notice-header { padding: 0 0 36px; margin: 0 0 36px; border-bottom: 1px solid var(--border-light); }
 .detail-page .notice-meta-detail { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; margin: 0 0 24px; font-size: 16px; color: var(--text-muted); }
 .detail-page .notice-date-detail { font-size: inherit; color: inherit; }

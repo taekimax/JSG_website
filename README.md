@@ -36,9 +36,10 @@ python3 -m http.server 4173 --bind 127.0.0.1
 
 접속: [로컬 JSG 홈](http://127.0.0.1:4173/). 콘텐츠 fetch를 위해 HTTP가 필요합니다.
 
-검사:
+검사 (Node.js 24.15 이상 24.x 또는 26 이상):
 
 ```sh
+npm ci --ignore-scripts
 npm run verify
 ```
 

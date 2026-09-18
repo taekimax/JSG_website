@@ -14,17 +14,22 @@ concurrency:
 
 jobs:
   deploy:
-    if: vars.CAFE24_DEPLOY_ENABLED == 'true'
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && vars.CAFE24_DEPLOY_ENABLED == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          node-version: 24
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '>=24.15.0 <25' # jsdom 30 requires Node 24.15.0 or newer.
+          package-manager-cache: false
+      - name: Install verification dependencies
+        run: npm ci --ignore-scripts
       - name: Verify and stage public files
         run: |
-          npm run verify
+          npm --ignore-scripts run verify
           node tools/stage-site.mjs
       - name: Install SFTP client
         run: sudo apt-get update && sudo apt-get install --yes lftp
@@ -58,10 +63,22 @@ jobs:
       - name: Verify published website
         run: |
           python3 - <<'PYVERIFY'
+          import re
           from pathlib import Path
           from urllib.request import urlopen
+          expected_headers = re.findall(
+              r'^[ \t]*Header[ \t]+always[ \t]+set[ \t]+([\w-]+)[ \t]+"([^"\r\n]+)"[ \t]*$',
+              Path('_site/.htaccess').read_text(encoding='utf-8'),
+              re.MULTILINE,
+          )
+          assert expected_headers, 'No security headers found in staged .htaccess'
           for name in ['index.html', 'about.html', 'assets/shared/board-endpoints.json']:
               with urlopen('https://jsginvest.com/' + name, timeout=30) as response:
                   assert response.read() == Path('_site', name).read_bytes(), name
+                  if name == 'about.html':
+                      for header, expected in expected_headers:
+                          actual = response.headers.get_all(header)
+                          assert actual == [expected], f'{header}: expected {[expected]!r}, got {actual!r}'
+                          print('Verified header:', header)
               print('Verified:', name)
           PYVERIFY
